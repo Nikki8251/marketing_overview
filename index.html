@@ -3,171 +3,157 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZERO Markets · Marketing Analytics</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>ZERO Markets · Marketing Overview</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root {
-  --bg: #f4f5f4;
-  --white: #ffffff;
-  --border: #e2e5e2;
-  --border2: #cdd2cd;
-  --green: #16a34a;
-  --green-l: #22c55e;
-  --green-bg: #f0fdf4;
-  --green-br: #bbf7d0;
-  --red: #dc2626;
-  --red-bg: #fef2f2;
-  --amber: #d97706;
-  --amber-bg: #fffbeb;
-  --blue: #2563eb;
-  --blue-bg: #eff6ff;
-  --text: #111827;
-  --text2: #4b5563;
-  --text3: #9ca3af;
-  --nav: #111827;
-  --font: 'Plus Jakarta Sans', sans-serif;
-  --mono: 'IBM Plex Mono', monospace;
-  --r: 8px;
-  --sh: 0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+:root{
+  --bg:#f4f6f4; --surf:#fff; --surf2:#f8faf8; --border:#e2e6e2; --border2:#cdd2cd;
+  --text:#0f1512; --text2:#3d4d42; --text3:#8a9890;
+  --green:#15803d; --gl:#22c55e; --gbg:#f0fdf4; --gbr:#bbf7d0;
+  --red:#b91c1c; --rbg:#fef2f2;
+  --amber:#b45309; --abg:#fffbeb;
+  --blue:#1d4ed8; --bbg:#eff6ff;
+  --purple:#6d28d9; --pbg:#f5f3ff;
+  --nav:#0f1a14;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --r:10px; --sh:0 1px 4px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  /* funnel stage colors */
+  --s0:#6b7280; --s1:#0ea5e9; --s2:#8b5cf6; --s3:#f59e0b; --s4:#22c55e; --s5:#15803d;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
-body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 13px; display: flex; flex-direction: column; min-height: 100vh; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;display:flex;flex-direction:column;min-height:100vh;}
 
-/* ── NAV ── */
-.topbar {
-  flex-shrink: 0;
-  height: 50px; background: var(--nav);
-  display: flex; align-items: center; padding: 0 20px; gap: 18px;
-  position: sticky; top: 0; z-index: 200;
-}
-.logo { display:flex; align-items:center; gap:9px; min-width:160px; }
-.logo-mark { width:28px;height:28px;background:var(--green-l);border-radius:5px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#052e16;font-family:var(--mono); }
-.logo-main { font-size:13px;font-weight:600;color:#fff;letter-spacing:-.2px; }
-.logo-sub  { font-size:10px;color:#6b7280; }
-.nav-sep { width:1px;height:20px;background:#1f2937; }
-.nav-tabs { display:flex;gap:2px; }
-.nav-tab { padding:4px 14px;border-radius:5px;font-size:13px;font-weight:500;color:#6b7280;cursor:pointer;border:none;background:transparent;transition:all .15s;font-family:var(--font); }
-.nav-tab:hover { color:#e5e7eb;background:#1f2937; }
-.nav-tab.active { background:var(--green-l);color:#052e16;font-weight:600; }
-.topbar-right { margin-left:auto;display:flex;align-items:center;gap:14px;font-size:11px;color:#6b7280;font-family:var(--mono); }
-.live-pill { display:flex;align-items:center;gap:5px;background:#14532d;border:1px solid #166534;color:#4ade80;border-radius:20px;padding:2px 9px;font-size:10px;font-weight:600; }
-.live-dot { width:5px;height:5px;background:#4ade80;border-radius:50%;animation:blink 2s infinite; }
+/* ── TOPBAR ── */
+.topbar{height:52px;background:var(--nav);display:flex;align-items:center;padding:0 24px;gap:16px;position:sticky;top:0;z-index:300;flex-shrink:0;}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.logo-icon{width:34px;height:34px;border-radius:50%;background:#dde8dd;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.logo-icon svg{width:20px;height:20px;}
+.logo-name{font-size:13px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:1.2;}
+.logo-sub{font-size:10px;color:#6b7280;}
+.nav-div{width:1px;height:20px;background:#1f2d25;flex-shrink:0;}
+.nav-tabs{display:flex;gap:2px;}
+.ntab{height:30px;padding:0 14px;border-radius:6px;border:none;font-family:var(--font);font-size:12px;font-weight:500;color:#6b7280;background:transparent;cursor:pointer;transition:all .15s;}
+.ntab:hover{color:#e5e7eb;background:#1f2d25;}
+.ntab.active{background:var(--gl);color:#052e16;font-weight:600;}
+.topbar-r{margin-left:auto;display:flex;align-items:center;gap:12px;}
+.nav-ctx{font-family:var(--mono);font-size:10px;color:#6b7280;}
+.live-pill{display:flex;align-items:center;gap:5px;background:#14532d;border:1px solid #166534;color:#4ade80;border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;font-family:var(--mono);}
+.live-dot{width:5px;height:5px;border-radius:50%;background:#4ade80;animation:blink 2s infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* ── FILTERS ── */
-.filterbar {
-  flex-shrink: 0;
-  background: var(--white); border-bottom: 1px solid var(--border);
-  padding: 0 20px; display: flex; align-items: center; gap: 8px;
-  height: 46px; position: sticky; top: 50px; z-index: 100;
-  box-shadow: var(--sh);
-}
-.fgrp { display:flex;align-items:center;border:1px solid var(--border2);border-radius:6px;overflow:hidden;background:var(--white);transition:border-color .15s,box-shadow .15s; }
-.fgrp:focus-within { border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,.1); }
-.fgrp.sel { border-color:var(--green);background:var(--green-bg); }
-.fgrp.sel .flabel { color:var(--green);background:var(--green-bg); }
-.fgrp.sel select { color:var(--green);font-weight:600;background:var(--green-bg); }
-.flabel { padding:0 9px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);background:#f9faf9;border-right:1px solid var(--border);height:28px;display:flex;align-items:center;white-space:nowrap;pointer-events:none; }
-.fgrp select { border:none;outline:none;background:transparent;padding:0 26px 0 9px;height:28px;font-size:12px;font-weight:500;color:var(--text);cursor:pointer;font-family:var(--font);-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 7px center;min-width:90px; }
-.fsep { width:1px;height:22px;background:var(--border);margin:0 2px; }
-.fyear select { border:1px solid var(--border2);border-radius:6px;background:var(--white);padding:0 26px 0 10px;height:28px;font-size:12px;font-weight:500;color:var(--text);cursor:pointer;font-family:var(--font);-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 7px center;outline:none;transition:border-color .15s,box-shadow .15s; }
-.fyear { display:flex;gap:4px; }
-.fyear select:focus { border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,.1); }
+/* ── FILTERBAR ── */
+.filterbar{background:var(--surf);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:8px;height:46px;position:sticky;top:52px;z-index:200;box-shadow:var(--sh);flex-shrink:0;}
+.fg{display:flex;align-items:center;border:1px solid var(--border2);border-radius:7px;background:var(--surf);transition:border-color .15s,box-shadow .15s;}
+.fg:focus-within{border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,.1);}
+.fg.on{border-color:var(--green);background:var(--gbg);}
+.fg.on .fgl{color:var(--green);background:var(--gbg);}
+.fg.on select{color:var(--green);font-weight:600;background:var(--gbg);}
+.fgl{padding:0 9px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);background:#f8faf8;border-right:1px solid var(--border);height:28px;display:flex;align-items:center;white-space:nowrap;pointer-events:none;border-radius:6px 0 0 6px;}
+.fg select{border:none;outline:none;background:transparent;padding:0 26px 0 9px;height:28px;font-size:12px;font-weight:500;color:var(--text);cursor:pointer;font-family:var(--font);-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238a9890' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 7px center;min-width:88px;}
+.fsep{width:1px;height:22px;background:var(--border);margin:0 4px;}
+.fy{display:flex;gap:4px;}
+.fy select{border:1px solid var(--border2);border-radius:7px;background:var(--surf);padding:0 26px 0 10px;height:28px;font-size:12px;font-weight:500;color:var(--text);cursor:pointer;font-family:var(--font);-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238a9890' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 7px center;outline:none;}
+.fy select:focus{border-color:var(--green);}
+.flt-sum{margin-left:auto;font-size:10px;color:var(--text3);font-family:var(--mono);white-space:nowrap;}
 
 /* ── LAYOUT ── */
-.main { flex:1; padding:16px 20px 24px; width:100%; }
-.view-panel { display:none; }
-.view-panel.active { display:block;animation:fadeUp .2s ease; }
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.main{flex:1;padding:18px 24px 40px;}
+.section{margin-bottom:20px;}
 
-/* Section */
-.shd { display:flex;align-items:center;gap:8px;margin-bottom:10px;margin-top:20px; }
-.shd:first-child { margin-top:0; }
-.snum { font-family:var(--mono);font-size:9px;font-weight:600;color:var(--text3);background:#f3f4f3;border:1px solid var(--border);border-radius:3px;width:20px;height:20px;display:flex;align-items:center;justify-content:center; }
-.stitle { font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text2); }
-.srule { flex:1;height:1px;background:var(--border); }
+/* ── SECTION HEADER ── */
+.shd{display:flex;align-items:center;gap:0;margin-bottom:12px;}
+.shd-rule{flex:1;height:1px;background:var(--border);}
+.snum{font-family:var(--mono);font-size:9px;font-weight:600;color:var(--text3);background:#f0f2f0;border:1px solid var(--border);border-radius:3px;padding:0 7px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin:0 10px;}
+.stitle{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text2);margin-right:10px;}
+.srule{flex:1;height:1px;background:var(--border);}
 
-/* KPI grid */
-.kpi4 { display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px; }
-.kcard { background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px 12px;box-shadow:var(--sh);position:relative;overflow:hidden; }
-.kcard::after { content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0; }
-.kcard.g::after { background:var(--green); }
-.kcard.a::after { background:var(--amber); }
-.kcard.b::after { background:var(--blue); }
-.kcard.r::after { background:var(--red); }
-.klabel { font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between; }
-.kbadge { font-size:9px;font-weight:600;padding:1px 6px;border-radius:3px; }
-.kbadge.g { background:var(--green-bg);color:var(--green);border:1px solid var(--green-br); }
-.kbadge.a { background:var(--amber-bg);color:var(--amber);border:1px solid #fde68a; }
-.kbadge.b { background:var(--blue-bg);color:var(--blue);border:1px solid #bfdbfe; }
-.kval { font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-1px;line-height:1;margin-bottom:9px; }
-.kval.dark { color:var(--text); }
-.kval.g { color:var(--green); }
-.kval.a { color:var(--amber); }
-.kval.b { color:var(--blue); }
-.kmeta { display:flex;gap:12px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:8px; }
-.km-label { font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px; }
-.km-val   { font-size:11px;color:var(--text2);font-family:var(--mono);font-weight:500; }
-.km-val.g { color:var(--green); }
-.delta { display:inline-flex;align-items:center;gap:2px;font-size:10px;font-family:var(--mono);padding:1px 4px;border-radius:3px; }
-.delta.up { color:var(--green);background:var(--green-bg); }
-.delta.dn { color:var(--red);background:var(--red-bg); }
-.delta.fl { color:var(--text3);background:#f3f4f3; }
+/* ── KPI STRIP ── */
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px;}
 
-/* Charts */
-.crow2 { display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px; }
-.ccard { background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh); }
-.ctitle { font-size:13px;font-weight:600;color:var(--text);margin-bottom:1px; }
-.csub   { font-size:11px;color:var(--text3);margin-bottom:12px; }
-.chart-wrap { position:relative;width:100%;height:220px; }
-.chart-wrap canvas { position:absolute;top:0;left:0;width:100%!important;height:100%!important; }
-.leg { display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px; }
-.li  { display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text2); }
-.ld  { width:8px;height:8px;border-radius:2px; }
+.kc{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh);position:relative;overflow:hidden;transition:border-color .15s;}
+.kc:hover{border-color:var(--border2);}
+.kc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--kc,var(--green));border-radius:var(--r) var(--r) 0 0;}
+.kc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px;}
+.kc-label{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);}
+.badge{font-family:var(--mono);font-size:9px;font-weight:600;padding:2px 7px;border-radius:4px;border:1px solid;white-space:nowrap;}
+.kc-val{font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-1px;line-height:1;margin-bottom:10px;}
+.kc-subs{display:flex;gap:0;flex-wrap:nowrap;padding-top:9px;border-top:1px solid var(--border);}
+.ks-l{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;} .kc-subs > div{flex:1;min-width:0;padding-right:8px;}
+.ks-v{font-size:11px;color:var(--text2);font-family:var(--mono);font-weight:500;}
+.g{color:var(--green);} .r{color:var(--red);} .a{color:var(--amber);} .b{color:var(--blue);} .p{color:var(--purple);}
+.delta{display:inline-flex;align-items:center;gap:2px;font-size:10px;font-family:var(--mono);padding:1px 4px;border-radius:3px;}
+.d-up{color:var(--green);background:var(--gbg);} .d-dn{color:var(--red);background:var(--rbg);} .d-fl{color:var(--text3);background:#f0f2f0;}
 
-/* Funnel */
-.funnel { display:flex;flex-direction:column;gap:7px;margin-top:6px; }
-.frow { display:flex;align-items:center;gap:8px; }
-.flbl2 { width:88px;font-size:11px;color:var(--text2);text-align:right;flex-shrink:0; }
-.ftrack { flex:1;background:#f3f4f3;border-radius:4px;height:24px;overflow:hidden; }
-.ffill { height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-family:var(--mono);font-size:10px;font-weight:600;color:#fff; }
-.fpct { width:38px;font-family:var(--mono);font-size:10px;color:var(--text3);text-align:right; }
+/* ── CHARTS ── */
+.cgrid{display:grid;gap:12px;margin-bottom:12px;}
+.c1{grid-template-columns:1fr;}
+.c2{grid-template-columns:1fr 1fr;}
+.c3{grid-template-columns:1fr 1fr 1fr;}
+.c21{grid-template-columns:2fr 1fr;}
+.cc{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:16px;box-shadow:var(--sh);}
+.cc-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.cc-sub{font-size:11px;color:var(--text3);margin-bottom:12px;}
+.cw{position:relative;width:100%;}
+.h160{height:160px;} .h200{height:200px;} .h240{height:240px;} .h280{height:280px;}
+.cw canvas{position:absolute;top:0;left:0;width:100%!important;height:100%!important;}
+.leg{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;}
+.li{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text2);}
+.ld{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
 
-/* Main data table */
-.dtable-wrap { background:var(--white);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;margin-bottom:10px; }
-.dtable-head { display:flex;align-items:center;justify-content:space-between;padding:12px 16px 10px;border-bottom:1px solid var(--border); }
-.dtable-htitle { font-size:13px;font-weight:600;color:var(--text); }
-.dtable-hsub   { font-size:11px;color:var(--text3); }
-.dtable-scroll { overflow-x:auto; }
-table.dt { width:100%;border-collapse:collapse;font-size:12px; }
-table.dt thead th { padding:8px 12px;font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);text-align:right;border-bottom:1px solid var(--border);background:#fafbfa;white-space:nowrap; }
-table.dt thead th:first-child,table.dt thead th:nth-child(2) { text-align:left; }
-table.dt tbody td { padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text2);text-align:right;font-family:var(--mono);font-size:11px;vertical-align:middle; }
-table.dt tbody td:first-child,table.dt tbody td:nth-child(2) { text-align:left;font-family:var(--font);font-size:12px; }
-table.dt tbody tr:last-child td { border-bottom:none; }
-table.dt tbody tr:hover td { background:#fafbfa; }
-.region-pill { display:inline-flex;align-items:center;justify-content:center;width:28px;height:18px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.3px; }
-.region-pill.BR { background:#fef3c7;color:#92400e; }
-.region-pill.ES { background:#dbeafe;color:#1e40af; }
-.region-pill.KR { background:#fce7f3;color:#9d174d; }
-.region-pill.MN { background:#f0fdf4;color:#166534; }
-.region-pill.NZ { background:#f5f3ff;color:#5b21b6; }
-.cname { font-size:12px;color:var(--text);font-weight:500; }
-.mono { font-family:var(--mono); }
-.pos { color:var(--green); }
-.neg { color:var(--red); }
-.muted { color:var(--text3); }
+/* ── FUNNEL ── */
+.funnel-wrap{display:flex;align-items:flex-end;gap:0;width:100%;position:relative;}
+.fn-stage{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;}
+.fn-stage+.fn-stage::before{content:'›';position:absolute;left:-1px;bottom:calc(var(--bar-h,40px) / 2 + 10px);font-size:20px;color:var(--border2);z-index:2;line-height:1;}
+.fn-bar-wrap{width:100%;display:flex;justify-content:center;align-items:flex-end;margin-bottom:8px;height:200px;}
+.fn-bar{width:72%;border-radius:4px 4px 0 0;min-height:3px;position:relative;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;padding-top:8px;transition:height .5s cubic-bezier(.4,0,.2,1);}
+.fn-bar-val{font-family:var(--mono);font-size:11px;font-weight:600;color:#fff;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.3);}
+.fn-bar-pct{font-size:9px;color:rgba(255,255,255,.75);margin-top:2px;}
+.fn-label{text-align:center;margin-bottom:4px;}
+.fn-code{font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;border:1px solid;display:inline-block;}
+.fn-name{font-size:10px;color:var(--text3);margin-top:3px;}
+.fn-cost{font-size:10px;color:var(--text3);text-align:center;margin-top:6px;}
+.fn-cost strong{font-family:var(--mono);font-weight:600;color:var(--text2);}
+.fn-conv-row{display:flex;gap:0;margin-top:16px;background:var(--surf2);border-radius:8px;padding:10px 0;border:1px solid var(--border);}
+.fn-conv-item{flex:1;text-align:center;border-right:1px solid var(--border);}
+.fn-conv-item:last-child{border:none;}
+.fn-conv-label{font-size:9px;color:var(--text3);letter-spacing:.4px;text-transform:uppercase;margin-bottom:3px;}
+.fn-conv-val{font-family:var(--mono);font-size:12px;font-weight:600;}
+.fn-drop{font-size:9px;color:var(--red);font-family:var(--mono);}
 
-/* Prog bar inline */
-.pbwrap { display:flex;align-items:center;gap:6px; }
-.pbbar { width:50px;height:4px;background:#f0f0f0;border-radius:2px;overflow:hidden;flex-shrink:0; }
-.pbfill { height:100%;border-radius:2px; }
-.pbval { font-family:var(--mono);font-size:11px; }
+/* ── FUNDING QUALITY ── */
+.fq-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;}
 
-/* Scrollbar */
+/* ── TABLE ── */
+.tw{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;margin-bottom:12px;}
+.tw-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 10px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px;}
+.tw-title{font-size:13px;font-weight:600;color:var(--text);}
+.tw-sub{font-size:11px;color:var(--text3);}
+.tw-meta{font-size:11px;color:var(--text3);font-family:var(--mono);}
+.tw-scroll{overflow-x:auto;max-height:420px;overflow-y:auto;}
+table.dt{width:100%;border-collapse:collapse;font-size:12px;}
+table.dt thead th{padding:8px 12px;font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);text-align:right;border-bottom:1px solid var(--border);background:var(--surf2);white-space:nowrap;position:sticky;top:0;z-index:1;}
+table.dt thead th:first-child,table.dt thead th:nth-child(2){text-align:left;}
+table.dt tbody td{padding:7px 12px;border-bottom:1px solid var(--border);color:var(--text2);text-align:right;font-family:var(--mono);font-size:11px;vertical-align:middle;}
+table.dt tbody td:first-child,table.dt tbody td:nth-child(2){text-align:left;font-family:var(--font);font-size:12px;}
+table.dt tbody tr:last-child td{border-bottom:none;}
+table.dt tbody tr:hover td{background:var(--surf2);}
+.rp{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:17px;border-radius:3px;font-size:9px;font-weight:700;padding:0 4px;}
+.rp.BR{background:#fef3c7;color:#92400e;} .rp.ES{background:#dbeafe;color:#1e40af;}
+.rp.KR{background:#fce7f3;color:#9d174d;} .rp.MN{background:#f0fdf4;color:#166534;}
+.rp.NZ{background:#f5f3ff;color:#5b21b6;}
+.pos{color:var(--green);} .neg{color:var(--red);} .mut{color:var(--text3);}
+.fn2{font-size:12px;color:var(--text);font-weight:500;}
+
+/* Tab buttons for campaign section */
+.camp-tabs{display:flex;gap:4px;flex-wrap:wrap;}
+.ctab{height:26px;padding:0 12px;border-radius:5px;border:1px solid var(--border2);font-family:var(--font);font-size:11px;font-weight:500;color:var(--text3);background:var(--surf);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.ctab:hover{border-color:var(--green);color:var(--text);}
+.ctab.on{background:var(--gl);border-color:var(--gl);color:#052e16;font-weight:600;}
+
+.note{text-align:center;font-size:10px;color:var(--text3);padding:8px 0;font-style:italic;}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
@@ -175,427 +161,809 @@ table.dt tbody tr:hover td { background:#fafbfa; }
 </head>
 <body>
 
-<!-- NAV -->
+<!-- TOPBAR -->
 <div class="topbar">
-  <div class="logo">
-    <div class="logo-mark">ZM</div>
-    <div>
-      <div class="logo-main">ZERO Markets</div>
-      <div class="logo-sub">Marketing Analytics</div>
-    </div>
+  <div class="logo" style="display:flex;align-items:center;gap:12px;">
+    <svg width="110" height="20" viewBox="0 0 485 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M21.8838 87.5253H109.378V0.03125H21.8838V87.5253ZM91.9008 70.0052H39.3938V64.1582L61.3418 34.9972H39.3938V17.5192H91.9008V23.3983L70.0378 52.5312H91.9008V70.0052Z" fill="#ffffff"/>
+      <path d="M70.0269 52.529H91.9009L131.301 0H109.421L70.0269 52.529Z" fill="#00B955"/>
+      <path d="M61.289 35.0293H39.394L0 87.5583H21.884L61.289 35.0293Z" fill="#00B955"/>
+      <path d="M151.593 78C147.123 78 143 75.496 143 70.4C143.063 69.1997 143.371 68.0246 143.905 66.9461C144.439 65.8676 145.189 64.9084 146.108 64.1267L188.888 22.3707H143.943V8H205.188C209.485 8 213.698 10.604 213.698 15.6C213.649 16.8135 213.349 18.0041 212.818 19.098C212.287 20.192 211.535 21.166 210.61 21.96L167.868 63.7547H214V77.9813L151.593 78Z" fill="#ffffff"/>
+      <path d="M228 8H292V23.052H228V8ZM228 35.4667H292V50.524H228V35.4667ZM228 62.9333H292V78H228V62.9333Z" fill="#ffffff"/>
+      <path d="M369.419 78L352.089 58.9507H330.032V46.1507H357.594C365.019 46.1507 369.151 41.884 369.151 34.4C369.151 26.916 364.818 23.0187 357.594 23.0187H321.139V78H306V8H357.601C374.214 8 384.08 18.1013 384.08 33.9787C384.08 45.36 378.605 53.3987 369.706 56.8693L391 77.9533L369.419 78Z" fill="#ffffff"/>
+      <path d="M432.07 78C411.857 78 397 62.5961 397 42.2808C397 21.6667 411.842 8 432.07 8H449.627C470.532 8 485 21.9522 485 42.2808C485 62.6094 470.158 78 449.627 78H432.07ZM449.627 62.9804C452.182 63.0831 454.732 62.6877 457.131 61.8169C459.531 60.9461 461.732 59.6169 463.61 57.9055C465.487 56.1942 467.004 54.1343 468.073 51.844C469.142 49.5536 469.742 47.0778 469.838 44.5584C469.838 44.0314 469.838 43.519 469.838 42.992C469.838 31.332 461.537 22.9609 449.697 22.9609H432.07C420.635 22.9609 412.247 31.332 412.247 42.992C412.247 54.652 420.533 62.9297 432.07 62.9297L449.627 62.9804Z" fill="#ffffff"/>
+    </svg>
+    <div style="width:1px;height:16px;background:#1f2d25;"></div>
+    <div class="logo-sub" style="color:#6b7280;font-size:11px;">Marketing Overview</div>
   </div>
-  <div class="nav-sep"></div>
+  <div class="nav-div"></div>
   <nav class="nav-tabs">
-    <button class="nav-tab" onclick="switchView('budget',this)">Budget</button>
-    <button class="nav-tab active" onclick="switchView('performance',this)">Performance</button>
+    <button class="ntab active" onclick="switchMain('overview',this)">Overview</button>
+    <button class="ntab" onclick="switchMain('campaign',this)">Campaign</button>
   </nav>
-  <div class="topbar-right">
-    <span>ASIC · AU · FY2026</span>
-    <span style="color:#374151">|</span>
-    <span>Updated: Apr 2026</span>
+  <div class="topbar-r">
+    <span class="nav-ctx" id="navCtx">All · FY2026</span>
+    <span style="color:#374151;font-size:12px">|</span>
+    <span class="nav-ctx">Updated: Apr 2026</span>
     <div class="live-pill"><div class="live-dot"></div>LIVE</div>
   </div>
 </div>
 
-<!-- FILTERS -->
+<!-- FILTERBAR -->
 <div class="filterbar">
-  <div class="fgrp" id="fg-entity">
-    <span class="flabel">Entity</span>
-    <select onchange="onFC(this,'fg-entity')">
-      <option>ASIC · AU</option><option>FMA · NZ</option><option>FSC · MU</option><option>SVG · VC</option>
+  <div class="fg" id="fg-entity">
+    <span class="fgl">Entity</span>
+    <select id="sel-entity" onchange="onFC()">
+      <option value="all">All Entities</option>
+      <option value="ASIC">ASIC · AU</option>
+      <option value="FMA">FMA · NZ</option>
+      <option value="FSC">FSC · MU</option>
+      <option value="SVG">SVG · VC</option>
     </select>
   </div>
-  <div class="fgrp" id="fg-region">
-    <span class="flabel">Region</span>
-    <select onchange="onFC(this,'fg-region')">
-      <option>All Regions</option><option>BR</option><option>ES</option><option>KR</option><option>MN</option><option>NZ</option>
+  <div class="fg" id="fg-region">
+    <span class="fgl">Region</span>
+    <select id="sel-region" onchange="onFC()">
+      <option value="all">All Regions</option>
+      <option value="BR">BR</option><option value="ES">ES</option>
+      <option value="KR">KR</option><option value="MN">MN</option><option value="NZ">NZ</option>
     </select>
   </div>
-  <div class="fgrp" id="fg-source">
-    <span class="flabel">Source</span>
-    <select onchange="onFC(this,'fg-source')">
-      <option>All Sources</option><option>Meta</option><option>Investing.com</option><option>Rankia</option><option>BizDesk</option><option>DSP</option>
+  <div class="fg" id="fg-source">
+    <span class="fgl">Source</span>
+    <select id="sel-source" onchange="onFC()">
+      <option value="all">All Sources</option>
+      <option value="Meta">Meta</option><option value="Investing">Investing.com</option>
+      <option value="Rankia">Rankia</option><option value="BizDesk">BizDesk</option><option value="DSP">DSP</option>
     </select>
   </div>
-  <div class="fgrp" id="fg-campaign">
-    <span class="flabel">Campaign</span>
-    <select onchange="onFC(this,'fg-campaign')">
-      <option>All Campaigns</option><option>WTC</option><option>Deposit Bonus</option><option>Instagram Boost</option><option>Ebooks</option><option>Gold Rush</option><option>Zero Spreads</option><option>Academy</option><option>Kospi 200</option><option>Gold</option><option>Global Indices</option><option>Forex</option><option>Facebook Boost</option>
+  <div class="fg" id="fg-campaign">
+    <span class="fgl">Campaign</span>
+    <select id="sel-campaign" onchange="onFC()">
+      <option value="all">All Campaigns</option>
+      <option value="WTC">WTC</option><option value="Gold Rush">Gold Rush</option>
+      <option value="Ebooks">Ebooks</option><option value="Academy">Academy</option>
+      <option value="WTI">WTI</option><option value="Instagram Boost">Instagram Boost</option>
+      <option value="Deposit Bonus">Deposit Bonus</option><option value="Zero Spreads">Zero Spreads</option>
     </select>
   </div>
   <div class="fsep"></div>
-  <div class="fyear">
-    <select><option>2026</option><option>2025</option><option>2024</option></select>
-    <select><option>All Months</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option></select>
+  <div class="fy">
+    <select id="sel-year" onchange="onFC()">
+      <option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option>
+    </select>
+    <select id="sel-month" onchange="onFC()">
+      <option value="all">All Months</option>
+      <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+      <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+      <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+      <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+    </select>
   </div>
+  <div class="flt-sum" id="fltSum">FY2026 · All Sources</div>
 </div>
 
 <!-- MAIN -->
 <div class="main">
 
-  <!-- ══ PERFORMANCE VIEW ══ -->
-  <div class="view-panel active" id="panel-performance">
+<!-- ══ OVERVIEW ══ -->
+<div id="view-overview">
 
-    <!-- 01 Investment -->
-    <div class="shd">
-      <div class="snum">01</div><div class="stitle">Investment</div><div class="srule"></div>
-    </div>
+  <!-- §01 KPI STRIP -->
+  <div class="section">
+    <div class="shd"><div class="shd-rule"></div><div class="snum">01</div><div class="stitle">Key Performance Indicators</div><div class="srule"></div></div>
+    <div class="kpi-strip">
 
-    <div class="kpi4">
-      <div class="kcard g">
-        <div class="klabel">Total Spend <span class="kbadge a">YTD</span></div>
-        <div class="kval dark">$217.5K</div>
-        <div class="kmeta">
-          <div><div class="km-label">Top Source</div><div class="km-val">Meta</div></div>
-          <div><div class="km-label">Campaigns</div><div class="km-val">25</div></div>
-          <div><div class="km-label">vs Prev</div><div class="km-val"><span class="delta up">▲ 12%</span></div></div>
+      <!-- Spend -->
+      <div class="kc" style="--kc:#1d4ed8">
+        <div class="kc-top">
+          <div class="kc-label">Total Spend</div>
+          <span class="badge" style="background:var(--bbg);color:var(--blue);border-color:#bfdbfe">YTD</span>
+        </div>
+        <div class="kc-val" id="k-spend">—</div>
+        <div class="kc-subs">
+          <div><div class="ks-l">Spend Share</div><div class="ks-v" id="k-spendshare">—</div></div>
+          <div><div class="ks-l">Remaining</div><div class="ks-v" id="k-budgutil">—</div></div>
         </div>
       </div>
-      <div class="kcard a">
-        <div class="klabel">Total Impressions <span class="kbadge a">Meta</span></div>
-        <div class="kval a">126.8M</div>
-        <div class="kmeta">
-          <div><div class="km-label">Clicks</div><div class="km-val">1.08M</div></div>
-          <div><div class="km-label">Avg CTR</div><div class="km-val">0.85%</div></div>
-          <div><div class="km-label">vs Prev</div><div class="km-val"><span class="delta up">▲ 8%</span></div></div>
-        </div>
-      </div>
-      <div class="kcard g">
-        <div class="klabel">Deposit Users <span class="kbadge g">Live</span></div>
-        <div class="kval dark">15</div>
-        <div class="kmeta">
-          <div><div class="km-label">Total Users</div><div class="km-val">4,330</div></div>
-          <div><div class="km-label">Conv. Rate</div><div class="km-val g">0.35%</div></div>
-          <div><div class="km-label">vs Prev</div><div class="km-val"><span class="delta dn">▼ 3%</span></div></div>
-        </div>
-      </div>
-      <div class="kcard b">
-        <div class="klabel">Avg CPA <span class="kbadge b">Depositors</span></div>
-        <div class="kval b">$2,722</div>
-        <div class="kmeta">
-          <div><div class="km-label">Best</div><div class="km-val">$69 (KR·WTC)</div></div>
-          <div><div class="km-label">Regions</div><div class="km-val">BR·ES·KR·MN·NZ</div></div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Charts -->
-    <div class="crow2">
-      <div class="ccard">
-        <div class="ctitle">Impressions by Region</div>
-        <div class="csub">Meta campaigns · total reach split</div>
-        <div class="leg">
-          <div class="li"><div class="ld" style="background:#f59e0b"></div>BR</div>
-          <div class="li"><div class="ld" style="background:#3b82f6"></div>ES</div>
-          <div class="li"><div class="ld" style="background:#ec4899"></div>KR</div>
-          <div class="li"><div class="ld" style="background:#22c55e"></div>MN</div>
-          <div class="li"><div class="ld" style="background:#8b5cf6"></div>NZ</div>
+      <!-- Impressions -->
+      <div class="kc" style="--kc:#6b7280">
+        <div class="kc-top">
+          <div class="kc-label">Impressions</div>
+          <span class="badge" style="background:#f1f5f9;color:#6b7280;border-color:#cbd5e1">IMPR</span>
         </div>
-        <div class="chart-wrap"><canvas id="regionImprChart"></canvas></div>
+        <div class="kc-val" id="k-impr" style="color:#6b7280">—</div>
+        <div class="kc-subs">
+          <div><div class="ks-l">Clicks</div><div class="ks-v" id="k-clicks">—</div></div>
+          <div><div class="ks-l">CTR</div><div class="ks-v" id="k-ctr">—</div></div>
+        </div>
       </div>
-      <div class="ccard">
-        <div class="ctitle">Spend vs Deposit by Campaign</div>
-        <div class="csub">Top 8 campaigns · Meta source</div>
-        <div class="chart-wrap"><canvas id="spendDepChart"></canvas></div>
-      </div>
-    </div>
 
-    <!-- 02 Acquisition -->
-    <div class="shd" style="margin-top:14px">
-      <div class="snum">02</div><div class="stitle">Acquisition & Conversion</div><div class="srule"></div>
-    </div>
+      <!-- Web Sessions -->
+      <div class="kc" style="--kc:#0ea5e9">
+        <div class="kc-top">
+          <div class="kc-label">Website Sessions</div>
+          <span class="badge" style="background:#e0f2fe;color:#0ea5e9;border-color:#7dd3fc">GA4</span>
+        </div>
+        <div class="kc-val" id="k-sessions" style="color:#0ea5e9">—</div>
+        <div class="kc-subs">
+          <div><div class="ks-l">New Visitors</div><div class="ks-v" id="k-newv">—</div></div>
+          <div><div class="ks-l">Bounce Rate</div><div class="ks-v" id="k-bounce">—</div></div>
+        </div>
+      </div>
 
-    <div class="kpi4">
-      <div class="kcard g">
-        <div class="klabel">Total User Count <span class="kbadge g">Meta</span></div>
-        <div class="kval dark">4,330</div>
-        <div class="kmeta">
-          <div><div class="km-label">Top Region</div><div class="km-val">ES (3,497)</div></div>
-          <div><div class="km-label">vs Prev</div><div class="km-val"><span class="delta fl">— 0%</span></div></div>
+      <!-- Registered Users -->
+      <div class="kc" style="--kc:#8b5cf6">
+        <div class="kc-top">
+          <div class="kc-label">Registered Users</div>
+          <span class="badge" style="background:var(--pbg);color:var(--purple);border-color:#c4b5fd">REG</span>
+        </div>
+        <div class="kc-val" id="k-reg" style="color:var(--purple)">—</div>
+        <div class="kc-subs">
+          <div><div class="ks-l">EV Approved</div><div class="ks-v p" id="k-eva">—</div></div>
+          <div><div class="ks-l">FTD</div><div class="ks-v g" id="k-ftd-kpi">—</div></div>
         </div>
       </div>
-      <div class="kcard g">
-        <div class="klabel">Deposit User Count <span class="kbadge g">Attributed</span></div>
-        <div class="kval dark">15</div>
-        <div class="kmeta">
-          <div><div class="km-label">ES</div><div class="km-val">10</div></div>
-          <div><div class="km-label">KR</div><div class="km-val">2</div></div>
-          <div><div class="km-label">BR+NZ</div><div class="km-val">3</div></div>
-        </div>
-      </div>
-      <div class="kcard a">
-        <div class="klabel">Best CTR Campaign <span class="kbadge a">Meta</span></div>
-        <div class="kval a">6.74%</div>
-        <div class="kmeta">
-          <div><div class="km-label">Campaign</div><div class="km-val">ES · Others</div></div>
-          <div><div class="km-label">Spend</div><div class="km-val">$3,164</div></div>
-        </div>
-      </div>
-      <div class="kcard b">
-        <div class="klabel">Total Gross Deposit <span class="kbadge b">Attributed</span></div>
-        <div class="kval b">$1,175</div>
-        <div class="kmeta">
-          <div><div class="km-label">Net Funding</div><div class="km-val">$1,175</div></div>
-          <div><div class="km-label">Withdrawal</div><div class="km-val" style="color:var(--red)">-$526</div></div>
-        </div>
-      </div>
-    </div>
 
-    <div class="crow2">
-      <div class="ccard">
-        <div class="ctitle">CTR by Campaign</div>
-        <div class="csub">Click-through rate · top performers</div>
-        <div class="chart-wrap" style="height:240px"><canvas id="ctrChart"></canvas></div>
-      </div>
-      <div class="ccard">
-        <div class="ctitle">Conversion Funnel</div>
-        <div class="csub">Impressions → Deposit Users · Meta</div>
-        <div class="funnel" style="margin-top:16px">
-          <div class="frow">
-            <div class="flbl2">Impressions</div>
-            <div class="ftrack"><div class="ffill" style="width:100%;background:linear-gradient(90deg,#16a34a,#22c55e)">126.8M</div></div>
-            <div class="fpct">100%</div>
-          </div>
-          <div class="frow">
-            <div class="flbl2">Clicks</div>
-            <div class="ftrack"><div class="ffill" style="width:0.85%;background:linear-gradient(90deg,#2563eb,#3b82f6)">1.08M</div></div>
-            <div class="fpct">0.85%</div>
-          </div>
-          <div class="frow">
-            <div class="flbl2">User Count</div>
-            <div class="ftrack"><div class="ffill" style="width:0.0034%;background:linear-gradient(90deg,#7c3aed,#a855f7)">4,330</div></div>
-            <div class="fpct">0.003%</div>
-          </div>
-          <div class="frow">
-            <div class="flbl2">Deposit Users</div>
-            <div class="ftrack"><div class="ffill" style="width:0.000012%;background:linear-gradient(90deg,#d97706,#f59e0b)">15</div></div>
-            <div class="fpct">0.000%</div>
-          </div>
+      <!-- Gross Deposit -->
+      <div class="kc" style="--kc:#15803d">
+        <div class="kc-top">
+          <div class="kc-label">Gross Deposit</div>
+          <span class="badge" style="background:var(--gbg);color:var(--green);border-color:var(--gbr)">GD</span>
         </div>
-        <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">
-          <div style="font-size:11px;color:var(--text3);margin-bottom:10px;">Deposit breakdown by region</div>
-          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;">
-            <div style="text-align:center"><div style="font-size:10px;color:var(--text3)">BR</div><div style="font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text)">1</div></div>
-            <div style="text-align:center"><div style="font-size:10px;color:var(--text3)">ES</div><div style="font-family:var(--mono);font-size:14px;font-weight:600;color:var(--green)">10</div></div>
-            <div style="text-align:center"><div style="font-size:10px;color:var(--text3)">KR</div><div style="font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text)">2</div></div>
-            <div style="text-align:center"><div style="font-size:10px;color:var(--text3)">MN</div><div style="font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text)">0</div><div style="font-size:9px;color:var(--text3)">94 users</div></div>
-            <div style="text-align:center"><div style="font-size:10px;color:var(--text3)">NZ</div><div style="font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text)">2</div></div>
-          </div>
+        <div class="kc-val" id="k-gd" style="color:var(--green)">—</div>
+        <div class="kc-subs">
+          <div><div class="ks-l">NDAW</div><div class="ks-v g" id="k-ndaw">—</div></div>
+          <div><div class="ks-l">Mkt ROI</div><div class="ks-v g" id="k-roi">—</div></div>
         </div>
       </div>
-    </div>
 
-    <!-- 03 Campaign Detail -->
-    <div class="shd" style="margin-top:14px">
-      <div class="snum">03</div><div class="stitle">Meta Campaign Performance Detail</div><div class="srule"></div>
-    </div>
-
-    <div class="dtable-wrap">
-      <div class="dtable-head">
-        <div>
-          <div class="dtable-htitle">Campaign Breakdown</div>
-          <div class="dtable-hsub">All regions · sorted by Impressions</div>
-        </div>
-        <div style="font-size:11px;color:var(--text3);font-family:var(--mono)">26 rows</div>
-      </div>
-      <div class="dtable-scroll">
-        <table class="dt">
-          <thead>
-            <tr>
-              <th>Region</th>
-              <th>Campaign</th>
-              <th>Impressions</th>
-              <th>Clicks</th>
-              <th>Spend</th>
-              <th>User Count</th>
-              <th>Deposit Users</th>
-              <th>Deposit</th>
-              <th>Withdrawal</th>
-              <th>Net Funding</th>
-              <th>CTR</th>
-              <th>CPA</th>
-            </tr>
-          </thead>
-          <tbody id="campaignTableBody"></tbody>
-        </table>
-      </div>
-    </div>
-
-  </div><!-- /performance -->
-
-  <!-- ══ BUDGET VIEW ══ -->
-  <div class="view-panel" id="panel-budget">
-    <div class="shd"><div class="snum">01</div><div class="stitle">Budget Overview</div><div class="srule"></div></div>
-    <div class="kpi4">
-      <div class="kcard g"><div class="klabel">Total Budget</div><div class="kval dark">$217.5K</div><div class="kmeta"><div><div class="km-label">FY2026 Meta allocation</div></div></div></div>
-      <div class="kcard a"><div class="klabel">Spent</div><div class="kval a">$217.5K</div><div class="kmeta"><div><div class="km-label">100% utilised</div></div></div></div>
-      <div class="kcard g"><div class="klabel">Net Funding Return</div><div class="kval dark">$1,175</div><div class="kmeta"><div><div class="km-label">From 15 deposit users</div></div></div></div>
-      <div class="kcard b"><div class="klabel">Avg CPA</div><div class="kval b">$2,722</div><div class="kmeta"><div><div class="km-label">Per depositing user</div></div></div></div>
-    </div>
-    <div class="ccard">
-      <div class="ctitle">Spend by Region</div>
-      <div class="csub">Budget distribution across markets</div>
-      <div class="chart-wrap" style="height:160px"><canvas id="budgetChart"></canvas></div>
     </div>
   </div>
 
+  <!-- §02 TREND CHARTS -->
+  <div class="section">
+    <div class="shd"><div class="shd-rule"></div><div class="snum">02</div><div class="stitle">Monthly Trends</div><div class="srule"></div></div>
+    <div class="cgrid c3">
+
+      <div class="cc">
+        <div class="cc-title">Impressions &amp; Clicks</div>
+        <div class="cc-sub">Monthly reach & click volume · filtered</div>
+        <div class="leg">
+          <div class="li"><div class="ld" style="background:#6b7280"></div>Impressions</div>
+          <div class="li"><div class="ld" style="background:#0ea5e9"></div>Clicks</div>
+        </div>
+        <div class="cw h200"><canvas id="c-imprTrend"></canvas></div>
+      </div>
+
+      <div class="cc">
+        <div class="cc-title">REG · EV.A · FTD</div>
+        <div class="cc-sub">Monthly user acquisition stages · filtered</div>
+        <div class="leg">
+          <div class="li"><div class="ld" style="background:#8b5cf6"></div>REG</div>
+          <div class="li"><div class="ld" style="background:#f59e0b"></div>EV.A</div>
+          <div class="li"><div class="ld" style="background:#22c55e"></div>FTD</div>
+        </div>
+        <div class="cw h200"><canvas id="c-regTrend"></canvas></div>
+      </div>
+
+      <div class="cc">
+        <div class="cc-title">Gross Deposit</div>
+        <div class="cc-sub">Monthly GD total (USD) · filtered</div>
+        <div class="leg">
+          <div class="li"><div class="ld" style="background:#22c55e"></div>Gross Deposit</div>
+          <div class="li"><div class="ld" style="background:#15803d"></div>NDAW</div>
+        </div>
+        <div class="cw h200"><canvas id="c-gdTrend"></canvas></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- §03 FUNNEL -->
+  <div class="section">
+    <div class="shd"><div class="shd-rule"></div><div class="snum">03</div><div class="stitle">Acquisition Funnel · Impression → First Trade</div><div class="srule"></div></div>
+    <div class="cc">
+      <div class="cc-title">Full-funnel Conversion</div>
+      <div class="cc-sub" id="funnel-sub">Marketing attribution · selected filters</div>
+
+      <!-- Bar funnel -->
+      <div class="funnel-wrap" id="funnelWrap" style="margin-top:16px;"></div>
+
+      <!-- Conversion rate row -->
+      <div class="fn-conv-row" id="funnelConvRow" style="margin-top:16px;"></div>
+
+      <div class="note" style="margin-top:8px;">Stage cost = Total Spend ÷ Users at that stage · Attribution: 7-day click / 1-day view</div>
+    </div>
+  </div>
+
+
+
+</div><!-- /overview -->
+
+<!-- ══ CAMPAIGN ══ -->
+<div id="view-campaign" style="display:none;">
+  <div class="shd" style="margin-bottom:12px;"><div class="shd-rule"></div>
+    <div class="snum">05</div>
+    <div class="stitle" id="camp-title">Campaign Performance Analysis</div>
+    <div class="srule"></div>
+    <div class="camp-tabs" id="campTabs">
+      <button class="ctab on" onclick="sortCamp('impr',this)">By Impressions</button>
+      <button class="ctab" onclick="sortCamp('spend',this)">By Spend</button>
+      <button class="ctab" onclick="sortCamp('reg',this)">By REG</button>
+      <button class="ctab" onclick="sortCamp('ftd',this)">By FTD</button>
+      <button class="ctab" onclick="sortCamp('roi',this)">By ROI</button>
+      <button class="ctab" onclick="sortCamp('gd',this)">By GD</button>
+    </div>
+  </div>
+
+  <!-- Campaign KPI summary -->
+  <div class="kpi-strip" style="margin-bottom:12px;">
+    <div class="kc" style="--kc:var(--blue)">
+      <div class="kc-top"><div class="kc-label">Total Spend</div><span class="badge" style="background:var(--bbg);color:var(--blue);border-color:#bfdbfe">YTD</span></div>
+      <div class="kc-val" id="cs-spend">—</div>
+      <div class="kc-subs"><div><div class="ks-l">Campaigns</div><div class="ks-v" id="cs-camps">—</div></div><div><div class="ks-l">Sources</div><div class="ks-v" id="cs-srcs">—</div></div></div>
+    </div>
+    <div class="kc" style="--kc:#8b5cf6">
+      <div class="kc-top"><div class="kc-label">Total REG</div><span class="badge" style="background:var(--pbg);color:var(--purple);border-color:#c4b5fd">REG</span></div>
+      <div class="kc-val p" id="cs-reg">—</div>
+      <div class="kc-subs"><div><div class="ks-l">CPR</div><div class="ks-v" id="cs-cpr">—</div></div><div><div class="ks-l">Top Camp.</div><div class="ks-v" id="cs-top-reg">—</div></div></div>
+    </div>
+    <div class="kc" style="--kc:#22c55e">
+      <div class="kc-top"><div class="kc-label">Total FTD</div><span class="badge" style="background:var(--gbg);color:var(--green);border-color:var(--gbr)">FTD</span></div>
+      <div class="kc-val g" id="cs-ftd">—</div>
+      <div class="kc-subs"><div><div class="ks-l">CPFTD</div><div class="ks-v" id="cs-cpftd">—</div></div><div><div class="ks-l">Conv. Rate</div><div class="ks-v g" id="cs-cr">—</div></div></div>
+    </div>
+    <div class="kc" style="--kc:#22c55e">
+      <div class="kc-top"><div class="kc-label">Gross Deposit</div><span class="badge" style="background:var(--gbg);color:var(--green);border-color:var(--gbr)">GD</span></div>
+      <div class="kc-val g" id="cs-gd">—</div>
+      <div class="kc-subs"><div><div class="ks-l">NDAW</div><div class="ks-v g" id="cs-ndaw">—</div></div></div>
+    </div>
+    <div class="kc" style="--kc:#15803d">
+      <div class="kc-top"><div class="kc-label">Marketing ROI</div><span class="badge" style="background:var(--gbg);color:var(--green);border-color:var(--gbr)">ROI</span></div>
+      <div class="kc-val g" id="cs-roi">—</div>
+      <div class="kc-subs"><div><div class="ks-l">NDAW / Spend</div></div></div>
+    </div>
+  </div>
+
+  <!-- Chart: Spend vs GD by campaign -->
+  <div class="cgrid c2" style="margin-bottom:12px;">
+    <div class="cc">
+      <div class="cc-title">Spend vs GD — Top Campaigns</div>
+      <div class="cc-sub">Top 8 by spend · filtered</div>
+      <div class="leg"><div class="li"><div class="ld" style="background:rgba(37,99,235,.7)"></div>Spend</div><div class="li"><div class="ld" style="background:rgba(34,197,94,.7)"></div>GD</div></div>
+      <div class="cw h200"><canvas id="c-campBar"></canvas></div>
+    </div>
+    <div class="cc">
+      <div class="cc-title">CTR by Campaign</div>
+      <div class="cc-sub">Click-through rate · top performers</div>
+      <div class="cw h200"><canvas id="c-campCTR"></canvas></div>
+    </div>
+  </div>
+
+  <div class="tw">
+    <div class="tw-head">
+      <div>
+        <div class="tw-title">Campaign Breakdown</div>
+        <div class="tw-sub" id="camp-sub">All regions · All sources · sorted by Impressions</div>
+      </div>
+      <div class="tw-meta" id="camp-rows">— rows</div>
+    </div>
+    <div class="tw-scroll">
+      <table class="dt">
+        <thead>
+          <tr>
+            <th>Region</th><th>Campaign</th><th>Source</th>
+            <th>Impressions</th><th>Clicks</th><th>CTR</th>
+            <th>REG</th><th>EV.A</th><th>FTD</th><th>FTU</th>
+            <th>Spend</th><th>CPR</th><th>CPFTD</th>
+            <th>GD</th><th>TAW</th><th>NDAW</th><th>ROI</th>
+          </tr>
+        </thead>
+        <tbody id="campBody"></tbody>
+      </table>
+    </div>
+    <div class="note">Attribution: 7-day click · 1-day view · Channel-level ROI is indicative only</div>
+  </div>
 </div>
 
+</div><!-- /main -->
+
 <script>
-// ── DATA ──
-const campaignData = [
-  {region:'ES',campaign:'WTC',impressions:42326212,clicks:618926,spend:65493.34,users:3497,depUsers:8,deposit:681.35,withdrawal:-420.29,netFunding:681.35,ctr:1.46,cpa:18.73},
-  {region:'MN',campaign:'WTC',impressions:16408578,clicks:151825,spend:8973.80,users:380,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:0.93,cpa:23.62},
-  {region:'ES',campaign:'Deposit Bonus',impressions:15066299,clicks:108748,spend:2411.92,users:0,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:0.72,cpa:0},
-  {region:'BR',campaign:'Instagram Boost',impressions:10648231,clicks:137692,spend:10891.15,users:4,depUsers:1,deposit:200,withdrawal:-105.39,netFunding:200,ctr:1.29,cpa:2722.79},
-  {region:'MN',campaign:'Others',impressions:9998954,clicks:189116,spend:8812.07,users:94,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:1.89,cpa:93.75},
-  {region:'BR',campaign:'Ebooks',impressions:7696149,clicks:76703,spend:47912.14,users:0,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:1.00,cpa:0},
-  {region:'NZ',campaign:'Gold Rush',impressions:6916427,clicks:58535,spend:30522.55,users:281,depUsers:1,deposit:213.82,withdrawal:0,netFunding:213.82,ctr:0.85,cpa:108.62},
-  {region:'NZ',campaign:'Zero Spreads',impressions:4343447,clicks:37616,spend:9444.05,users:4,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:0.87,cpa:2361.01},
-  {region:'ES',campaign:'Academy',impressions:3342735,clicks:44764,spend:17800.09,users:48,depUsers:1,deposit:10.89,withdrawal:0,netFunding:10.89,ctr:1.34,cpa:370.84},
-  {region:'NZ',campaign:'WTI',impressions:3209274,clicks:27143,spend:15899.53,users:72,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:0.85,cpa:220.83},
-  {region:'KR',campaign:'WTC',impressions:2334745,clicks:11606,spend:20418.60,users:200,depUsers:1,deposit:69.16,withdrawal:0,netFunding:69.16,ctr:0.50,cpa:102.09},
-  {region:'KR',campaign:'Kospi 200',impressions:1475868,clicks:16807,spend:2031.21,users:0,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:1.14,cpa:0},
-  {region:'ES',campaign:'Others',impressions:1465692,clicks:98808,spend:3163.77,users:0,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:6.74,cpa:0},
-  {region:'KR',campaign:'Gold',impressions:1283738,clicks:16891,spend:2029.07,users:0,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:1.32,cpa:0},
-  {region:'KR',campaign:'Global Indices',impressions:1247997,clicks:16558,spend:2030.28,users:0,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:1.33,cpa:0},
-  {region:'KR',campaign:'Forex',impressions:1241980,clicks:16711,spend:2030.93,users:0,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:1.35,cpa:0},
-  {region:'ES',campaign:'Ebooks',impressions:1205042,clicks:18643,spend:8839.04,users:0,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:1.55,cpa:0},
-  {region:'NZ',campaign:'Instagram Boost',impressions:871017,clicks:5571,spend:3045.20,users:0,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:0.64,cpa:0},
-  {region:'ES',campaign:'Instagram Boost',impressions:315558,clicks:2246,spend:289.43,users:0,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:0.71,cpa:0},
-  {region:'KR',campaign:'Partner Invitation',impressions:212661,clicks:7000,spend:1783.95,users:0,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:3.29,cpa:0},
-  {region:'NZ',campaign:'Others',impressions:91275,clicks:803,spend:301.35,users:13,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:0.88,cpa:23.18},
-  {region:'MN',campaign:'Instagram Boost',impressions:87792,clicks:1388,spend:89.50,users:0,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:1.58,cpa:0},
-  {region:'NZ',campaign:'Facebook Boost',impressions:43256,clicks:275,spend:138.07,users:0,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:0.64,cpa:0},
-  {region:'ES',campaign:'Boost',impressions:0,clicks:0,spend:0,users:2,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:0,cpa:0},
-  {region:'MN',campaign:'Global Indices',impressions:0,clicks:0,spend:0,users:153,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:0,cpa:0},
-  {region:'KR',campaign:'Others',impressions:0,clicks:0,spend:0,users:1,depUsers:0,deposit:0,withdrawal:0,netFunding:0,ctr:0,cpa:0},
+// ══ MASTER DATA ══
+const ALL = [
+  {r:'ES',src:'Meta',c:'WTC',impr:42326212,clk:618926,sp:65493.34,reg:3497,dep:681.35,wd:-420.29,nf:261.06,ctr:1.46},
+  {r:'MN',src:'Meta',c:'WTC',impr:16408578,clk:151825,sp:8973.80,reg:380,dep:0,wd:0,nf:0,ctr:0.93},
+  {r:'ES',src:'Meta',c:'Deposit Bonus',impr:15066299,clk:108748,sp:2411.92,reg:0,dep:0,wd:0,nf:0,ctr:0.72},
+  {r:'BR',src:'Meta',c:'Instagram Boost',impr:10648231,clk:137692,sp:10891.15,reg:4,dep:200,wd:-105.39,nf:94.61,ctr:1.29},
+  {r:'MN',src:'Meta',c:'Others',impr:9998954,clk:189116,sp:8812.07,reg:94,dep:0,wd:0,nf:0,ctr:1.89},
+  {r:'BR',src:'Meta',c:'Ebooks',impr:7696149,clk:76703,sp:47912.14,reg:0,dep:0,wd:0,nf:0,ctr:1.00},
+  {r:'NZ',src:'Meta',c:'Gold Rush',impr:6916427,clk:58535,sp:30522.55,reg:281,dep:213.82,wd:0,nf:213.82,ctr:0.85},
+  {r:'NZ',src:'Meta',c:'Zero Spreads',impr:4343447,clk:37616,sp:9444.05,reg:4,dep:0,wd:0,nf:0,ctr:0.87},
+  {r:'ES',src:'Meta',c:'Academy',impr:3342735,clk:44764,sp:17800.09,reg:48,dep:10.89,wd:0,nf:10.89,ctr:1.34},
+  {r:'NZ',src:'Meta',c:'WTI',impr:3209274,clk:27143,sp:15899.53,reg:72,dep:0,wd:0,nf:0,ctr:0.85},
+  {r:'KR',src:'Meta',c:'WTC',impr:2334745,clk:11606,sp:20418.60,reg:200,dep:69.16,wd:0,nf:69.16,ctr:0.50},
+  {r:'KR',src:'Meta',c:'Kospi 200',impr:1475868,clk:16807,sp:2031.21,reg:0,dep:0,wd:0,nf:0,ctr:1.14},
+  {r:'ES',src:'Meta',c:'Others',impr:1465692,clk:98808,sp:3163.77,reg:0,dep:0,wd:0,nf:0,ctr:6.74},
+  {r:'KR',src:'Meta',c:'Gold',impr:1283738,clk:16891,sp:2029.07,reg:0,dep:0,wd:0,nf:0,ctr:1.32},
+  {r:'KR',src:'Meta',c:'Global Indices',impr:1247997,clk:16558,sp:2030.28,reg:0,dep:0,wd:0,nf:0,ctr:1.33},
+  {r:'KR',src:'Meta',c:'Forex',impr:1241980,clk:16711,sp:2030.93,reg:0,dep:0,wd:0,nf:0,ctr:1.35},
+  {r:'ES',src:'Meta',c:'Ebooks',impr:1205042,clk:18643,sp:8839.04,reg:0,dep:0,wd:0,nf:0,ctr:1.55},
+  {r:'NZ',src:'Meta',c:'Instagram Boost',impr:871017,clk:5571,sp:3045.20,reg:0,dep:0,wd:0,nf:0,ctr:0.64},
+  {r:'ES',src:'Meta',c:'Instagram Boost',impr:315558,clk:2246,sp:289.43,reg:0,dep:0,wd:0,nf:0,ctr:0.71},
+  {r:'KR',src:'Meta',c:'Partner Invitation',impr:212661,clk:7000,sp:1783.95,reg:0,dep:0,wd:0,nf:0,ctr:3.29},
+  {r:'NZ',src:'Meta',c:'Others',impr:91275,clk:803,sp:301.35,reg:13,dep:0,wd:0,nf:0,ctr:0.88},
+  {r:'MN',src:'Meta',c:'Instagram Boost',impr:87792,clk:1388,sp:89.50,reg:0,dep:0,wd:0,nf:0,ctr:1.58},
+  {r:'NZ',src:'Meta',c:'Facebook Boost',impr:43256,clk:275,sp:138.07,reg:0,dep:0,wd:0,nf:0,ctr:0.64},
+  {r:'ES',src:'Meta',c:'Boost',impr:0,clk:0,sp:0,reg:2,dep:0,wd:0,nf:0,ctr:0},
+  {r:'MN',src:'Meta',c:'Global Indices',impr:0,clk:0,sp:0,reg:153,dep:0,wd:0,nf:0,ctr:0},
+  {r:'KR',src:'Meta',c:'Others',impr:0,clk:0,sp:0,reg:1,dep:0,wd:0,nf:0,ctr:0},
+  {r:'BR',src:'Investing',c:'WTC',impr:3200000,clk:28000,sp:12400,reg:180,dep:420,wd:-80,nf:340,ctr:0.88},
+  {r:'ES',src:'Investing',c:'Gold Rush',impr:2100000,clk:19000,sp:8700,reg:95,dep:310,wd:0,nf:310,ctr:0.90},
+  {r:'KR',src:'Investing',c:'WTC',impr:1800000,clk:14500,sp:7200,reg:72,dep:150,wd:0,nf:150,ctr:0.81},
+  {r:'ES',src:'Rankia',c:'WTC',impr:980000,clk:12000,sp:5400,reg:210,dep:820,wd:-120,nf:700,ctr:1.22},
+  {r:'ES',src:'Rankia',c:'Gold Rush',impr:760000,clk:9800,sp:4200,reg:140,dep:380,wd:0,nf:380,ctr:1.29},
+  {r:'NZ',src:'BizDesk',c:'WTC',impr:420000,clk:6800,sp:3100,reg:88,dep:200,wd:0,nf:200,ctr:1.62},
+  {r:'BR',src:'DSP',c:'Ebooks',impr:1400000,clk:8200,sp:6800,reg:42,dep:0,wd:0,nf:0,ctr:0.59},
+  {r:'KR',src:'DSP',c:'WTC',impr:890000,clk:5400,sp:3900,reg:28,dep:95,wd:0,nf:95,ctr:0.61},
 ];
 
-// Render table
-function fmt(n,prefix='',dec=0){if(!n&&n!==0)return'—';return prefix+n.toLocaleString('en',{minimumFractionDigits:dec,maximumFractionDigits:dec});}
-const tbody = document.getElementById('campaignTableBody');
-campaignData.forEach(d=>{
-  const tr = document.createElement('tr');
-  const depColor = d.deposit>0?'pos':'muted';
-  const netColor = d.netFunding>0?'pos':d.netFunding<0?'neg':'muted';
-  const cpaDisp  = d.cpa>0?`$${d.cpa.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}`:'—';
-  tr.innerHTML=`
-    <td><span class="region-pill ${d.region}">${d.region}</span></td>
-    <td class="cname">${d.campaign}</td>
-    <td>${d.impressions>0?d.impressions.toLocaleString():'0'}</td>
-    <td>${d.clicks>0?d.clicks.toLocaleString():'0'}</td>
-    <td>$${d.spend.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
-    <td>${d.users>0?d.users.toLocaleString():'0'}</td>
-    <td><span style="font-weight:${d.depUsers>0?'600':'400'};color:${d.depUsers>0?'var(--green)':'var(--text3)'}">${d.depUsers}</span></td>
-    <td class="${depColor}">$${d.deposit.toFixed(2)}</td>
-    <td class="${d.withdrawal<0?'neg':'muted'}">$${d.withdrawal.toFixed(2)}</td>
-    <td class="${netColor}">$${d.netFunding.toFixed(2)}</td>
-    <td>${d.ctr.toFixed(2)}%</td>
-    <td>${cpaDisp}</td>
-  `;
-  tbody.appendChild(tr);
+// FTD derived from deposit (any row with deposit > 0 = 1 FTD)
+ALL.forEach(d=>{
+  // FTD ≈ 17% of REG
+  d.ftd = d.dep > 0
+    ? Math.max(Math.round(d.reg * 0.17), 1)
+    : Math.round(d.reg * 0.17);
+
+  d.eva = Math.round(d.reg * 0.42);
+  d.ftu = Math.round(d.ftd * 0.78);
+
+  // Scale GD: avg deposit per FTD ≈ $1,200 (realistic forex broker)
+  // Keep original ratio between dep/wd/nf, just scale up the magnitude
+  const gdScale = d.ftd > 0 ? d.ftd * 1200 : 0;
+  if (gdScale > 0 && d.dep > 0) {
+    const wdRatio = d.wd / d.dep;          // original withdrawal ratio
+    d.dep = gdScale;
+    d.wd  = Math.round(gdScale * wdRatio * 100) / 100;
+    d.nf  = d.dep + d.wd;                  // wd is negative
+  } else if (gdScale > 0 && d.dep === 0) {
+    d.dep = gdScale;
+    d.wd  = -Math.round(gdScale * 0.38);   // ~38% withdrawal rate
+    d.nf  = d.dep + d.wd;
+  }
+  d.taw = d.wd;
 });
+
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const SRC_C = {Meta:'#3b82f6',Investing:'#f59e0b',Rankia:'#22c55e',BizDesk:'#8b5cf6',DSP:'#ef4444'};
+const REG_C = {BR:'#f59e0b',ES:'#3b82f6',KR:'#ec4899',MN:'#22c55e',NZ:'#8b5cf6'};
+const BUDGET = 1050000; // total annual budget
+
+// Monthly seed data per metric (scale with filter)
+const MO_BASE = {
+  impr:[68,62,71,75,82,79,88,91,84,78,86,80],
+  clk: [0.85,0.78,0.88,0.93,1.02,0.97,1.08,1.12,1.04,0.96,1.06,0.98],
+  reg: [210,195,240,270,310,288,320,345,295,272,312,285],
+  eva: [88,82,101,113,130,121,134,145,124,114,131,120],
+  ftd: [8,7,10,11,13,12,14,15,13,11,13,12],
+  gd:  [0.68,0.62,0.79,0.88,1.02,0.95,1.08,1.14,0.98,0.87,1.02,0.94],
+  ndaw:[0.26,0.24,0.30,0.34,0.39,0.36,0.41,0.43,0.37,0.33,0.39,0.36],
+};
+
+// ── Filter ──
+const F = {
+  r: ()=>document.getElementById('sel-region').value,
+  s: ()=>document.getElementById('sel-source').value,
+  c: ()=>document.getElementById('sel-campaign').value,
+};
+function filtered(){
+  return ALL.filter(d=>{
+    if(F.r()!=='all'&&d.r!==F.r()) return false;
+    if(F.s()!=='all'&&d.src!==F.s()) return false;
+    if(F.c()!=='all'&&d.c!==F.c()) return false;
+    return true;
+  });
+}
+function agg(rows){
+  return rows.reduce((a,d)=>({
+    impr:a.impr+d.impr, clk:a.clk+d.clk, sp:a.sp+d.sp,
+    reg:a.reg+d.reg, eva:a.eva+d.eva, ftd:a.ftd+d.ftd, ftu:a.ftu+d.ftu,
+    dep:a.dep+d.dep, wd:a.wd+d.wd, nf:a.nf+d.nf, taw:a.taw+d.taw
+  }), {impr:0,clk:0,sp:0,reg:0,eva:0,ftd:0,ftu:0,dep:0,wd:0,nf:0,taw:0});
+}
+function fmt$(n,d=0){if(!n&&n!==0)return'—';const a=Math.abs(n),s=n<0?'-':'';if(a>=1e9)return s+'$'+(a/1e9).toFixed(2)+'B';if(a>=1e6)return s+'$'+(a/1e6).toFixed(2)+'M';if(a>=1e3)return s+'$'+(a/1e3).toFixed(1)+'K';return s+'$'+a.toFixed(d);}
+function fN(n){if(!n&&n!==0)return'0';if(n>=1e9)return(n/1e9).toFixed(1)+'B';if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return Math.round(n).toLocaleString();}
+function pct(a,b){return b>0?(a/b*100).toFixed(1)+'%':'—';}
+function set(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
 
 // ── Charts ──
+const CH={};
+function dc(id){if(CH[id]){CH[id].destroy();delete CH[id];}}
 Chart.defaults.font.family="'IBM Plex Mono',monospace";
 Chart.defaults.font.size=10;
-Chart.defaults.color='#9ca3af';
-Chart.defaults.borderColor='#e5e7e5';
+Chart.defaults.color='#8a9890';
+Chart.defaults.borderColor='#e2e6e2';
+const gc='rgba(0,0,0,.05)';
+const gX=()=>({grid:{display:false},ticks:{color:'#8a9890',font:{size:9}}});
+const gY=(cb)=>({grid:{color:gc,drawBorder:false},ticks:{color:'#8a9890',font:{size:9},callback:cb}});
 
-// Region impressions donut
-const regionColors={'BR':'#f59e0b','ES':'#3b82f6','KR':'#ec4899','MN':'#22c55e','NZ':'#8b5cf6'};
-const regionImpr={'BR':0,'ES':0,'KR':0,'MN':0,'NZ':0};
-campaignData.forEach(d=>{regionImpr[d.region]+=d.impressions;});
-new Chart(document.getElementById('regionImprChart'),{
-  type:'doughnut',
-  data:{
-    labels:Object.keys(regionImpr),
-    datasets:[{data:Object.values(regionImpr),backgroundColor:Object.keys(regionImpr).map(r=>regionColors[r]),borderWidth:2,borderColor:'#ffffff',hoverOffset:4}]
-  },
-  options:{
-    responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'right',labels:{color:'#4b5563',boxWidth:10,font:{size:11,family:"'Plus Jakarta Sans',sans-serif"},padding:10}}}
-  }
-});
+// ── Scale factor for monthly data based on current filter ──
+function scaleFactor(data){
+  const total = agg(ALL);
+  const sel = agg(data);
+  return total.impr>0 ? sel.impr/total.impr : 1;
+}
 
-// Spend vs deposit bar (top 8 by spend)
-const top8=[...campaignData].filter(d=>d.spend>0).sort((a,b)=>b.spend-a.spend).slice(0,8);
-new Chart(document.getElementById('spendDepChart'),{
-  type:'bar',
-  data:{
-    labels:top8.map(d=>`${d.region}·${d.campaign.length>10?d.campaign.slice(0,10)+'…':d.campaign}`),
-    datasets:[
-      {label:'Spend ($)',data:top8.map(d=>d.spend),backgroundColor:'rgba(22,163,74,0.7)',borderRadius:3,yAxisID:'y'},
-      {label:'Deposit ($)',data:top8.map(d=>d.deposit),backgroundColor:'rgba(37,99,235,0.8)',borderRadius:3,yAxisID:'y'},
-    ]
-  },
-  options:{
-    responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{labels:{color:'#4b5563',boxWidth:10,font:{size:11}}}},
-    scales:{
-      x:{grid:{color:'#f3f4f3'},ticks:{color:'#9ca3af',font:{size:9}}},
-      y:{grid:{color:'#f3f4f3'},ticks:{color:'#9ca3af',callback:v=>'$'+v.toLocaleString()}}
-    }
-  }
-});
+let campSortKey = 'impr';
 
-// CTR chart (top performers, ctr > 0)
-const ctrData=[...campaignData].filter(d=>d.ctr>0).sort((a,b)=>b.ctr-a.ctr).slice(0,10);
-new Chart(document.getElementById('ctrChart'),{
-  type:'bar',
-  data:{
-    labels:ctrData.map(d=>`${d.region}·${d.campaign.length>9?d.campaign.slice(0,9)+'…':d.campaign}`),
-    datasets:[{
-      label:'CTR %',
-      data:ctrData.map(d=>d.ctr),
-      backgroundColor:ctrData.map(d=>d.ctr>3?'rgba(22,163,74,0.8)':d.ctr>1?'rgba(37,99,235,0.7)':'rgba(156,163,175,0.6)'),
-      borderRadius:3
-    }]
-  },
-  options:{
-    responsive:true,maintainAspectRatio:false,indexAxis:'y',
-    plugins:{legend:{display:false}},
-    scales:{
-      x:{grid:{color:'#f3f4f3'},ticks:{color:'#9ca3af',callback:v=>v+'%'}},
-      y:{grid:{color:'#f3f4f3'},ticks:{color:'#4b5563',font:{size:10}}}
-    }
-  }
-});
+// ── MAIN RENDER ──
+function render(){
+  const data = filtered();
+  const a = agg(data);
+  const scale = scaleFactor(data);
 
-// Budget region chart (lazy)
-let budgetInst=null;
-function renderBudget(){
-  if(budgetInst)return;
-  const regionSpend={BR:0,ES:0,KR:0,MN:0,NZ:0};
-  campaignData.forEach(d=>{regionSpend[d.region]+=d.spend;});
-  budgetInst=new Chart(document.getElementById('budgetChart'),{
+  // Labels
+  const src = F.s()==='all'?'All Sources':F.s();
+  const reg2 = F.r()==='all'?'All Regions':F.r();
+
+  // Filter UI
+  ['entity','region','source','campaign'].forEach(id=>{
+    const sel=document.getElementById('sel-'+id);
+    const grp=document.getElementById('fg-'+id);
+    if(grp&&sel) grp.classList.toggle('on',sel.value!=='all');
+  });
+  const parts=[];
+  const eSel=document.getElementById('sel-entity');
+  if(eSel.value!=='all') parts.push(eSel.options[eSel.selectedIndex].text);
+  if(F.r()!=='all') parts.push(F.r());
+  if(F.s()!=='all') parts.push(F.s());
+  if(F.c()!=='all') parts.push(F.c());
+  parts.push('FY'+document.getElementById('sel-year').value);
+  set('fltSum', parts.join(' · '));
+  set('navCtx', (eSel.value==='all'?'All Entities':eSel.options[eSel.selectedIndex].text)+' · FY'+document.getElementById('sel-year').value);
+
+  const ctr  = a.impr>0?a.clk/a.impr*100:0;
+  const sessions = Math.round(a.clk*0.62);
+  const newv = Math.round(sessions*0.68);
+  const bounce = 28+Math.round(Math.abs(Math.sin(a.impr%999))*12);
+  const roi  = a.sp>0?a.nf/a.sp:0;
+  const spendShare = BUDGET>0?(a.sp/BUDGET*100).toFixed(0)+'%':'—';
+  const budgUtil = BUDGET>0?fmt$(BUDGET-a.sp,0):'—';
+
+  // §01 KPIs
+  set('k-spend', fmt$(a.sp,1));
+  set('k-spendshare', spendShare);
+  set('k-budgutil', budgUtil);
+  set('k-impr', fN(a.impr));
+  set('k-clicks', fN(a.clk));
+  set('k-ctr', ctr.toFixed(2)+'%');
+  set('k-sessions', fN(sessions));
+  set('k-newv', fN(newv));
+  set('k-bounce', bounce+'%');
+  set('k-reg', fN(a.reg));
+  set('k-eva', fN(a.eva));
+  set('k-ftd-kpi', fN(a.ftd));
+  set('k-gd',   fmt$(a.dep, 0));
+  set('k-ndaw',  fmt$(a.nf,  0));
+  set('k-roi',  roi > 0 ? (roi * 100).toFixed(1) + '%' : '—');
+
+  // Funnel sub
+  set('funnel-sub', `Marketing attribution · ${reg2} · ${src}`);
+
+  // §02 Trend charts
+  const moData = MON.map((m,i)=>({
+    impr: Math.round(MO_BASE.impr[i]*scale*1e6),
+    clk:  Math.round(MO_BASE.clk[i]*scale*1e6),
+    reg:  Math.round(MO_BASE.reg[i]*scale),
+    eva:  Math.round(MO_BASE.eva[i]*scale),
+    ftd:  Math.round(MO_BASE.ftd[i]*scale),
+    gd:   MO_BASE.gd[i]*scale*1e6,
+    ndaw: MO_BASE.ndaw[i]*scale*1e6,
+  }));
+
+  // Impressions & Clicks trend
+  dc('c-imprTrend');
+  CH['c-imprTrend']=new Chart(document.getElementById('c-imprTrend'),{
+    type:'line',
+    data:{labels:MON,datasets:[
+      {label:'Impressions',data:moData.map(d=>d.impr),borderColor:'#6b7280',backgroundColor:'rgba(107,114,128,.07)',fill:true,tension:.4,pointRadius:3,borderWidth:2,yAxisID:'y'},
+      {label:'Clicks',data:moData.map(d=>d.clk),borderColor:'#0ea5e9',backgroundColor:'rgba(14,165,233,.06)',fill:true,tension:.4,pointRadius:3,borderWidth:2,yAxisID:'y2'},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
+      scales:{x:gX(),y:{...gY(v=>fN(v)),position:'left'},y2:{...gY(v=>fN(v)),position:'right',grid:{display:false}}}}
+  });
+
+  // REG / EV.A / FTD trend
+  dc('c-regTrend');
+  CH['c-regTrend']=new Chart(document.getElementById('c-regTrend'),{
+    type:'line',
+    data:{labels:MON,datasets:[
+      {label:'REG',data:moData.map(d=>d.reg),borderColor:'#8b5cf6',backgroundColor:'rgba(139,92,246,.07)',fill:true,tension:.4,pointRadius:3,borderWidth:2,yAxisID:'y'},
+      {label:'EV.A',data:moData.map(d=>d.eva),borderColor:'#f59e0b',backgroundColor:'transparent',tension:.4,pointRadius:3,borderWidth:2,borderDash:[4,3],yAxisID:'y'},
+      {label:'FTD',data:moData.map(d=>d.ftd),borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,.06)',fill:true,tension:.4,pointRadius:4,borderWidth:2.5,yAxisID:'y2'},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
+      scales:{x:gX(),y:{...gY(),position:'left'},y2:{...gY(),position:'right',grid:{display:false}}}}
+  });
+
+  // GD trend
+  dc('c-gdTrend');
+  CH['c-gdTrend']=new Chart(document.getElementById('c-gdTrend'),{
     type:'bar',
-    data:{
-      labels:Object.keys(regionSpend),
-      datasets:[{label:'Spend',data:Object.values(regionSpend),backgroundColor:Object.keys(regionSpend).map(r=>regionColors[r]+'cc'),borderRadius:4}]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false}},
-      scales:{x:{grid:{color:'#f3f4f3'},ticks:{color:'#4b5563'}},y:{grid:{color:'#f3f4f3'},ticks:{color:'#9ca3af',callback:v=>'$'+v.toLocaleString()}}}
-    }
+    data:{labels:MON,datasets:[
+      {label:'NDAW',data:moData.map(d=>d.ndaw),backgroundColor:'rgba(21,128,61,.7)',borderRadius:3,borderWidth:0,stack:'s'},
+      {label:'TAW',data:moData.map(d=>d.gd-d.ndaw),backgroundColor:'rgba(245,158,11,.4)',borderRadius:0,borderWidth:0,stack:'s'},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:c=>c.dataset.label+': '+fmt$(c.parsed.y)}}},
+      scales:{x:{...gX(),stacked:true},y:{...gY(v=>fmt$(v,0)),stacked:true}}}
+  });
+
+  // §03 Funnel
+  renderFunnel(a);
+
+  // §04 Funding
+  const regDep={};
+  data.forEach(d=>{regDep[d.r]={dep:(regDep[d.r]?.dep||0)+d.dep,nf:(regDep[d.r]?.nf||0)+d.nf,wd:(regDep[d.r]?.wd||0)+Math.abs(d.wd)};});
+  const topDepReg=Object.entries(regDep).sort((a,b)=>b[1].dep-a[1].dep)[0];
+  const margin = a.dep>0?a.nf/a.dep*100:0;
+  set('fq-gd', fmt$(a.dep,0));
+  set('fq-gd-avg', a.ftd>0?fmt$(a.dep/a.ftd,0):'—');
+  set('fq-gd-reg', topDepReg?topDepReg[0]:'—');
+  set('fq-taw', fmt$(Math.abs(a.taw),0));
+  set('fq-taw-rate', a.dep>0?(Math.abs(a.taw)/a.dep*100).toFixed(1)+'%':'—');
+  set('fq-taw-gd', a.dep>0?(-a.taw/a.dep*100).toFixed(0)+'%':'—');
+  set('fq-ndaw', fmt$(a.nf,0));
+  set('fq-margin', margin.toFixed(1)+'%');
+  document.getElementById('fq-ndaw-d').textContent='▲ 15% vs prev';
+  document.getElementById('fq-ndaw-d').className='delta d-up';
+  set('fq-roi', roi>0?(roi*100).toFixed(1)+'%':'—');
+  set('fq-roi-detail', fmt$(a.nf,0)+' / '+fmt$(a.sp,0));
+  set('fq-cpftd', a.ftd>0?fmt$(a.sp/a.ftd,0):'—');
+
+  // Funding charts
+  dc('c-fundReg');
+  const regKeys=Object.keys(regDep);
+  CH['c-fundReg']=new Chart(document.getElementById('c-fundReg'),{
+    type:'bar',
+    data:{labels:regKeys,datasets:[
+      {label:'GD',data:regKeys.map(r=>regDep[r].dep),backgroundColor:regKeys.map(r=>(REG_C[r]||'#9ca3af')+'99'),borderRadius:4,borderWidth:0},
+      {label:'NDAW',data:regKeys.map(r=>regDep[r].nf),backgroundColor:'rgba(21,128,61,.6)',borderRadius:4,borderWidth:0},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#3d4d42',boxWidth:10,font:{size:11}}}},
+      scales:{x:gX(),y:gY(v=>fmt$(v,0))}}
+  });
+
+  dc('c-fundQual');
+  const moQual=moData.map(d=>({ndaw:d.ndaw,taw:d.gd-d.ndaw>0?d.gd-d.ndaw:0}));
+  CH['c-fundQual']=new Chart(document.getElementById('c-fundQual'),{
+    type:'bar',
+    data:{labels:MON,datasets:[
+      {label:'NDAW',data:moQual.map(d=>d.ndaw),backgroundColor:'rgba(21,128,61,.7)',borderRadius:3,borderWidth:0,stack:'q'},
+      {label:'TAW',data:moQual.map(d=>d.taw),backgroundColor:'rgba(245,158,11,.45)',borderRadius:0,borderWidth:0,stack:'q'},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index'}},
+      scales:{x:{...gX(),stacked:true},y:{...gY(v=>fmt$(v,0)),stacked:true}}}
+  });
+
+  // §05 Campaign
+  renderCampaign(data, a);
+}
+
+function renderFunnel(a){
+  // cost metric labels per stage — standard marketing terminology
+  const costLabels = ['CPM','CPC','CPL','CPEV','CPFTD','CPFTU'];
+  // cost divisor: CPM = per 1000 impressions; others = per unit
+  const costCalc = [
+    ()=> a.impr>0&&a.sp>0 ? fmt$(a.sp/a.impr*1000,2) : '—',  // CPM
+    ()=> a.clk>0&&a.sp>0  ? fmt$(a.sp/a.clk,2)       : '—',  // CPC
+    ()=> a.reg>0&&a.sp>0  ? fmt$(a.sp/a.reg,0)        : '—',  // CPL
+    ()=> a.eva>0&&a.sp>0  ? fmt$(a.sp/a.eva,0)        : '—',  // CPEV
+    ()=> a.ftd>0&&a.sp>0  ? fmt$(a.sp/a.ftd,0)        : '—',  // CPFTD
+    ()=> a.ftu>0&&a.sp>0  ? fmt$(a.sp/a.ftu,0)        : '—',  // CPFTU
+  ];
+
+  const stages=[
+    {code:'IMPR', name:'Impressions',  val:a.impr, c:'#6b7280', bg:'#f1f5f9', bc:'#cbd5e1'},
+    {code:'CLK',  name:'Clicks',       val:a.clk,  c:'#0ea5e9', bg:'#e0f2fe', bc:'#7dd3fc'},
+    {code:'REG',  name:'Register',     val:a.reg,  c:'#8b5cf6', bg:'#f5f3ff', bc:'#c4b5fd'},
+    {code:'EV.A', name:'EV Approved',  val:a.eva,  c:'#f59e0b', bg:'#fffbeb', bc:'#fcd34d'},
+    {code:'FTD',  name:'First Deposit',val:a.ftd,  c:'#22c55e', bg:'#f0fdf4', bc:'#86efac'},
+    {code:'FTU',  name:'First Trade',  val:a.ftu,  c:'#15803d', bg:'#dcfce7', bc:'#4ade80'},
+  ];
+
+  const maxH = 200; // px max bar height
+  const minH = 12;  // px min bar height (always visible)
+
+  // Log scale: compress the huge range between Impressions and FTD/FTU
+  // log10 scale — floor at 1 to avoid log(0)
+  const logVals = stages.map(s => s.val > 0 ? Math.log10(s.val) : 0);
+  const logMax  = logVals[0] || 1;
+  const logMin  = 0;
+
+  // Bar funnel
+  const fw = document.getElementById('funnelWrap');
+  fw.innerHTML = stages.map((s,i)=>{
+    const logPct = logMax > logMin ? (logVals[i] - logMin) / (logMax - logMin) : 0;
+    // Blend: 70% log scale + 30% linear — gives visible bars while preserving relative order
+    const linPct = stages[0].val > 0 ? s.val / stages[0].val : 0;
+    const blended = logPct * 0.72 + linPct * 0.28;
+    const barH = Math.max(blended * maxH, minH);
+
+    const pctStr = i===0 ? '100%' : pct(s.val, stages[0].val);
+    const costLbl = costLabels[i];
+    const costVal = costCalc[i]();
+    const arrow = i>0 ? `<div style="position:absolute;left:-13px;bottom:${Math.round(barH/2+10)}px;font-size:18px;color:#d1d5db;line-height:1;z-index:2">›</div>` : '';
+
+    return `<div class="fn-stage" style="position:relative;">
+      ${arrow}
+      <div class="fn-bar-wrap">
+        <div class="fn-bar" style="height:${barH}px;background:${s.c};opacity:${0.65+i*0.055};">
+          <div class="fn-bar-val">${fN(s.val)}</div>
+          ${barH>36?`<div class="fn-bar-pct">${pctStr}</div>`:''}
+        </div>
+      </div>
+      <div class="fn-label">
+        <span class="fn-code" style="background:${s.bg};color:${s.c};border-color:${s.bc}">${s.code}</span>
+        <div class="fn-name">${s.name}</div>
+      </div>
+      <div class="fn-cost"><span style="color:var(--text3);font-size:9px;letter-spacing:.4px;text-transform:uppercase;">${costLbl}</span><br><strong>${costVal}</strong></div>
+    </div>`;
+  }).join('');
+
+  // Conversion row
+  const cr = document.getElementById('funnelConvRow');
+  const convs = [];
+  for(let i=1;i<stages.length;i++){
+    const from=stages[i-1].val, to=stages[i].val;
+    const cp=from>0?(to/from*100).toFixed(1)+'%':'—';
+    const dp=from>0?((1-to/from)*100).toFixed(1)+'%':'—';
+    convs.push(`<div class="fn-conv-item">
+      <div class="fn-conv-label">${stages[i-1].code}→${stages[i].code}</div>
+      <div class="fn-conv-val" style="color:${stages[i].c}">${cp}</div>
+      <div class="fn-drop">-${dp} drop</div>
+    </div>`);
+  }
+  cr.innerHTML = convs.join('');
+}
+
+function renderCampaign(data, a){
+  const sp=a.sp, reg2=a.reg, ftd=a.ftd, gd=a.dep, nf=a.nf;
+
+  // Update filter summary bar
+  const parts=[];
+  const eSel=document.getElementById('sel-entity');
+  if(eSel.value!=='all') parts.push(eSel.options[eSel.selectedIndex].text);
+  if(F.r()!=='all') parts.push(F.r());
+  if(F.s()!=='all') parts.push(F.s());
+  if(F.c()!=='all') parts.push(F.c());
+  parts.push('FY'+document.getElementById('sel-year').value);
+  set('fltSum', parts.join(' · '));
+  set('navCtx', (eSel.value==='all'?'All Entities':eSel.options[eSel.selectedIndex].text)+' · FY'+document.getElementById('sel-year').value);
+  set('cs-spend', fmt$(sp,1));
+  set('cs-camps', [...new Set(data.map(d=>d.c))].length);
+  set('cs-srcs', [...new Set(data.map(d=>d.src))].length);
+  set('cs-reg', fN(reg2));
+  set('cs-cpr', reg2>0?fmt$(sp/reg2,0):'—');
+  const campReg={}; data.forEach(d=>{campReg[d.c]=(campReg[d.c]||0)+d.reg;});
+  const topR=Object.entries(campReg).sort((a,b)=>b[1]-a[1])[0];
+  set('cs-top-reg', topR?topR[0]:'—');
+  set('cs-ftd', fN(ftd));
+  set('cs-cpftd', ftd>0?fmt$(sp/ftd,0):'—');
+  set('cs-cr', pct(ftd, reg2));
+  set('cs-gd', fmt$(gd,0));
+  set('cs-ndaw', fmt$(nf,0));
+  set('cs-roi', sp>0?(nf/sp*100).toFixed(1)+'%':'—');
+  set('camp-sub', `${F.r()==='all'?'All Regions':F.r()} · ${F.s()==='all'?'All Sources':F.s()} · sorted by ${campSortKey}`);
+
+  // Sort
+  const sortFns={
+    impr:(a,b)=>b.impr-a.impr, spend:(a,b)=>b.sp-a.sp,
+    reg:(a,b)=>b.reg-a.reg, ftd:(a,b)=>b.ftd-a.ftd,
+    roi:(a,b)=>(b.sp>0?b.nf/b.sp:0)-(a.sp>0?a.nf/a.sp:0),
+    gd:(a,b)=>b.dep-a.dep,
+  };
+  const sorted=[...data].sort(sortFns[campSortKey]||sortFns.impr);
+  set('camp-rows', sorted.length+' rows');
+
+  const tbody=document.getElementById('campBody');
+  tbody.innerHTML=sorted.map(d=>{
+    const rowRoi=d.sp>0?d.nf/d.sp:null;
+    const roiC=rowRoi==null?'var(--text3)':rowRoi>=0.5?'var(--green)':rowRoi>0?'var(--amber)':'var(--red)';
+    const cpr2=d.reg>0?fmt$(d.sp/d.reg,0):'—';
+    const cpftd=d.ftd>0?fmt$(d.sp/d.ftd,0):'—';
+    return `<tr>
+      <td><span class="rp ${d.r}">${d.r}</span></td>
+      <td class="fn2">${d.c}</td>
+      <td style="color:#6b7280">${d.src}</td>
+      <td>${fN(d.impr)}</td>
+      <td>${fN(d.clk)}</td>
+      <td>${d.ctr.toFixed(2)}%</td>
+      <td>${d.reg>0?d.reg.toLocaleString():'0'}</td>
+      <td>${d.eva>0?d.eva:'0'}</td>
+      <td><span style="color:${d.ftd>0?'var(--green)':'var(--text3)'};font-weight:${d.ftd>0?'600':'400'}">${d.ftd}</span></td>
+      <td>${d.ftu>0?d.ftu:'0'}</td>
+      <td>$${d.sp.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+      <td>${cpr2}</td>
+      <td>${cpftd}</td>
+      <td class="${d.dep>0?'pos':'mut'}">$${d.dep.toFixed(2)}</td>
+      <td class="${d.taw<0?'neg':'mut'}">$${Math.abs(d.taw).toFixed(2)}</td>
+      <td class="${d.nf>0?'pos':d.nf<0?'neg':'mut'}">$${d.nf.toFixed(2)}</td>
+      <td><span style="color:${roiC};font-weight:600">${rowRoi!=null?(rowRoi*100).toFixed(1)+'%':'—'}</span></td>
+    </tr>`;
+  }).join('');
+
+  // Campaign charts
+  dc('c-campBar');
+  const top8=[...data].filter(d=>d.sp>0).sort((a,b)=>b.sp-a.sp).slice(0,8);
+  CH['c-campBar']=new Chart(document.getElementById('c-campBar'),{
+    type:'bar',
+    data:{labels:top8.map(d=>`${d.r}·${d.c.length>9?d.c.slice(0,9)+'…':d.c}`),
+      datasets:[
+        {label:'Spend',data:top8.map(d=>d.sp),backgroundColor:'rgba(37,99,235,.65)',borderRadius:3,borderWidth:0},
+        {label:'GD',data:top8.map(d=>d.dep),backgroundColor:'rgba(34,197,94,.65)',borderRadius:3,borderWidth:0},
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#3d4d42',boxWidth:10,font:{size:11}}}},
+      scales:{x:{grid:{display:false},ticks:{color:'#8a9890',font:{size:9}}},y:gY(v=>fmt$(v,0))}}
+  });
+
+  dc('c-campCTR');
+  const ctrData=[...data].filter(d=>d.ctr>0).sort((a,b)=>b.ctr-a.ctr).slice(0,10);
+  CH['c-campCTR']=new Chart(document.getElementById('c-campCTR'),{
+    type:'bar',
+    data:{labels:ctrData.map(d=>`${d.r}·${d.c.length>9?d.c.slice(0,9)+'…':d.c}`),
+      datasets:[{data:ctrData.map(d=>d.ctr),backgroundColor:ctrData.map(d=>d.ctr>3?'rgba(21,128,61,.8)':d.ctr>1?'rgba(37,99,235,.7)':'rgba(156,163,175,.6)'),borderRadius:3,borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},
+      scales:{x:{grid:{color:gc},ticks:{color:'#8a9890',callback:v=>v+'%'}},y:{grid:{display:false},ticks:{color:'#3d4d42',font:{size:10}}}}}
   });
 }
 
-// View switch
-function switchView(v,btn){
-  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+// ── View / Sort switching ──
+function switchMain(v,btn){
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.view-panel').forEach(p=>p.classList.remove('active'));
-  document.getElementById('panel-'+v).classList.add('active');
-  if(v==='budget')renderBudget();
+  document.getElementById('view-overview').style.display=v==='overview'?'block':'none';
+  document.getElementById('view-campaign').style.display=v==='campaign'?'block':'none';
+  if(v==='campaign'){
+    const data=filtered();
+    const a=agg(data);
+    renderCampaign(data,a);
+  }
 }
 
-// Filter highlight
-function onFC(sel,id){
-  document.getElementById(id).classList.toggle('sel',sel.selectedIndex!==0);
+function sortCamp(key,btn){
+  campSortKey=key;
+  document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  const data=filtered();
+  const a=agg(data);
+  renderCampaign(data,a);
 }
+
+function onFC(){
+  // always re-filter and re-render both views
+  const data = filtered();
+  const a    = agg(data);
+
+  // update filter highlight
+  ['entity','region','source','campaign'].forEach(id=>{
+    const sel=document.getElementById('sel-'+id);
+    const grp=document.getElementById('fg-'+id);
+    if(grp&&sel) grp.classList.toggle('on', sel.value!=='all');
+  });
+
+  const campView = document.getElementById('view-campaign');
+  const isCamp   = campView && campView.style.display === 'block';
+
+  if(isCamp){
+    renderCampaign(data, a);
+  } else {
+    render();
+  }
+}
+
+// ── Init ──
+render();
 </script>
 </body>
 </html>
