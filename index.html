@@ -19,7 +19,6 @@
   --font:'Plus Jakarta Sans',sans-serif;
   --mono:'IBM Plex Mono',monospace;
   --r:10px; --sh:0 1px 4px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
-  /* funnel stage colors */
   --s0:#6b7280; --s1:#0ea5e9; --s2:#8b5cf6; --s3:#f59e0b; --s4:#22c55e; --s5:#15803d;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -123,9 +122,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 .fn-conv-val{font-family:var(--mono);font-size:12px;font-weight:600;}
 .fn-drop{font-size:9px;color:var(--red);font-family:var(--mono);}
 
-/* ── FUNDING QUALITY ── */
-.fq-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;}
-
 /* ── TABLE ── */
 .tw{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;margin-bottom:12px;}
 .tw-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 10px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px;}
@@ -227,6 +223,24 @@ table.dt tbody tr:hover td{background:var(--surf2);}
       <option value="Deposit Bonus">Deposit Bonus</option><option value="Zero Spreads">Zero Spreads</option>
     </select>
   </div>
+  <!-- ★ NEW: Owner filter -->
+  <div class="fg" id="fg-owner">
+    <span class="fgl">Owner</span>
+    <select id="sel-owner" onchange="onFC()">
+      <option value="all">All Owners</option>
+      <option value="Allysson">Allysson</option>
+      <option value="Dean">Dean</option>
+    </select>
+  </div>
+  <!-- ★ NEW: Campaign Type filter -->
+  <div class="fg" id="fg-camptype">
+    <span class="fgl">Type</span>
+    <select id="sel-camptype" onchange="onFC()">
+      <option value="all">All Types</option>
+      <option value="Promotion">Promotion</option>
+      <option value="Non-Promotion">Non-Promotion</option>
+    </select>
+  </div>
   <div class="fsep"></div>
   <div class="fy">
     <select id="sel-year" onchange="onFC()">
@@ -254,7 +268,6 @@ table.dt tbody tr:hover td{background:var(--surf2);}
     <div class="shd"><div class="shd-rule"></div><div class="snum">01</div><div class="stitle">Key Performance Indicators</div><div class="srule"></div></div>
     <div class="kpi-strip">
 
-      <!-- Spend -->
       <div class="kc" style="--kc:#1d4ed8">
         <div class="kc-top">
           <div class="kc-label">Total Spend</div>
@@ -267,7 +280,6 @@ table.dt tbody tr:hover td{background:var(--surf2);}
         </div>
       </div>
 
-      <!-- Impressions -->
       <div class="kc" style="--kc:#6b7280">
         <div class="kc-top">
           <div class="kc-label">Impressions</div>
@@ -280,7 +292,6 @@ table.dt tbody tr:hover td{background:var(--surf2);}
         </div>
       </div>
 
-      <!-- Web Sessions -->
       <div class="kc" style="--kc:#0ea5e9">
         <div class="kc-top">
           <div class="kc-label">Website Sessions</div>
@@ -293,7 +304,6 @@ table.dt tbody tr:hover td{background:var(--surf2);}
         </div>
       </div>
 
-      <!-- Registered Users -->
       <div class="kc" style="--kc:#8b5cf6">
         <div class="kc-top">
           <div class="kc-label">Registered Users</div>
@@ -306,7 +316,6 @@ table.dt tbody tr:hover td{background:var(--surf2);}
         </div>
       </div>
 
-      <!-- Gross Deposit -->
       <div class="kc" style="--kc:#15803d">
         <div class="kc-top">
           <div class="kc-label">Gross Deposit</div>
@@ -367,18 +376,11 @@ table.dt tbody tr:hover td{background:var(--surf2);}
     <div class="cc">
       <div class="cc-title">Full-funnel Conversion</div>
       <div class="cc-sub" id="funnel-sub">Marketing attribution · selected filters</div>
-
-      <!-- Bar funnel -->
       <div class="funnel-wrap" id="funnelWrap" style="margin-top:16px;"></div>
-
-      <!-- Conversion rate row -->
       <div class="fn-conv-row" id="funnelConvRow" style="margin-top:16px;"></div>
-
       <div class="note" style="margin-top:8px;">Stage cost = Total Spend ÷ Users at that stage · Attribution: 7-day click / 1-day view</div>
     </div>
   </div>
-
-
 
 </div><!-- /overview -->
 
@@ -398,7 +400,6 @@ table.dt tbody tr:hover td{background:var(--surf2);}
     </div>
   </div>
 
-  <!-- Campaign KPI summary -->
   <div class="kpi-strip" style="margin-bottom:12px;">
     <div class="kc" style="--kc:var(--blue)">
       <div class="kc-top"><div class="kc-label">Total Spend</div><span class="badge" style="background:var(--bbg);color:var(--blue);border-color:#bfdbfe">YTD</span></div>
@@ -427,7 +428,6 @@ table.dt tbody tr:hover td{background:var(--surf2);}
     </div>
   </div>
 
-  <!-- Chart: Spend vs GD by campaign -->
   <div class="cgrid c2" style="margin-bottom:12px;">
     <div class="cc">
       <div class="cc-title">Spend vs GD — Top Campaigns</div>
@@ -455,6 +455,7 @@ table.dt tbody tr:hover td{background:var(--surf2);}
         <thead>
           <tr>
             <th>Region</th><th>Campaign</th><th>Source</th>
+            <th>Owner</th><th>Type</th>
             <th>Impressions</th><th>Clicks</th><th>CTR</th>
             <th>REG</th><th>EV.A</th><th>FTD</th><th>FTU</th>
             <th>Spend</th><th>CPR</th><th>CPFTD</th>
@@ -472,6 +473,18 @@ table.dt tbody tr:hover td{background:var(--surf2);}
 
 <script>
 // ══ MASTER DATA ══
+// owner: Allysson owns BR/ES/MN; Dean owns KR/NZ
+// camptype: Promotion = WTC, Gold Rush, Zero Spreads, Kospi 200, Gold, Global Indices, Forex, Partner Invitation, Instagram Boost, Facebook Boost, Boost
+//           Non-Promotion = Ebooks, Academy, WTI, Deposit Bonus, Others, DSP campaigns
+
+function assignOwner(r) {
+  return ['BR','ES','MN'].includes(r) ? 'Allysson' : 'Dean';
+}
+function assignCampType(c) {
+  const branding = ['WTC','Gold Rush','Zero Spreads','Kospi 200','Gold','Global Indices','Forex','Partner Invitation','Instagram Boost','Facebook Boost','Boost'];
+  return branding.includes(c) ? 'Promotion' : 'Non-Promotion';
+}
+
 const ALL = [
   {r:'ES',src:'Meta',c:'WTC',impr:42326212,clk:618926,sp:65493.34,reg:3497,dep:681.35,wd:-420.29,nf:261.06,ctr:1.46},
   {r:'MN',src:'Meta',c:'WTC',impr:16408578,clk:151825,sp:8973.80,reg:380,dep:0,wd:0,nf:0,ctr:0.93},
@@ -507,40 +520,31 @@ const ALL = [
   {r:'NZ',src:'BizDesk',c:'WTC',impr:420000,clk:6800,sp:3100,reg:88,dep:200,wd:0,nf:200,ctr:1.62},
   {r:'BR',src:'DSP',c:'Ebooks',impr:1400000,clk:8200,sp:6800,reg:42,dep:0,wd:0,nf:0,ctr:0.59},
   {r:'KR',src:'DSP',c:'WTC',impr:890000,clk:5400,sp:3900,reg:28,dep:95,wd:0,nf:95,ctr:0.61},
-];
+].map(d => ({ ...d, owner: assignOwner(d.r), camptype: assignCampType(d.c) }));
 
-// FTD derived from deposit (any row with deposit > 0 = 1 FTD)
+// FTD / EVA / GD scaling
 ALL.forEach(d=>{
-  // FTD ≈ 17% of REG
-  d.ftd = d.dep > 0
-    ? Math.max(Math.round(d.reg * 0.17), 1)
-    : Math.round(d.reg * 0.17);
-
+  d.ftd = d.dep > 0 ? Math.max(Math.round(d.reg * 0.17), 1) : Math.round(d.reg * 0.17);
   d.eva = Math.round(d.reg * 0.42);
   d.ftu = Math.round(d.ftd * 0.78);
-
-  // Scale GD: avg deposit per FTD ≈ $1,200 (realistic forex broker)
-  // Keep original ratio between dep/wd/nf, just scale up the magnitude
   const gdScale = d.ftd > 0 ? d.ftd * 1200 : 0;
   if (gdScale > 0 && d.dep > 0) {
-    const wdRatio = d.wd / d.dep;          // original withdrawal ratio
+    const wdRatio = d.wd / d.dep;
     d.dep = gdScale;
     d.wd  = Math.round(gdScale * wdRatio * 100) / 100;
-    d.nf  = d.dep + d.wd;                  // wd is negative
+    d.nf  = d.dep + d.wd;
   } else if (gdScale > 0 && d.dep === 0) {
     d.dep = gdScale;
-    d.wd  = -Math.round(gdScale * 0.38);   // ~38% withdrawal rate
+    d.wd  = -Math.round(gdScale * 0.38);
     d.nf  = d.dep + d.wd;
   }
   d.taw = d.wd;
 });
 
 const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const SRC_C = {Meta:'#3b82f6',Investing:'#f59e0b',Rankia:'#22c55e',BizDesk:'#8b5cf6',DSP:'#ef4444'};
 const REG_C = {BR:'#f59e0b',ES:'#3b82f6',KR:'#ec4899',MN:'#22c55e',NZ:'#8b5cf6'};
-const BUDGET = 1050000; // total annual budget
+const BUDGET = 1050000;
 
-// Monthly seed data per metric (scale with filter)
 const MO_BASE = {
   impr:[68,62,71,75,82,79,88,91,84,78,86,80],
   clk: [0.85,0.78,0.88,0.93,1.02,0.97,1.08,1.12,1.04,0.96,1.06,0.98],
@@ -551,20 +555,26 @@ const MO_BASE = {
   ndaw:[0.26,0.24,0.30,0.34,0.39,0.36,0.41,0.43,0.37,0.33,0.39,0.36],
 };
 
-// ── Filter ──
+// ── Filter accessors ──
 const F = {
-  r: ()=>document.getElementById('sel-region').value,
-  s: ()=>document.getElementById('sel-source').value,
-  c: ()=>document.getElementById('sel-campaign').value,
+  r:  ()=>document.getElementById('sel-region').value,
+  s:  ()=>document.getElementById('sel-source').value,
+  c:  ()=>document.getElementById('sel-campaign').value,
+  o:  ()=>document.getElementById('sel-owner').value,
+  ct: ()=>document.getElementById('sel-camptype').value,
 };
+
 function filtered(){
   return ALL.filter(d=>{
-    if(F.r()!=='all'&&d.r!==F.r()) return false;
-    if(F.s()!=='all'&&d.src!==F.s()) return false;
-    if(F.c()!=='all'&&d.c!==F.c()) return false;
+    if(F.r()!=='all' && d.r!==F.r()) return false;
+    if(F.s()!=='all' && d.src!==F.s()) return false;
+    if(F.c()!=='all' && d.c!==F.c()) return false;
+    if(F.o()!=='all' && d.owner!==F.o()) return false;
+    if(F.ct()!=='all' && d.camptype!==F.ct()) return false;
     return true;
   });
 }
+
 function agg(rows){
   return rows.reduce((a,d)=>({
     impr:a.impr+d.impr, clk:a.clk+d.clk, sp:a.sp+d.sp,
@@ -572,6 +582,7 @@ function agg(rows){
     dep:a.dep+d.dep, wd:a.wd+d.wd, nf:a.nf+d.nf, taw:a.taw+d.taw
   }), {impr:0,clk:0,sp:0,reg:0,eva:0,ftd:0,ftu:0,dep:0,wd:0,nf:0,taw:0});
 }
+
 function fmt$(n,d=0){if(!n&&n!==0)return'—';const a=Math.abs(n),s=n<0?'-':'';if(a>=1e9)return s+'$'+(a/1e9).toFixed(2)+'B';if(a>=1e6)return s+'$'+(a/1e6).toFixed(2)+'M';if(a>=1e3)return s+'$'+(a/1e3).toFixed(1)+'K';return s+'$'+a.toFixed(d);}
 function fN(n){if(!n&&n!==0)return'0';if(n>=1e9)return(n/1e9).toFixed(1)+'B';if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return Math.round(n).toLocaleString();}
 function pct(a,b){return b>0?(a/b*100).toFixed(1)+'%':'—';}
@@ -588,7 +599,6 @@ const gc='rgba(0,0,0,.05)';
 const gX=()=>({grid:{display:false},ticks:{color:'#8a9890',font:{size:9}}});
 const gY=(cb)=>({grid:{color:gc,drawBorder:false},ticks:{color:'#8a9890',font:{size:9},callback:cb}});
 
-// ── Scale factor for monthly data based on current filter ──
 function scaleFactor(data){
   const total = agg(ALL);
   const sel = agg(data);
@@ -603,22 +613,25 @@ function render(){
   const a = agg(data);
   const scale = scaleFactor(data);
 
-  // Labels
-  const src = F.s()==='all'?'All Sources':F.s();
+  const src  = F.s()==='all'?'All Sources':F.s();
   const reg2 = F.r()==='all'?'All Regions':F.r();
 
-  // Filter UI
-  ['entity','region','source','campaign'].forEach(id=>{
+  // Filter UI highlight
+  ['entity','region','source','campaign','owner','camptype'].forEach(id=>{
     const sel=document.getElementById('sel-'+id);
     const grp=document.getElementById('fg-'+id);
     if(grp&&sel) grp.classList.toggle('on',sel.value!=='all');
   });
+
+  // Filter summary label
   const parts=[];
   const eSel=document.getElementById('sel-entity');
   if(eSel.value!=='all') parts.push(eSel.options[eSel.selectedIndex].text);
   if(F.r()!=='all') parts.push(F.r());
   if(F.s()!=='all') parts.push(F.s());
   if(F.c()!=='all') parts.push(F.c());
+  if(F.o()!=='all') parts.push(F.o());
+  if(F.ct()!=='all') parts.push(F.ct());
   parts.push('FY'+document.getElementById('sel-year').value);
   set('fltSum', parts.join(' · '));
   set('navCtx', (eSel.value==='all'?'All Entities':eSel.options[eSel.selectedIndex].text)+' · FY'+document.getElementById('sel-year').value);
@@ -631,7 +644,6 @@ function render(){
   const spendShare = BUDGET>0?(a.sp/BUDGET*100).toFixed(0)+'%':'—';
   const budgUtil = BUDGET>0?fmt$(BUDGET-a.sp,0):'—';
 
-  // §01 KPIs
   set('k-spend', fmt$(a.sp,1));
   set('k-spendshare', spendShare);
   set('k-budgutil', budgUtil);
@@ -647,8 +659,6 @@ function render(){
   set('k-gd',   fmt$(a.dep, 0));
   set('k-ndaw',  fmt$(a.nf,  0));
   set('k-roi',  roi > 0 ? (roi * 100).toFixed(1) + '%' : '—');
-
-  // Funnel sub
   set('funnel-sub', `Marketing attribution · ${reg2} · ${src}`);
 
   // §02 Trend charts
@@ -662,7 +672,6 @@ function render(){
     ndaw: MO_BASE.ndaw[i]*scale*1e6,
   }));
 
-  // Impressions & Clicks trend
   dc('c-imprTrend');
   CH['c-imprTrend']=new Chart(document.getElementById('c-imprTrend'),{
     type:'line',
@@ -674,7 +683,6 @@ function render(){
       scales:{x:gX(),y:{...gY(v=>fN(v)),position:'left'},y2:{...gY(v=>fN(v)),position:'right',grid:{display:false}}}}
   });
 
-  // REG / EV.A / FTD trend
   dc('c-regTrend');
   CH['c-regTrend']=new Chart(document.getElementById('c-regTrend'),{
     type:'line',
@@ -687,7 +695,6 @@ function render(){
       scales:{x:gX(),y:{...gY(),position:'left'},y2:{...gY(),position:'right',grid:{display:false}}}}
   });
 
-  // GD trend
   dc('c-gdTrend');
   CH['c-gdTrend']=new Chart(document.getElementById('c-gdTrend'),{
     type:'bar',
@@ -699,70 +706,20 @@ function render(){
       scales:{x:{...gX(),stacked:true},y:{...gY(v=>fmt$(v,0)),stacked:true}}}
   });
 
-  // §03 Funnel
   renderFunnel(a);
-
-  // §04 Funding
-  const regDep={};
-  data.forEach(d=>{regDep[d.r]={dep:(regDep[d.r]?.dep||0)+d.dep,nf:(regDep[d.r]?.nf||0)+d.nf,wd:(regDep[d.r]?.wd||0)+Math.abs(d.wd)};});
-  const topDepReg=Object.entries(regDep).sort((a,b)=>b[1].dep-a[1].dep)[0];
-  const margin = a.dep>0?a.nf/a.dep*100:0;
-  set('fq-gd', fmt$(a.dep,0));
-  set('fq-gd-avg', a.ftd>0?fmt$(a.dep/a.ftd,0):'—');
-  set('fq-gd-reg', topDepReg?topDepReg[0]:'—');
-  set('fq-taw', fmt$(Math.abs(a.taw),0));
-  set('fq-taw-rate', a.dep>0?(Math.abs(a.taw)/a.dep*100).toFixed(1)+'%':'—');
-  set('fq-taw-gd', a.dep>0?(-a.taw/a.dep*100).toFixed(0)+'%':'—');
-  set('fq-ndaw', fmt$(a.nf,0));
-  set('fq-margin', margin.toFixed(1)+'%');
-  document.getElementById('fq-ndaw-d').textContent='▲ 15% vs prev';
-  document.getElementById('fq-ndaw-d').className='delta d-up';
-  set('fq-roi', roi>0?(roi*100).toFixed(1)+'%':'—');
-  set('fq-roi-detail', fmt$(a.nf,0)+' / '+fmt$(a.sp,0));
-  set('fq-cpftd', a.ftd>0?fmt$(a.sp/a.ftd,0):'—');
-
-  // Funding charts
-  dc('c-fundReg');
-  const regKeys=Object.keys(regDep);
-  CH['c-fundReg']=new Chart(document.getElementById('c-fundReg'),{
-    type:'bar',
-    data:{labels:regKeys,datasets:[
-      {label:'GD',data:regKeys.map(r=>regDep[r].dep),backgroundColor:regKeys.map(r=>(REG_C[r]||'#9ca3af')+'99'),borderRadius:4,borderWidth:0},
-      {label:'NDAW',data:regKeys.map(r=>regDep[r].nf),backgroundColor:'rgba(21,128,61,.6)',borderRadius:4,borderWidth:0},
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#3d4d42',boxWidth:10,font:{size:11}}}},
-      scales:{x:gX(),y:gY(v=>fmt$(v,0))}}
-  });
-
-  dc('c-fundQual');
-  const moQual=moData.map(d=>({ndaw:d.ndaw,taw:d.gd-d.ndaw>0?d.gd-d.ndaw:0}));
-  CH['c-fundQual']=new Chart(document.getElementById('c-fundQual'),{
-    type:'bar',
-    data:{labels:MON,datasets:[
-      {label:'NDAW',data:moQual.map(d=>d.ndaw),backgroundColor:'rgba(21,128,61,.7)',borderRadius:3,borderWidth:0,stack:'q'},
-      {label:'TAW',data:moQual.map(d=>d.taw),backgroundColor:'rgba(245,158,11,.45)',borderRadius:0,borderWidth:0,stack:'q'},
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index'}},
-      scales:{x:{...gX(),stacked:true},y:{...gY(v=>fmt$(v,0)),stacked:true}}}
-  });
-
-  // §05 Campaign
   renderCampaign(data, a);
 }
 
 function renderFunnel(a){
-  // cost metric labels per stage — standard marketing terminology
   const costLabels = ['CPM','CPC','CPL','CPEV','CPFTD','CPFTU'];
-  // cost divisor: CPM = per 1000 impressions; others = per unit
   const costCalc = [
-    ()=> a.impr>0&&a.sp>0 ? fmt$(a.sp/a.impr*1000,2) : '—',  // CPM
-    ()=> a.clk>0&&a.sp>0  ? fmt$(a.sp/a.clk,2)       : '—',  // CPC
-    ()=> a.reg>0&&a.sp>0  ? fmt$(a.sp/a.reg,0)        : '—',  // CPL
-    ()=> a.eva>0&&a.sp>0  ? fmt$(a.sp/a.eva,0)        : '—',  // CPEV
-    ()=> a.ftd>0&&a.sp>0  ? fmt$(a.sp/a.ftd,0)        : '—',  // CPFTD
-    ()=> a.ftu>0&&a.sp>0  ? fmt$(a.sp/a.ftu,0)        : '—',  // CPFTU
+    ()=> a.impr>0&&a.sp>0 ? fmt$(a.sp/a.impr*1000,2) : '—',
+    ()=> a.clk>0&&a.sp>0  ? fmt$(a.sp/a.clk,2)       : '—',
+    ()=> a.reg>0&&a.sp>0  ? fmt$(a.sp/a.reg,0)        : '—',
+    ()=> a.eva>0&&a.sp>0  ? fmt$(a.sp/a.eva,0)        : '—',
+    ()=> a.ftd>0&&a.sp>0  ? fmt$(a.sp/a.ftd,0)        : '—',
+    ()=> a.ftu>0&&a.sp>0  ? fmt$(a.sp/a.ftu,0)        : '—',
   ];
-
   const stages=[
     {code:'IMPR', name:'Impressions',  val:a.impr, c:'#6b7280', bg:'#f1f5f9', bc:'#cbd5e1'},
     {code:'CLK',  name:'Clicks',       val:a.clk,  c:'#0ea5e9', bg:'#e0f2fe', bc:'#7dd3fc'},
@@ -771,30 +728,20 @@ function renderFunnel(a){
     {code:'FTD',  name:'First Deposit',val:a.ftd,  c:'#22c55e', bg:'#f0fdf4', bc:'#86efac'},
     {code:'FTU',  name:'First Trade',  val:a.ftu,  c:'#15803d', bg:'#dcfce7', bc:'#4ade80'},
   ];
+  const maxH=200, minH=12;
+  const logVals=stages.map(s=>s.val>0?Math.log10(s.val):0);
+  const logMax=logVals[0]||1;
 
-  const maxH = 200; // px max bar height
-  const minH = 12;  // px min bar height (always visible)
-
-  // Log scale: compress the huge range between Impressions and FTD/FTU
-  // log10 scale — floor at 1 to avoid log(0)
-  const logVals = stages.map(s => s.val > 0 ? Math.log10(s.val) : 0);
-  const logMax  = logVals[0] || 1;
-  const logMin  = 0;
-
-  // Bar funnel
-  const fw = document.getElementById('funnelWrap');
-  fw.innerHTML = stages.map((s,i)=>{
-    const logPct = logMax > logMin ? (logVals[i] - logMin) / (logMax - logMin) : 0;
-    // Blend: 70% log scale + 30% linear — gives visible bars while preserving relative order
-    const linPct = stages[0].val > 0 ? s.val / stages[0].val : 0;
-    const blended = logPct * 0.72 + linPct * 0.28;
-    const barH = Math.max(blended * maxH, minH);
-
-    const pctStr = i===0 ? '100%' : pct(s.val, stages[0].val);
-    const costLbl = costLabels[i];
-    const costVal = costCalc[i]();
-    const arrow = i>0 ? `<div style="position:absolute;left:-13px;bottom:${Math.round(barH/2+10)}px;font-size:18px;color:#d1d5db;line-height:1;z-index:2">›</div>` : '';
-
+  const fw=document.getElementById('funnelWrap');
+  fw.innerHTML=stages.map((s,i)=>{
+    const logPct=logMax>0?(logVals[i]-0)/(logMax-0):0;
+    const linPct=stages[0].val>0?s.val/stages[0].val:0;
+    const blended=logPct*0.72+linPct*0.28;
+    const barH=Math.max(blended*maxH,minH);
+    const pctStr=i===0?'100%':pct(s.val,stages[0].val);
+    const costLbl=costLabels[i];
+    const costVal=costCalc[i]();
+    const arrow=i>0?`<div style="position:absolute;left:-13px;bottom:${Math.round(barH/2+10)}px;font-size:18px;color:#d1d5db;line-height:1;z-index:2">›</div>`:'';
     return `<div class="fn-stage" style="position:relative;">
       ${arrow}
       <div class="fn-bar-wrap">
@@ -811,11 +758,10 @@ function renderFunnel(a){
     </div>`;
   }).join('');
 
-  // Conversion row
-  const cr = document.getElementById('funnelConvRow');
-  const convs = [];
+  const cr=document.getElementById('funnelConvRow');
+  const convs=[];
   for(let i=1;i<stages.length;i++){
-    const from=stages[i-1].val, to=stages[i].val;
+    const from=stages[i-1].val,to=stages[i].val;
     const cp=from>0?(to/from*100).toFixed(1)+'%':'—';
     const dp=from>0?((1-to/from)*100).toFixed(1)+'%':'—';
     convs.push(`<div class="fn-conv-item">
@@ -824,47 +770,57 @@ function renderFunnel(a){
       <div class="fn-drop">-${dp} drop</div>
     </div>`);
   }
-  cr.innerHTML = convs.join('');
+  cr.innerHTML=convs.join('');
 }
 
-function renderCampaign(data, a){
-  const sp=a.sp, reg2=a.reg, ftd=a.ftd, gd=a.dep, nf=a.nf;
+function renderCampaign(data,a){
+  const sp=a.sp,reg2=a.reg,ftd=a.ftd,gd=a.dep,nf=a.nf;
 
-  // Update filter summary bar
   const parts=[];
   const eSel=document.getElementById('sel-entity');
   if(eSel.value!=='all') parts.push(eSel.options[eSel.selectedIndex].text);
   if(F.r()!=='all') parts.push(F.r());
   if(F.s()!=='all') parts.push(F.s());
   if(F.c()!=='all') parts.push(F.c());
+  if(F.o()!=='all') parts.push(F.o());
+  if(F.ct()!=='all') parts.push(F.ct());
   parts.push('FY'+document.getElementById('sel-year').value);
-  set('fltSum', parts.join(' · '));
-  set('navCtx', (eSel.value==='all'?'All Entities':eSel.options[eSel.selectedIndex].text)+' · FY'+document.getElementById('sel-year').value);
-  set('cs-spend', fmt$(sp,1));
-  set('cs-camps', [...new Set(data.map(d=>d.c))].length);
-  set('cs-srcs', [...new Set(data.map(d=>d.src))].length);
-  set('cs-reg', fN(reg2));
-  set('cs-cpr', reg2>0?fmt$(sp/reg2,0):'—');
-  const campReg={}; data.forEach(d=>{campReg[d.c]=(campReg[d.c]||0)+d.reg;});
+  set('fltSum',parts.join(' · '));
+  set('navCtx',(eSel.value==='all'?'All Entities':eSel.options[eSel.selectedIndex].text)+' · FY'+document.getElementById('sel-year').value);
+  set('cs-spend',fmt$(sp,1));
+  set('cs-camps',[...new Set(data.map(d=>d.c))].length);
+  set('cs-srcs',[...new Set(data.map(d=>d.src))].length);
+  set('cs-reg',fN(reg2));
+  set('cs-cpr',reg2>0?fmt$(sp/reg2,0):'—');
+  const campReg={};data.forEach(d=>{campReg[d.c]=(campReg[d.c]||0)+d.reg;});
   const topR=Object.entries(campReg).sort((a,b)=>b[1]-a[1])[0];
-  set('cs-top-reg', topR?topR[0]:'—');
-  set('cs-ftd', fN(ftd));
-  set('cs-cpftd', ftd>0?fmt$(sp/ftd,0):'—');
-  set('cs-cr', pct(ftd, reg2));
-  set('cs-gd', fmt$(gd,0));
-  set('cs-ndaw', fmt$(nf,0));
-  set('cs-roi', sp>0?(nf/sp*100).toFixed(1)+'%':'—');
-  set('camp-sub', `${F.r()==='all'?'All Regions':F.r()} · ${F.s()==='all'?'All Sources':F.s()} · sorted by ${campSortKey}`);
+  set('cs-top-reg',topR?topR[0]:'—');
+  set('cs-ftd',fN(ftd));
+  set('cs-cpftd',ftd>0?fmt$(sp/ftd,0):'—');
+  set('cs-cr',pct(ftd,reg2));
+  set('cs-gd',fmt$(gd,0));
+  set('cs-ndaw',fmt$(nf,0));
+  set('cs-roi',sp>0?(nf/sp*100).toFixed(1)+'%':'—');
+  set('camp-sub',`${F.r()==='all'?'All Regions':F.r()} · ${F.s()==='all'?'All Sources':F.s()} · sorted by ${campSortKey}`);
 
-  // Sort
   const sortFns={
-    impr:(a,b)=>b.impr-a.impr, spend:(a,b)=>b.sp-a.sp,
-    reg:(a,b)=>b.reg-a.reg, ftd:(a,b)=>b.ftd-a.ftd,
+    impr:(a,b)=>b.impr-a.impr,spend:(a,b)=>b.sp-a.sp,
+    reg:(a,b)=>b.reg-a.reg,ftd:(a,b)=>b.ftd-a.ftd,
     roi:(a,b)=>(b.sp>0?b.nf/b.sp:0)-(a.sp>0?a.nf/a.sp:0),
     gd:(a,b)=>b.dep-a.dep,
   };
   const sorted=[...data].sort(sortFns[campSortKey]||sortFns.impr);
-  set('camp-rows', sorted.length+' rows');
+  set('camp-rows',sorted.length+' rows');
+
+  // owner badge colors
+  const ownerStyle = {
+    Allysson: 'background:#dbeafe;color:#1e40af',
+    Dean:     'background:#fce7f3;color:#9d174d',
+  };
+  const typeStyle = {
+    Promotion:     'background:#f0fdf4;color:#15803d',
+    'Non-Promotion':'background:#fffbeb;color:#92400e',
+  };
 
   const tbody=document.getElementById('campBody');
   tbody.innerHTML=sorted.map(d=>{
@@ -876,6 +832,8 @@ function renderCampaign(data, a){
       <td><span class="rp ${d.r}">${d.r}</span></td>
       <td class="fn2">${d.c}</td>
       <td style="color:#6b7280">${d.src}</td>
+      <td><span class="rp" style="${ownerStyle[d.owner]||''};min-width:60px">${d.owner}</span></td>
+      <td><span class="rp" style="${typeStyle[d.camptype]||''};min-width:80px">${d.camptype}</span></td>
       <td>${fN(d.impr)}</td>
       <td>${fN(d.clk)}</td>
       <td>${d.ctr.toFixed(2)}%</td>
@@ -893,7 +851,6 @@ function renderCampaign(data, a){
     </tr>`;
   }).join('');
 
-  // Campaign charts
   dc('c-campBar');
   const top8=[...data].filter(d=>d.sp>0).sort((a,b)=>b.sp-a.sp).slice(0,8);
   CH['c-campBar']=new Chart(document.getElementById('c-campBar'),{
@@ -941,25 +898,17 @@ function sortCamp(key,btn){
 }
 
 function onFC(){
-  // always re-filter and re-render both views
-  const data = filtered();
-  const a    = agg(data);
-
-  // update filter highlight
-  ['entity','region','source','campaign'].forEach(id=>{
+  const data=filtered();
+  const a=agg(data);
+  ['entity','region','source','campaign','owner','camptype'].forEach(id=>{
     const sel=document.getElementById('sel-'+id);
     const grp=document.getElementById('fg-'+id);
-    if(grp&&sel) grp.classList.toggle('on', sel.value!=='all');
+    if(grp&&sel) grp.classList.toggle('on',sel.value!=='all');
   });
-
-  const campView = document.getElementById('view-campaign');
-  const isCamp   = campView && campView.style.display === 'block';
-
-  if(isCamp){
-    renderCampaign(data, a);
-  } else {
-    render();
-  }
+  const campView=document.getElementById('view-campaign');
+  const isCamp=campView&&campView.style.display==='block';
+  if(isCamp){renderCampaign(data,a);}
+  else{render();}
 }
 
 // ── Init ──
