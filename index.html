@@ -3,187 +3,234 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZERO Markets · Marketing Overview</title>
+<title>ZERO Markets &middot; Marketing Overview</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root{
-  --bg:#f4f6f4; --surf:#fff; --surf2:#f8faf8; --border:#e2e6e2; --border2:#cdd2cd;
-  --text:#0f1512; --text2:#3d4d42; --text3:#8a9890;
-  --green:#15803d; --gl:#22c55e; --gbg:#f0fdf4; --gbr:#bbf7d0;
-  --red:#b91c1c; --rbg:#fef2f2;
-  --amber:#b45309; --abg:#fffbeb;
-  --blue:#1d4ed8; --bbg:#eff6ff;
-  --purple:#6d28d9; --pbg:#f5f3ff;
-  --nav:#0f1a14;
+  --bg:#f2f4f2;--surf:#fff;--surf2:#f7f9f7;
+  --border:#e0e4e0;--border2:#c8cec8;
+  --text:#0d1410;--text2:#374237;--text3:#7a8c7a;
+  --green:#16a34a;--gl:#22c55e;--gbg:#f0fdf4;--gbr:#bbf7d0;
+  --red:#dc2626;--rbg:#fef2f2;
+  --amber:#d97706;--abg:#fffbeb;
+  --blue:#2563eb;--bbg:#eff6ff;
+  --purple:#7c3aed;--pbg:#f5f3ff;
+  --nav:#0d1a10;
   --font:'Plus Jakarta Sans',sans-serif;
   --mono:'IBM Plex Mono',monospace;
-  --r:10px; --sh:0 1px 4px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
-  --s0:#6b7280; --s1:#0ea5e9; --s2:#8b5cf6; --s3:#f59e0b; --s4:#22c55e; --s5:#15803d;
+  --r:8px;--sh:0 1px 3px rgba(0,0,0,.05),0 1px 2px rgba(0,0,0,.04);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;display:flex;flex-direction:column;min-height:100vh;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;min-height:100vh;display:flex;flex-direction:column;}
 
-/* ── TOPBAR ── */
-.topbar{height:52px;background:var(--nav);display:flex;align-items:center;padding:0 24px;gap:16px;position:sticky;top:0;z-index:300;flex-shrink:0;}
-.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.logo-icon{width:34px;height:34px;border-radius:50%;background:#dde8dd;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.logo-icon svg{width:20px;height:20px;}
-.logo-name{font-size:13px;font-weight:700;color:#fff;letter-spacing:-.2px;line-height:1.2;}
+/* TOPBAR */
+.topbar{height:52px;background:var(--nav);display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0;position:sticky;top:0;z-index:300;}
+.logo{display:flex;align-items:center;gap:9px;}
+.logo-icon{width:32px;height:32px;border-radius:50%;background:#dde8dd;display:flex;align-items:center;justify-content:center;}
+.logo-icon svg{width:18px;height:18px;}
+.logo-name{font-size:13px;font-weight:700;color:#fff;letter-spacing:-.2px;}
 .logo-sub{font-size:10px;color:#6b7280;}
-.nav-div{width:1px;height:20px;background:#1f2d25;flex-shrink:0;}
+.ndiv{width:1px;height:20px;background:#1f2d25;}
 .nav-tabs{display:flex;gap:2px;}
 .ntab{height:30px;padding:0 14px;border-radius:6px;border:none;font-family:var(--font);font-size:12px;font-weight:500;color:#6b7280;background:transparent;cursor:pointer;transition:all .15s;}
 .ntab:hover{color:#e5e7eb;background:#1f2d25;}
 .ntab.active{background:var(--gl);color:#052e16;font-weight:600;}
-.topbar-r{margin-left:auto;display:flex;align-items:center;gap:12px;}
-.nav-ctx{font-family:var(--mono);font-size:10px;color:#6b7280;}
-.live-pill{display:flex;align-items:center;gap:5px;background:#14532d;border:1px solid #166534;color:#4ade80;border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;font-family:var(--mono);}
-.live-dot{width:5px;height:5px;border-radius:50%;background:#4ade80;animation:blink 2s infinite;}
+.topbar-r{margin-left:auto;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:10px;color:#6b7280;}
+.live-pill{display:flex;align-items:center;gap:5px;background:#14532d;border:1px solid #166534;color:#4ade80;border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;}
+.ldot{width:5px;height:5px;border-radius:50%;background:#4ade80;animation:blink 2s infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* ── FILTERBAR ── */
-.filterbar{background:var(--surf);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:8px;height:46px;position:sticky;top:52px;z-index:200;box-shadow:var(--sh);flex-shrink:0;}
-.fg{display:flex;align-items:center;border:1px solid var(--border2);border-radius:7px;background:var(--surf);transition:border-color .15s,box-shadow .15s;}
-.fg:focus-within{border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,.1);}
-.fg.on{border-color:var(--green);background:var(--gbg);}
-.fg.on .fgl{color:var(--green);background:var(--gbg);}
+/* FILTERBAR */
+.filterbar{background:var(--surf);border-bottom:1px solid var(--border);padding:0 20px;height:46px;display:flex;align-items:center;gap:6px;flex-shrink:0;position:sticky;top:52px;z-index:200;box-shadow:var(--sh);}
+.fg{display:flex;align-items:center;border:1px solid var(--border2);border-radius:6px;background:var(--surf);}
+.fg:focus-within,.fg.on{border-color:var(--green);}
+.fg.on{background:var(--gbg);}
+.fg.on .fgl{background:var(--gbg);color:var(--green);}
 .fg.on select{color:var(--green);font-weight:600;background:var(--gbg);}
-.fgl{padding:0 9px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);background:#f8faf8;border-right:1px solid var(--border);height:28px;display:flex;align-items:center;white-space:nowrap;pointer-events:none;border-radius:6px 0 0 6px;}
-.fg select{border:none;outline:none;background:transparent;padding:0 26px 0 9px;height:28px;font-size:12px;font-weight:500;color:var(--text);cursor:pointer;font-family:var(--font);-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238a9890' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 7px center;min-width:88px;}
-.fsep{width:1px;height:22px;background:var(--border);margin:0 4px;}
+.fgl{padding:0 8px;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);background:#f7f9f7;border-right:1px solid var(--border);height:28px;display:flex;align-items:center;white-space:nowrap;pointer-events:none;border-radius:5px 0 0 5px;}
+.fg select{border:none;outline:none;background:transparent;padding:0 22px 0 8px;height:28px;font-size:12px;font-weight:500;color:var(--text);cursor:pointer;font-family:var(--font);-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a8c7a' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 5px center;min-width:80px;}
+.fsep{width:1px;height:22px;background:var(--border);margin:0 3px;}
 .fy{display:flex;gap:4px;}
-.fy select{border:1px solid var(--border2);border-radius:7px;background:var(--surf);padding:0 26px 0 10px;height:28px;font-size:12px;font-weight:500;color:var(--text);cursor:pointer;font-family:var(--font);-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238a9890' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 7px center;outline:none;}
-.fy select:focus{border-color:var(--green);}
-.flt-sum{margin-left:auto;font-size:10px;color:var(--text3);font-family:var(--mono);white-space:nowrap;}
+.fy select{border:1px solid var(--border2);border-radius:6px;background:var(--surf);padding:0 22px 0 8px;height:28px;font-size:12px;font-weight:500;color:var(--text);cursor:pointer;font-family:var(--font);-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a8c7a' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 5px center;outline:none;}
+.flt-r{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--text3);}
 
-/* ── LAYOUT ── */
-.main{flex:1;padding:18px 24px 40px;}
-.section{margin-bottom:20px;}
+/* TAB NAV */
+.tabnav{background:var(--surf);border-bottom:1px solid var(--border);padding:0 20px;display:flex;gap:0;flex-shrink:0;position:sticky;top:98px;z-index:190;}
+.stab{padding:11px 18px;font-size:13px;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;user-select:none;}
+.stab:hover{color:var(--text2);}
+.stab.active{color:var(--green);border-bottom-color:var(--green);font-weight:600;}
 
-/* ── SECTION HEADER ── */
-.shd{display:flex;align-items:center;gap:0;margin-bottom:12px;}
-.shd-rule{flex:1;height:1px;background:var(--border);}
-.snum{font-family:var(--mono);font-size:9px;font-weight:600;color:var(--text3);background:#f0f2f0;border:1px solid var(--border);border-radius:3px;padding:0 7px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin:0 10px;}
-.stitle{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text2);margin-right:10px;}
-.srule{flex:1;height:1px;background:var(--border);}
+/* MAIN */
+.main{flex:1;padding:18px 20px 40px;}
 
-/* ── KPI STRIP ── */
-.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px;}
+/* SECTION HEADER */
+.shd{display:flex;align-items:center;gap:0;margin-bottom:12px;margin-top:22px;}
+.shd:first-child,.shd.first{margin-top:0;}
+.shr{flex:1;height:1px;background:var(--border);}
+.snum{font-family:var(--mono);font-size:9px;font-weight:600;color:var(--text3);background:#f0f2f0;border:1px solid var(--border);border-radius:3px;padding:0 7px;height:18px;display:flex;align-items:center;margin:0 10px;}
+.stitle{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--text2);margin-right:10px;}
 
-.kc{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh);position:relative;overflow:hidden;transition:border-color .15s;}
-.kc:hover{border-color:var(--border2);}
+/* KPI STRIP */
+.krow{display:grid;gap:10px;margin-bottom:14px;}
+.k5{grid-template-columns:repeat(5,1fr);}
+.k4{grid-template-columns:repeat(4,1fr);}
+.k3{grid-template-columns:repeat(3,1fr);}
+
+.kc{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh);position:relative;overflow:hidden;}
 .kc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--kc,var(--green));border-radius:var(--r) var(--r) 0 0;}
 .kc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px;}
-.kc-label{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);}
-.badge{font-family:var(--mono);font-size:9px;font-weight:600;padding:2px 7px;border-radius:4px;border:1px solid;white-space:nowrap;}
+.kc-lbl{font-size:10px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--text3);}
+.badge{font-family:var(--mono);font-size:9px;font-weight:600;padding:2px 7px;border-radius:4px;border:1px solid;}
 .kc-val{font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-1px;line-height:1;margin-bottom:10px;}
 .kc-subs{display:flex;gap:0;flex-wrap:nowrap;padding-top:9px;border-top:1px solid var(--border);}
-.ks-l{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;} .kc-subs > div{flex:1;min-width:0;padding-right:8px;}
-.ks-v{font-size:11px;color:var(--text2);font-family:var(--mono);font-weight:500;}
-.g{color:var(--green);} .r{color:var(--red);} .a{color:var(--amber);} .b{color:var(--blue);} .p{color:var(--purple);}
-.delta{display:inline-flex;align-items:center;gap:2px;font-size:10px;font-family:var(--mono);padding:1px 4px;border-radius:3px;}
-.d-up{color:var(--green);background:var(--gbg);} .d-dn{color:var(--red);background:var(--rbg);} .d-fl{color:var(--text3);background:#f0f2f0;}
+.kc-subs>div{flex:1;min-width:0;padding-right:6px;}
+.sl{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;}
+.sv{font-size:11px;color:var(--text2);font-family:var(--mono);font-weight:500;}
+.g{color:var(--green);}.r{color:var(--red);}.a{color:var(--amber);}.b{color:var(--blue);}.p{color:var(--purple);}
 
-/* ── CHARTS ── */
-.cgrid{display:grid;gap:12px;margin-bottom:12px;}
-.c1{grid-template-columns:1fr;}
-.c2{grid-template-columns:1fr 1fr;}
+/* budget bar */
+.bbar-bg{height:5px;background:var(--surf2);border-radius:3px;overflow:hidden;margin:7px 0 4px;}
+.bbar-fill{height:100%;background:var(--gl);border-radius:3px;transition:width .6s;}
+.bbar-lbl{display:flex;justify-content:space-between;font-size:9px;color:var(--text3);font-family:var(--mono);}
+
+/* CHART CARDS */
+.cgrid{display:grid;gap:12px;margin-bottom:14px;}
 .c3{grid-template-columns:1fr 1fr 1fr;}
+.c2{grid-template-columns:1fr 1fr;}
 .c21{grid-template-columns:2fr 1fr;}
 .cc{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:16px;box-shadow:var(--sh);}
 .cc-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
-.cc-sub{font-size:11px;color:var(--text3);margin-bottom:12px;}
-.cw{position:relative;width:100%;}
-.h160{height:160px;} .h200{height:200px;} .h240{height:240px;} .h280{height:280px;}
-.cw canvas{position:absolute;top:0;left:0;width:100%!important;height:100%!important;}
-.leg{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;}
+.cc-sub{font-size:11px;color:var(--text3);margin-bottom:10px;}
+.leg{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:8px;}
 .li{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text2);}
 .ld{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.cw{position:relative;height:220px;width:100%;}
+.cw canvas{position:absolute;top:0;left:0;width:100%!important;height:100%!important;}
+.h200{height:200px;}.h240{height:240px;}.h260{height:260px;}
 
-/* ── FUNNEL ── */
-.funnel-wrap{display:flex;align-items:flex-end;gap:0;width:100%;position:relative;}
-.fn-stage{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;}
-.fn-stage+.fn-stage::before{content:'›';position:absolute;left:-1px;bottom:calc(var(--bar-h,40px) / 2 + 10px);font-size:20px;color:var(--border2);z-index:2;line-height:1;}
-.fn-bar-wrap{width:100%;display:flex;justify-content:center;align-items:flex-end;margin-bottom:8px;height:200px;}
-.fn-bar{width:72%;border-radius:4px 4px 0 0;min-height:3px;position:relative;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;padding-top:8px;transition:height .5s cubic-bezier(.4,0,.2,1);}
-.fn-bar-val{font-family:var(--mono);font-size:11px;font-weight:600;color:#fff;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.3);}
-.fn-bar-pct{font-size:9px;color:rgba(255,255,255,.75);margin-top:2px;}
-.fn-label{text-align:center;margin-bottom:4px;}
-.fn-code{font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;border:1px solid;display:inline-block;}
-.fn-name{font-size:10px;color:var(--text3);margin-top:3px;}
-.fn-cost{font-size:10px;color:var(--text3);text-align:center;margin-top:6px;}
-.fn-cost strong{font-family:var(--mono);font-weight:600;color:var(--text2);}
-.fn-conv-row{display:flex;gap:0;margin-top:16px;background:var(--surf2);border-radius:8px;padding:10px 0;border:1px solid var(--border);}
-.fn-conv-item{flex:1;text-align:center;border-right:1px solid var(--border);}
-.fn-conv-item:last-child{border:none;}
-.fn-conv-label{font-size:9px;color:var(--text3);letter-spacing:.4px;text-transform:uppercase;margin-bottom:3px;}
-.fn-conv-val{font-family:var(--mono);font-size:12px;font-weight:600;}
-.fn-drop{font-size:9px;color:var(--red);font-family:var(--mono);}
+/* SORT TABS */
+.sort-tabs{display:flex;gap:4px;flex-wrap:wrap;}
+.srtab{height:24px;padding:0 10px;border-radius:5px;border:1px solid var(--border2);font-family:var(--font);font-size:11px;font-weight:500;color:var(--text3);background:var(--surf);cursor:pointer;transition:all .15s;}
+.srtab:hover{border-color:var(--green);color:var(--text);}
+.srtab.on{background:var(--gl);border-color:var(--gl);color:#052e16;font-weight:600;}
+.grptab{height:26px;padding:0 11px;border:none;font-family:var(--font);font-size:12px;font-weight:500;color:var(--text3);background:var(--surf);cursor:pointer;transition:all .15s;}
+.grptab:hover{background:var(--surf2);color:var(--text);}
+.grptab.on{background:var(--text);color:#fff;font-weight:600;}
+.typetab{height:26px;padding:0 11px;border:none;font-family:var(--font);font-size:12px;font-weight:500;color:var(--text3);background:var(--surf);cursor:pointer;transition:all .15s;}
+.typetab:hover{background:var(--surf2);color:var(--text);}
+.typetab.on-g{background:var(--gl);color:#052e16;font-weight:600;}
 
-/* ── TABLE ── */
-.tw{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;margin-bottom:12px;}
-.tw-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 10px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px;}
+/* TABLE */
+.tw{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;margin-bottom:14px;}
+.tw-head{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px;}
 .tw-title{font-size:13px;font-weight:600;color:var(--text);}
 .tw-sub{font-size:11px;color:var(--text3);}
-.tw-meta{font-size:11px;color:var(--text3);font-family:var(--mono);}
-.tw-scroll{overflow-x:auto;max-height:420px;overflow-y:auto;}
+.tw-right{display:flex;align-items:center;gap:10px;}
+.tw-badge{font-size:9px;font-weight:600;padding:2px 8px;border-radius:4px;border:1px solid;}
+.badge-promo{background:rgba(124,58,237,.08);color:var(--purple);border-color:rgba(124,58,237,.2);}
+.badge-np{background:rgba(37,99,235,.08);color:var(--blue);border-color:rgba(37,99,235,.2);}
+.tw-cnt{font-size:11px;color:var(--text3);font-family:var(--mono);}
+.tw-scroll{overflow-x:auto;max-height:380px;overflow-y:auto;}
 table.dt{width:100%;border-collapse:collapse;font-size:12px;}
-table.dt thead th{padding:8px 12px;font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);text-align:right;border-bottom:1px solid var(--border);background:var(--surf2);white-space:nowrap;position:sticky;top:0;z-index:1;}
-table.dt thead th:first-child,table.dt thead th:nth-child(2){text-align:left;}
-table.dt tbody td{padding:7px 12px;border-bottom:1px solid var(--border);color:var(--text2);text-align:right;font-family:var(--mono);font-size:11px;vertical-align:middle;}
-table.dt tbody td:first-child,table.dt tbody td:nth-child(2){text-align:left;font-family:var(--font);font-size:12px;}
+table.dt thead th{padding:7px 10px;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);text-align:right;border-bottom:1px solid var(--border);background:var(--surf2);white-space:nowrap;position:sticky;top:0;z-index:1;}
+table.dt thead th:first-child,table.dt thead th:nth-child(2),table.dt thead th:nth-child(3),table.dt thead th:nth-child(4),table.dt thead th:nth-child(5){text-align:left;}
+table.dt tbody td{padding:7px 10px;border-bottom:1px solid var(--border);color:var(--text2);text-align:right;font-family:var(--mono);font-size:11px;vertical-align:middle;}
+table.dt tbody td:first-child,table.dt tbody td:nth-child(2),table.dt tbody td:nth-child(3),table.dt tbody td:nth-child(4),table.dt tbody td:nth-child(5){text-align:left;font-family:var(--font);font-size:12px;}
 table.dt tbody tr:last-child td{border-bottom:none;}
 table.dt tbody tr:hover td{background:var(--surf2);}
 .rp{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:17px;border-radius:3px;font-size:9px;font-weight:700;padding:0 4px;}
-.rp.BR{background:#fef3c7;color:#92400e;} .rp.ES{background:#dbeafe;color:#1e40af;}
-.rp.KR{background:#fce7f3;color:#9d174d;} .rp.MN{background:#f0fdf4;color:#166534;}
+.rp.BR{background:#fef3c7;color:#92400e;}.rp.ES{background:#dbeafe;color:#1e40af;}
+.rp.KR{background:#fce7f3;color:#9d174d;}.rp.MN{background:#f0fdf4;color:#166534;}
 .rp.NZ{background:#f5f3ff;color:#5b21b6;}
-.pos{color:var(--green);} .neg{color:var(--red);} .mut{color:var(--text3);}
-.fn2{font-size:12px;color:var(--text);font-weight:500;}
+.type-pill{display:inline-block;font-size:9px;font-weight:600;padding:2px 7px;border-radius:4px;white-space:nowrap;}
+.tp-promo{background:rgba(124,58,237,.1);color:var(--purple);}
+.tp-np{background:rgba(37,99,235,.1);color:var(--blue);}
+.owner-pill{display:inline-block;font-size:10px;font-weight:500;padding:1px 8px;border-radius:12px;background:#f0fdf4;color:var(--green);border:1px solid var(--gbr);}
+.pos{color:var(--green);}.neg{color:var(--red);}.mut{color:var(--text3);}
+.fn{font-size:12px;color:var(--text);font-weight:500;}
 
-/* Tab buttons for campaign section */
-.camp-tabs{display:flex;gap:4px;flex-wrap:wrap;}
-.ctab{height:26px;padding:0 12px;border-radius:5px;border:1px solid var(--border2);font-family:var(--font);font-size:11px;font-weight:500;color:var(--text3);background:var(--surf);cursor:pointer;transition:all .15s;white-space:nowrap;}
-.ctab:hover{border-color:var(--green);color:var(--text);}
-.ctab.on{background:var(--gl);border-color:var(--gl);color:#052e16;font-weight:600;}
+/* MGR CARDS */
+.mgr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;}
+.mgr-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:16px;box-shadow:var(--sh);}
+.mgr-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.mgr-role{font-size:10px;color:var(--text3);letter-spacing:.3px;margin-bottom:12px;}
+.mgr-main{display:flex;gap:16px;margin-bottom:10px;}
+.mgr-stat .sl{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;}
+.mgr-stat .sv{font-family:var(--mono);font-size:18px;font-weight:600;}
+.mgr-grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:10px;border-top:1px solid var(--border);}
+
+/* FUNNEL */
+.fn-wrap{display:flex;align-items:flex-end;gap:0;width:100%;padding:0 8px;}
+.fn-stage{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;}
+.fn-stage+.fn-stage::before{content:'>';position:absolute;left:-2px;font-size:18px;color:var(--border2);bottom:calc(var(--bh,40px) / 2 + 10px);line-height:1;}
+.fn-bar-area{width:100%;display:flex;justify-content:center;align-items:flex-end;height:220px;margin-bottom:8px;}
+.fn-bar{width:75%;border-radius:4px 4px 0 0;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;padding-top:7px;transition:height .5s cubic-bezier(.4,0,.2,1);}
+.fn-bval{font-family:var(--mono);font-size:11px;font-weight:600;color:#fff;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.3);}
+.fn-bpct{font-size:9px;color:rgba(255,255,255,.75);margin-top:2px;}
+.fn-label{text-align:center;margin-bottom:4px;}
+.fn-code{font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;border:1px solid;display:inline-block;}
+.fn-name{font-size:10px;color:var(--text3);margin-top:3px;}
+.fn-cost{font-size:10px;color:var(--text3);text-align:center;margin-top:5px;}
+.fn-cost strong{font-family:var(--mono);font-weight:600;color:var(--text2);}
+.fn-conv-row{display:flex;background:var(--surf2);border-radius:6px;margin-top:14px;border:1px solid var(--border);}
+.fn-conv-item{flex:1;text-align:center;padding:8px 4px;border-right:1px solid var(--border);}
+.fn-conv-item:last-child{border:none;}
+.fn-conv-lbl{font-size:9px;color:var(--text3);letter-spacing:.3px;text-transform:uppercase;margin-bottom:3px;}
+.fn-conv-val{font-family:var(--mono);font-size:12px;font-weight:600;}
+.fn-drop{font-size:9px;color:var(--red);font-family:var(--mono);}
+
+/* CHANNEL PILLS */
+.ch-pill{display:inline-block;font-size:9px;font-weight:600;padding:2px 7px;border-radius:10px;}
 
 .note{text-align:center;font-size:10px;color:var(--text3);padding:8px 0;font-style:italic;}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+/* Manager Showdown */
+.sd-row{display:flex;align-items:center;gap:14px;background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;box-shadow:var(--sh);position:relative;overflow:hidden;}
+.sd-rank{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--text3);width:28px;text-align:center;flex-shrink:0;}
+.sd-rank.r1{color:#d4a017;}
+.sd-rank.r2{color:#9ca3af;}
+.sd-rank.r3{color:#b87333;}
+.sd-name{font-size:14px;font-weight:700;color:var(--text);width:90px;flex-shrink:0;}
+.sd-bar-wrap{flex:1;display:flex;flex-direction:column;gap:4px;}
+.sd-bar-bg{height:18px;background:var(--surf2);border-radius:4px;overflow:hidden;position:relative;}
+.sd-bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;transition:width .8s cubic-bezier(.4,0,.2,1);min-width:32px;}
+.sd-bar-val{font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.25);}
+.sd-meta{display:flex;gap:14px;font-size:10px;color:var(--text3);font-family:var(--mono);}
+.sd-meta b{color:var(--text2);font-weight:600;}
+.sd-metric-tabs{display:flex;gap:3px;margin-bottom:10px;}
+.sd-mtab{height:26px;padding:0 12px;border-radius:5px;border:1px solid var(--border2);font-family:var(--font);font-size:11px;font-weight:500;color:var(--text3);background:var(--surf);cursor:pointer;transition:all .15s;}
+.sd-mtab:hover{border-color:var(--green);color:var(--text);}
+.sd-mtab.on{background:var(--gl);border-color:var(--gl);color:#052e16;font-weight:600;}
 </style>
 </head>
 <body>
 
 <!-- TOPBAR -->
-<div class="topbar">
-  <div class="logo" style="display:flex;align-items:center;gap:12px;">
-    <svg width="110" height="20" viewBox="0 0 485 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M21.8838 87.5253H109.378V0.03125H21.8838V87.5253ZM91.9008 70.0052H39.3938V64.1582L61.3418 34.9972H39.3938V17.5192H91.9008V23.3983L70.0378 52.5312H91.9008V70.0052Z" fill="#ffffff"/>
-      <path d="M70.0269 52.529H91.9009L131.301 0H109.421L70.0269 52.529Z" fill="#00B955"/>
-      <path d="M61.289 35.0293H39.394L0 87.5583H21.884L61.289 35.0293Z" fill="#00B955"/>
-      <path d="M151.593 78C147.123 78 143 75.496 143 70.4C143.063 69.1997 143.371 68.0246 143.905 66.9461C144.439 65.8676 145.189 64.9084 146.108 64.1267L188.888 22.3707H143.943V8H205.188C209.485 8 213.698 10.604 213.698 15.6C213.649 16.8135 213.349 18.0041 212.818 19.098C212.287 20.192 211.535 21.166 210.61 21.96L167.868 63.7547H214V77.9813L151.593 78Z" fill="#ffffff"/>
-      <path d="M228 8H292V23.052H228V8ZM228 35.4667H292V50.524H228V35.4667ZM228 62.9333H292V78H228V62.9333Z" fill="#ffffff"/>
-      <path d="M369.419 78L352.089 58.9507H330.032V46.1507H357.594C365.019 46.1507 369.151 41.884 369.151 34.4C369.151 26.916 364.818 23.0187 357.594 23.0187H321.139V78H306V8H357.601C374.214 8 384.08 18.1013 384.08 33.9787C384.08 45.36 378.605 53.3987 369.706 56.8693L391 77.9533L369.419 78Z" fill="#ffffff"/>
-      <path d="M432.07 78C411.857 78 397 62.5961 397 42.2808C397 21.6667 411.842 8 432.07 8H449.627C470.532 8 485 21.9522 485 42.2808C485 62.6094 470.158 78 449.627 78H432.07ZM449.627 62.9804C452.182 63.0831 454.732 62.6877 457.131 61.8169C459.531 60.9461 461.732 59.6169 463.61 57.9055C465.487 56.1942 467.004 54.1343 468.073 51.844C469.142 49.5536 469.742 47.0778 469.838 44.5584C469.838 44.0314 469.838 43.519 469.838 42.992C469.838 31.332 461.537 22.9609 449.697 22.9609H432.07C420.635 22.9609 412.247 31.332 412.247 42.992C412.247 54.652 420.533 62.9297 432.07 62.9297L449.627 62.9804Z" fill="#ffffff"/>
-    </svg>
-    <div style="width:1px;height:16px;background:#1f2d25;"></div>
-    <div class="logo-sub" style="color:#6b7280;font-size:11px;">Marketing Overview</div>
+<header class="topbar">
+  <div class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 40 40" fill="none"><rect x="5" y="5" width="30" height="30" rx="4" stroke="#1a2e1a" stroke-width="2.5"/><path d="M11 29L20 11L29 29" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 24H26" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/></svg>
+    </div>
+    <div>
+      <div class="logo-name">ZERO MARKETS</div>
+      <div class="logo-sub">Marketing Overview</div>
+    </div>
   </div>
-  <div class="nav-div"></div>
+  <div class="ndiv"></div>
   <nav class="nav-tabs">
-    <button class="ntab active" onclick="switchMain('overview',this)">Overview</button>
-    <button class="ntab" onclick="switchMain('campaign',this)">Campaign</button>
+    <button class="ntab active" onclick="switchMain('overview',this)">Marketing Overview</button>
   </nav>
   <div class="topbar-r">
-    <span class="nav-ctx" id="navCtx">All · FY2026</span>
-    <span style="color:#374151;font-size:12px">|</span>
-    <span class="nav-ctx">Updated: Apr 2026</span>
-    <div class="live-pill"><div class="live-dot"></div>LIVE</div>
+    <span id="navCtx">All Entities &middot; FY2026</span>
+    <span style="color:#374151">|</span>
+    <span>Updated: Apr 2026</span>
+    <div class="live-pill"><div class="ldot"></div>LIVE</div>
   </div>
-</div>
+</header>
 
 <!-- FILTERBAR -->
 <div class="filterbar">
@@ -191,728 +238,1402 @@ table.dt tbody tr:hover td{background:var(--surf2);}
     <span class="fgl">Entity</span>
     <select id="sel-entity" onchange="onFC()">
       <option value="all">All Entities</option>
-      <option value="ASIC">ASIC · AU</option>
-      <option value="FMA">FMA · NZ</option>
-      <option value="FSC">FSC · MU</option>
-      <option value="SVG">SVG · VC</option>
+      <option value="ASIC">ASIC &middot; AU</option><option value="FMA">FMA &middot; NZ</option>
+      <option value="FSC">FSC &middot; MU</option><option value="SVG">SVG &middot; VC</option>
     </select>
   </div>
   <div class="fg" id="fg-region">
-    <span class="fgl">Region</span>
+    <span class="fgl">Country / Region</span>
     <select id="sel-region" onchange="onFC()">
       <option value="all">All Regions</option>
-      <option value="BR">BR</option><option value="ES">ES</option>
-      <option value="KR">KR</option><option value="MN">MN</option><option value="NZ">NZ</option>
+      <option value="BR">Brazil (BR)</option><option value="ES">Spain (ES)</option>
+      <option value="KR">Korea (KR)</option><option value="MN">Mongolia (MN)</option><option value="NZ">New Zealand (NZ)</option>
     </select>
   </div>
-  <div class="fg" id="fg-source">
-    <span class="fgl">Source</span>
-    <select id="sel-source" onchange="onFC()">
-      <option value="all">All Sources</option>
-      <option value="Meta">Meta</option><option value="Investing">Investing.com</option>
-      <option value="Rankia">Rankia</option><option value="BizDesk">BizDesk</option><option value="DSP">DSP</option>
-    </select>
-  </div>
-  <div class="fg" id="fg-campaign">
-    <span class="fgl">Campaign</span>
-    <select id="sel-campaign" onchange="onFC()">
-      <option value="all">All Campaigns</option>
-      <option value="WTC">WTC</option><option value="Gold Rush">Gold Rush</option>
-      <option value="Ebooks">Ebooks</option><option value="Academy">Academy</option>
-      <option value="WTI">WTI</option><option value="Instagram Boost">Instagram Boost</option>
-      <option value="Deposit Bonus">Deposit Bonus</option><option value="Zero Spreads">Zero Spreads</option>
-    </select>
-  </div>
-  <!-- ★ NEW: Owner filter -->
-  <div class="fg" id="fg-owner">
-    <span class="fgl">Owner</span>
-    <select id="sel-owner" onchange="onFC()">
-      <option value="all">All Owners</option>
-      <option value="Allysson">Allysson</option>
-      <option value="Dean">Dean</option>
-    </select>
-  </div>
-  <!-- ★ NEW: Campaign Type filter -->
-  <div class="fg" id="fg-camptype">
-    <span class="fgl">Type</span>
-    <select id="sel-camptype" onchange="onFC()">
-      <option value="all">All Types</option>
-      <option value="Promotion">Promotion</option>
-      <option value="Non-Promotion">Non-Promotion</option>
-    </select>
+  <div class="fg" id="fg-channel" style="position:relative;">
+    <span class="fgl">Channel</span>
+    <button id="channel-btn" onclick="toggleChannelMenu()" style="border:none;outline:none;background:transparent;padding:0 22px 0 8px;height:28px;font-size:12px;font-family:var(--font);color:var(--text);cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:0;position:relative;">
+      <span id="channel-btn-label">All Channels</span>
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7a8c7a" stroke-width="2.5" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <div id="channel-menu" style="display:none;position:absolute;top:34px;left:0;background:var(--surf);border:1px solid var(--border2);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:8px;min-width:180px;z-index:500;">
+      <div style="display:flex;gap:6px;padding:0 4px 8px;border-bottom:1px solid var(--border);margin-bottom:6px;">
+        <button onclick="setAllChannels(true)" style="flex:1;font-size:10px;padding:4px 6px;border:1px solid var(--border2);border-radius:4px;background:var(--surf2);color:var(--text2);cursor:pointer;font-family:var(--font);">Select all</button>
+        <button onclick="setAllChannels(false)" style="flex:1;font-size:10px;padding:4px 6px;border:1px solid var(--border2);border-radius:4px;background:var(--surf2);color:var(--text2);cursor:pointer;font-family:var(--font);">Clear</button>
+      </div>
+      <div id="channel-options"></div>
+    </div>
   </div>
   <div class="fsep"></div>
-  <div class="fy">
-    <select id="sel-year" onchange="onFC()">
-      <option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option>
-    </select>
-    <select id="sel-month" onchange="onFC()">
-      <option value="all">All Months</option>
-      <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
-      <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
-      <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
-      <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
-    </select>
+  <div class="fg" id="fg-from" style="border-color:var(--border2);">
+    <span class="fgl">From</span>
+    <input type="date" id="sel-from" value="2026-01-01" onchange="onFC()" style="border:none;outline:none;background:transparent;padding:0 8px;height:28px;font-size:12px;font-family:var(--font);color:var(--text);cursor:pointer;min-width:120px;">
   </div>
-  <div class="flt-sum" id="fltSum">FY2026 · All Sources</div>
+  <div class="fg" id="fg-to" style="border-color:var(--border2);">
+    <span class="fgl">To</span>
+    <input type="date" id="sel-to" value="2026-04-30" onchange="onFC()" style="border:none;outline:none;background:transparent;padding:0 8px;height:28px;font-size:12px;font-family:var(--font);color:var(--text);cursor:pointer;min-width:120px;">
+  </div>
+  <!-- hidden selects kept for filter logic compatibility -->
+  <select id="sel-source" style="display:none"><option value="all">all</option></select>
+  <select id="sel-campaign" style="display:none"><option value="all">all</option></select>
+  <select id="sel-owner" style="display:none"><option value="all">all</option></select>
+  <select id="sel-type" style="display:none"><option value="all">all</option></select>
+  <select id="sel-year" style="display:none"><option value="2026">2026</option></select>
+  <select id="sel-month" style="display:none"><option value="all">all</option></select>
+  <div class="flt-r" id="fltSum">FY2026</div>
 </div>
+
+<!-- TAB NAV -- Overview sub-tabs -->
+<nav class="tabnav" id="subTabNav">
+  <div class="stab active" onclick="switchSub('kpi',this)">Overview</div>
+  <div class="stab" onclick="switchSub('budget',this)">Budget</div>
+  <div class="stab" onclick="switchSub('promotions',this)">Promotions</div>
+  <div class="stab" onclick="switchSub('channels',this)">Channels</div>
+  <div class="stab" onclick="switchSub('adsmgr',this)">Ads Managers</div>
+</nav>
 
 <!-- MAIN -->
 <div class="main">
 
-<!-- ══ OVERVIEW ══ -->
+<!-- === OVERVIEW MAIN === -->
 <div id="view-overview">
 
-  <!-- §01 KPI STRIP -->
-  <div class="section">
-    <div class="shd"><div class="shd-rule"></div><div class="snum">01</div><div class="stitle">Key Performance Indicators</div><div class="srule"></div></div>
-    <div class="kpi-strip">
+  <!-- SUB: KPI -->
+  <div id="sub-kpi" class="subpanel">
 
-      <div class="kc" style="--kc:#1d4ed8">
-        <div class="kc-top">
-          <div class="kc-label">Total Spend</div>
-          <span class="badge" style="background:var(--bbg);color:var(--blue);border-color:#bfdbfe">YTD</span>
-        </div>
-        <div class="kc-val" id="k-spend">—</div>
-        <div class="kc-subs">
-          <div><div class="ks-l">Spend Share</div><div class="ks-v" id="k-spendshare">—</div></div>
-          <div><div class="ks-l">Remaining</div><div class="ks-v" id="k-budgutil">—</div></div>
+    <!-- 01 KPIs -->
+    <div class="shd first"><div class="shr"></div><div class="snum">01</div><div class="stitle">Key Performance Indicators</div><div class="shr"></div></div>
+    <div class="krow k5">
+      <div class="kc" style="--kc:var(--blue)">
+        <div class="kc-top"><div class="kc-lbl">Total Spend</div><span class="badge" style="background:var(--bbg);color:var(--blue);border-color:#bfdbfe">YTD</span></div>
+        <div class="kc-val" id="k-spend">--</div>
+        <div class="bbar-bg"><div class="bbar-fill" id="k-budbar" style="width:0%"></div></div>
+        <div class="bbar-lbl"><span id="k-spct">--</span><span id="k-srem">--</span></div>
+        <div class="kc-subs" style="margin-top:6px;">
+          <div><div class="sl">Spend Share</div><div class="sv" id="k-sshare">--</div></div>
+          <div><div class="sl">Remaining</div><div class="sv g" id="k-sremain">--</div></div>
         </div>
       </div>
-
       <div class="kc" style="--kc:#6b7280">
-        <div class="kc-top">
-          <div class="kc-label">Impressions</div>
-          <span class="badge" style="background:#f1f5f9;color:#6b7280;border-color:#cbd5e1">IMPR</span>
-        </div>
-        <div class="kc-val" id="k-impr" style="color:#6b7280">—</div>
+        <div class="kc-top"><div class="kc-lbl">Impressions</div><span class="badge" style="background:#f1f5f9;color:#6b7280;border-color:#cbd5e1">IMPR</span></div>
+        <div class="kc-val" id="k-impr" style="color:#6b7280">--</div>
         <div class="kc-subs">
-          <div><div class="ks-l">Clicks</div><div class="ks-v" id="k-clicks">—</div></div>
-          <div><div class="ks-l">CTR</div><div class="ks-v" id="k-ctr">—</div></div>
+          <div><div class="sl">Clicks</div><div class="sv" id="k-clicks">--</div></div>
+          <div><div class="sl">CTR</div><div class="sv" id="k-ctr">--</div></div>
         </div>
       </div>
-
       <div class="kc" style="--kc:#0ea5e9">
-        <div class="kc-top">
-          <div class="kc-label">Website Sessions</div>
-          <span class="badge" style="background:#e0f2fe;color:#0ea5e9;border-color:#7dd3fc">GA4</span>
-        </div>
-        <div class="kc-val" id="k-sessions" style="color:#0ea5e9">—</div>
+        <div class="kc-top"><div class="kc-lbl">Website Sessions</div><span class="badge" style="background:#e0f2fe;color:#0ea5e9;border-color:#7dd3fc">GA4</span></div>
+        <div class="kc-val" id="k-sess" style="color:#0ea5e9">--</div>
         <div class="kc-subs">
-          <div><div class="ks-l">New Visitors</div><div class="ks-v" id="k-newv">—</div></div>
-          <div><div class="ks-l">Bounce Rate</div><div class="ks-v" id="k-bounce">—</div></div>
+          <div><div class="sl">New Visitors</div><div class="sv" id="k-newv">--</div></div>
+          <div><div class="sl">Bounce Rate</div><div class="sv" id="k-bounce">--</div></div>
         </div>
       </div>
-
-      <div class="kc" style="--kc:#8b5cf6">
-        <div class="kc-top">
-          <div class="kc-label">Registered Users</div>
-          <span class="badge" style="background:var(--pbg);color:var(--purple);border-color:#c4b5fd">REG</span>
-        </div>
-        <div class="kc-val" id="k-reg" style="color:var(--purple)">—</div>
+      <div class="kc" style="--kc:var(--purple)">
+        <div class="kc-top"><div class="kc-lbl">Registered Users</div><span class="badge" style="background:var(--pbg);color:var(--purple);border-color:#c4b5fd">REG</span></div>
+        <div class="kc-val" id="k-reg" style="color:var(--purple)">--</div>
         <div class="kc-subs">
-          <div><div class="ks-l">EV Approved</div><div class="ks-v p" id="k-eva">—</div></div>
-          <div><div class="ks-l">FTD</div><div class="ks-v g" id="k-ftd-kpi">—</div></div>
+          <div><div class="sl">EV Approved</div><div class="sv p" id="k-eva">--</div></div>
+          <div><div class="sl">FTD</div><div class="sv g" id="k-ftd">--</div></div>
         </div>
       </div>
-
-      <div class="kc" style="--kc:#15803d">
-        <div class="kc-top">
-          <div class="kc-label">Gross Deposit</div>
-          <span class="badge" style="background:var(--gbg);color:var(--green);border-color:var(--gbr)">GD</span>
-        </div>
-        <div class="kc-val" id="k-gd" style="color:var(--green)">—</div>
+      <div class="kc" style="--kc:var(--green)">
+        <div class="kc-top"><div class="kc-lbl">Gross Deposit</div><span class="badge" style="background:var(--gbg);color:var(--green);border-color:var(--gbr)">GD</span></div>
+        <div class="kc-val" id="k-gd" style="color:var(--green)">--</div>
         <div class="kc-subs">
-          <div><div class="ks-l">NDAW</div><div class="ks-v g" id="k-ndaw">—</div></div>
-          <div><div class="ks-l">Mkt ROI</div><div class="ks-v g" id="k-roi">—</div></div>
+          <div><div class="sl">NDAW</div><div class="sv g" id="k-ndaw">--</div></div>
+          <div><div class="sl">Mkt ROI</div><div class="sv g" id="k-roi">--</div></div>
         </div>
       </div>
-
     </div>
-  </div>
 
-  <!-- §02 TREND CHARTS -->
-  <div class="section">
-    <div class="shd"><div class="shd-rule"></div><div class="snum">02</div><div class="stitle">Monthly Trends</div><div class="srule"></div></div>
+    <!-- 02 Trends -->
+    <div class="shd"><div class="shr"></div><div class="snum">02</div><div class="stitle">Monthly Trends</div><div class="shr"></div></div>
     <div class="cgrid c3">
-
       <div class="cc">
         <div class="cc-title">Impressions &amp; Clicks</div>
-        <div class="cc-sub">Monthly reach & click volume · filtered</div>
-        <div class="leg">
-          <div class="li"><div class="ld" style="background:#6b7280"></div>Impressions</div>
-          <div class="li"><div class="ld" style="background:#0ea5e9"></div>Clicks</div>
-        </div>
-        <div class="cw h200"><canvas id="c-imprTrend"></canvas></div>
+        <div class="cc-sub">Monthly reach &amp; click volume &middot; filtered</div>
+        <div class="leg"><div class="li"><div class="ld" style="background:#6b7280"></div>Impressions</div><div class="li"><div class="ld" style="background:#0ea5e9"></div>Clicks</div></div>
+        <div class="cw h200"><canvas id="c-impr"></canvas></div>
       </div>
-
       <div class="cc">
-        <div class="cc-title">REG · EV.A · FTD</div>
-        <div class="cc-sub">Monthly user acquisition stages · filtered</div>
-        <div class="leg">
-          <div class="li"><div class="ld" style="background:#8b5cf6"></div>REG</div>
-          <div class="li"><div class="ld" style="background:#f59e0b"></div>EV.A</div>
-          <div class="li"><div class="ld" style="background:#22c55e"></div>FTD</div>
-        </div>
-        <div class="cw h200"><canvas id="c-regTrend"></canvas></div>
+        <div class="cc-title">REG &middot; EV.A &middot; FTD</div>
+        <div class="cc-sub">Monthly user acquisition stages &middot; filtered</div>
+        <div class="leg"><div class="li"><div class="ld" style="background:#8b5cf6"></div>REG</div><div class="li"><div class="ld" style="background:#f59e0b"></div>EV.A</div><div class="li"><div class="ld" style="background:#22c55e"></div>FTD</div></div>
+        <div class="cw h200"><canvas id="c-reg"></canvas></div>
       </div>
-
       <div class="cc">
         <div class="cc-title">Gross Deposit</div>
-        <div class="cc-sub">Monthly GD total (USD) · filtered</div>
-        <div class="leg">
-          <div class="li"><div class="ld" style="background:#22c55e"></div>Gross Deposit</div>
-          <div class="li"><div class="ld" style="background:#15803d"></div>NDAW</div>
-        </div>
-        <div class="cw h200"><canvas id="c-gdTrend"></canvas></div>
+        <div class="cc-sub">Monthly GD total (USD) &middot; filtered</div>
+        <div class="leg"><div class="li"><div class="ld" style="background:#22c55e"></div>NDAW (retained)</div><div class="li"><div class="ld" style="background:rgba(251,191,36,.6)"></div>TAW (withdrawn)</div></div>
+        <div class="cw h200"><canvas id="c-gd"></canvas></div>
       </div>
-
     </div>
-  </div>
 
-  <!-- §03 FUNNEL -->
-  <div class="section">
-    <div class="shd"><div class="shd-rule"></div><div class="snum">03</div><div class="stitle">Acquisition Funnel · Impression → First Trade</div><div class="srule"></div></div>
+    <!-- 03 Funnel -->
+    <div class="shd"><div class="shr"></div><div class="snum">03</div><div class="stitle">Acquisition Funnel &middot; Impression -> First Trade</div><div class="shr"></div></div>
     <div class="cc">
       <div class="cc-title">Full-funnel Conversion</div>
-      <div class="cc-sub" id="funnel-sub">Marketing attribution · selected filters</div>
-      <div class="funnel-wrap" id="funnelWrap" style="margin-top:16px;"></div>
-      <div class="fn-conv-row" id="funnelConvRow" style="margin-top:16px;"></div>
-      <div class="note" style="margin-top:8px;">Stage cost = Total Spend ÷ Users at that stage · Attribution: 7-day click / 1-day view</div>
+      <div class="cc-sub" id="fn-sub">Marketing attribution &middot; All Regions &middot; All Sources</div>
+      <div class="fn-wrap" id="fnWrap" style="margin-top:16px;"></div>
+      <div class="fn-conv-row" id="fnConv" style="margin-top:14px;"></div>
+      <div class="note">Stage cost = Total Spend / Users at that stage &middot; Attribution: 7-day click / 1-day view</div>
+    </div>
+
+  </div>
+
+  <!-- SUB: PROMOTIONS -->
+  <div id="sub-promotions" class="subpanel" style="display:none;">
+    <div class="shd first"><div class="shr"></div><div class="snum">01</div><div class="stitle">Non-Promotion Campaigns</div><div class="shr"></div></div>
+    <div class="tw">
+      <div class="tw-head">
+        <div><div class="tw-title">Non-Promotion Performance</div><div class="tw-sub">Always-on campaigns &middot; sorted by Spend</div></div>
+        <div class="tw-right"><span class="tw-badge badge-np">NON-PROMO</span><span class="tw-cnt" id="np-cnt">--</span></div>
+      </div>
+      <div class="tw-scroll"><table class="dt"><thead><tr><th>Region</th><th>Campaign</th><th>Owner</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>Spend $$</th><th>CPR</th><th>CPFTD</th><th>GD</th><th>NDAW</th><th>ROI</th></tr></thead><tbody id="np-body"></tbody></table></div>
+    </div>
+    <div class="shd"><div class="shr"></div><div class="snum">02</div><div class="stitle">Promotion Campaigns</div><div class="shr"></div></div>
+    <div class="tw">
+      <div class="tw-head">
+        <div><div class="tw-title">Promotion Performance</div><div class="tw-sub">Time-limited promotions &amp; bonuses &middot; sorted by Spend</div></div>
+        <div class="tw-right"><span class="tw-badge badge-promo">PROMO</span><span class="tw-cnt" id="p-cnt">--</span></div>
+      </div>
+      <div class="tw-scroll"><table class="dt"><thead><tr><th>Region</th><th>Campaign</th><th>Owner</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>Spend $$</th><th>CPR</th><th>CPFTD</th><th>GD</th><th>NDAW</th><th>ROI</th></tr></thead><tbody id="p-body"></tbody></table></div>
     </div>
   </div>
 
-</div><!-- /overview -->
-
-<!-- ══ CAMPAIGN ══ -->
-<div id="view-campaign" style="display:none;">
-  <div class="shd" style="margin-bottom:12px;"><div class="shd-rule"></div>
-    <div class="snum">05</div>
-    <div class="stitle" id="camp-title">Campaign Performance Analysis</div>
-    <div class="srule"></div>
-    <div class="camp-tabs" id="campTabs">
-      <button class="ctab on" onclick="sortCamp('impr',this)">By Impressions</button>
-      <button class="ctab" onclick="sortCamp('spend',this)">By Spend</button>
-      <button class="ctab" onclick="sortCamp('reg',this)">By REG</button>
-      <button class="ctab" onclick="sortCamp('ftd',this)">By FTD</button>
-      <button class="ctab" onclick="sortCamp('roi',this)">By ROI</button>
-      <button class="ctab" onclick="sortCamp('gd',this)">By GD</button>
+  <!-- SUB: CHANNELS -->
+  <div id="sub-channels" class="subpanel" style="display:none;">
+    <div class="shd first"><div class="shr"></div><div class="snum">01</div><div class="stitle">Channel Performance</div><div class="shr"></div></div>
+    <div class="krow k5" id="ch-kpis"></div>
+    <div class="cgrid c2" style="margin-bottom:14px;">
+      <div class="cc"><div class="cc-title">Spend by Channel</div><div class="cc-sub">Budget distribution</div><div class="cw h240"><canvas id="c-chSpend"></canvas></div></div>
+      <div class="cc"><div class="cc-title">FTD by Channel</div><div class="cc-sub">First depositors per source</div><div class="cw h240"><canvas id="c-chFTD"></canvas></div></div>
+    </div>
+    <div class="shd"><div class="shr"></div><div class="snum">02</div><div class="stitle">Campaign Detail by Channel</div><div class="shr"></div></div>
+    <div class="tw">
+      <div class="tw-head"><div><div class="tw-title">Channel Breakdown</div><div class="tw-sub" id="ch-sub">All campaigns grouped by source</div></div><span class="tw-cnt" id="ch-cnt">--</span></div>
+      <div class="tw-scroll"><table class="dt"><thead><tr><th>Channel</th><th>Campaign</th><th>Region</th><th>Owner</th><th>Type</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>FTD</th><th>Spend</th><th>CPM</th><th>CPC</th><th>CPR</th><th>CPFTD</th><th>GD</th><th>ROI</th></tr></thead><tbody id="ch-body"></tbody></table></div>
     </div>
   </div>
 
-  <div class="kpi-strip" style="margin-bottom:12px;">
-    <div class="kc" style="--kc:var(--blue)">
-      <div class="kc-top"><div class="kc-label">Total Spend</div><span class="badge" style="background:var(--bbg);color:var(--blue);border-color:#bfdbfe">YTD</span></div>
-      <div class="kc-val" id="cs-spend">—</div>
-      <div class="kc-subs"><div><div class="ks-l">Campaigns</div><div class="ks-v" id="cs-camps">—</div></div><div><div class="ks-l">Sources</div><div class="ks-v" id="cs-srcs">—</div></div></div>
+  <!-- SUB: ADS MANAGERS -->
+  <div id="sub-adsmgr" class="subpanel" style="display:none;">
+
+  <!-- Campaign Budget summary -->
+  <div style="display:flex;align-items:center;gap:0;margin-bottom:12px;background:var(--surf);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;">
+    <div style="flex:1;padding:12px 18px;border-right:1px solid var(--border);">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Total Budget</div>
+      <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.5px;">$1,050,000</div>
     </div>
-    <div class="kc" style="--kc:#8b5cf6">
-      <div class="kc-top"><div class="kc-label">Total REG</div><span class="badge" style="background:var(--pbg);color:var(--purple);border-color:#c4b5fd">REG</span></div>
-      <div class="kc-val p" id="cs-reg">—</div>
-      <div class="kc-subs"><div><div class="ks-l">CPR</div><div class="ks-v" id="cs-cpr">—</div></div><div><div class="ks-l">Top Camp.</div><div class="ks-v" id="cs-top-reg">—</div></div></div>
+    <div style="flex:1;padding:12px 18px;border-right:1px solid var(--border);">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Used Budget</div>
+      <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--green);letter-spacing:-.5px;" id="camp-used">--</div>
     </div>
-    <div class="kc" style="--kc:#22c55e">
-      <div class="kc-top"><div class="kc-label">Total FTD</div><span class="badge" style="background:var(--gbg);color:var(--green);border-color:var(--gbr)">FTD</span></div>
-      <div class="kc-val g" id="cs-ftd">—</div>
-      <div class="kc-subs"><div><div class="ks-l">CPFTD</div><div class="ks-v" id="cs-cpftd">—</div></div><div><div class="ks-l">Conv. Rate</div><div class="ks-v g" id="cs-cr">—</div></div></div>
-    </div>
-    <div class="kc" style="--kc:#22c55e">
-      <div class="kc-top"><div class="kc-label">Gross Deposit</div><span class="badge" style="background:var(--gbg);color:var(--green);border-color:var(--gbr)">GD</span></div>
-      <div class="kc-val g" id="cs-gd">—</div>
-      <div class="kc-subs"><div><div class="ks-l">NDAW</div><div class="ks-v g" id="cs-ndaw">—</div></div></div>
-    </div>
-    <div class="kc" style="--kc:#15803d">
-      <div class="kc-top"><div class="kc-label">Marketing ROI</div><span class="badge" style="background:var(--gbg);color:var(--green);border-color:var(--gbr)">ROI</span></div>
-      <div class="kc-val g" id="cs-roi">—</div>
-      <div class="kc-subs"><div><div class="ks-l">NDAW / Spend</div></div></div>
+    <div style="flex:1;padding:12px 18px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Remaining Budget</div>
+      <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--amber);letter-spacing:-.5px;" id="camp-remaining">--</div>
     </div>
   </div>
 
-  <div class="cgrid c2" style="margin-bottom:12px;">
-    <div class="cc">
-      <div class="cc-title">Spend vs GD — Top Campaigns</div>
-      <div class="cc-sub">Top 8 by spend · filtered</div>
-      <div class="leg"><div class="li"><div class="ld" style="background:rgba(37,99,235,.7)"></div>Spend</div><div class="li"><div class="ld" style="background:rgba(34,197,94,.7)"></div>GD</div></div>
-      <div class="cw h200"><canvas id="c-campBar"></canvas></div>
+  <!-- Ads Manager Showdown - head to head ranking -->
+  <div id="mgr-showdown" style="display:none;margin-bottom:14px;">
+    <div class="shd" style="margin-top:0;"><div class="shr"></div><div class="snum">RANK</div><div class="stitle">Ads Manager Showdown &middot; Head-to-Head</div><div class="shr"></div></div>
+    <div class="sd-metric-tabs">
+      <button class="sd-mtab on" onclick="setSdMetric('gd',this)">Gross Deposit</button>
+      <button class="sd-mtab" onclick="setSdMetric('roi',this)">ROI</button>
+      <button class="sd-mtab" onclick="setSdMetric('ftd',this)">FTD</button>
+      <button class="sd-mtab" onclick="setSdMetric('cpftd',this)">CPFTD (lower better)</button>
+      <button class="sd-mtab" onclick="setSdMetric('reg',this)">REG</button>
+      <button class="sd-mtab" onclick="setSdMetric('sp',this)">Spend</button>
     </div>
-    <div class="cc">
-      <div class="cc-title">CTR by Campaign</div>
-      <div class="cc-sub">Click-through rate · top performers</div>
-      <div class="cw h200"><canvas id="c-campCTR"></canvas></div>
+    <div id="showdown-cards" style="display:flex;flex-direction:column;gap:8px;"></div>
+    <div class="note">Click any manager above to see their individual budget &amp; channel breakdown</div>
+  </div>
+
+  <!-- Selected Manager Detail -->
+  <div id="mgr-detail" style="display:none;margin-bottom:14px;">
+    <div class="shd" style="margin-top:0;">
+      <div class="shr"></div>
+      <div class="snum">DETAIL</div>
+      <div class="stitle" id="mgr-detail-title">Manager Detail</div>
+      <div class="shr"></div>
+      <button onclick="closeMgrDetail()" style="height:24px;padding:0 10px;border:1px solid var(--border2);border-radius:5px;background:var(--surf);color:var(--text3);font-family:var(--font);font-size:11px;cursor:pointer;">Close &times;</button>
+    </div>
+
+    <!-- Budget allocation row for this manager -->
+    <div style="display:flex;align-items:center;gap:0;margin-bottom:12px;background:var(--surf);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;">
+      <div style="flex:1;padding:14px 18px;border-right:1px solid var(--border);">
+        <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Allocated Budget</div>
+        <div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--text);letter-spacing:-.5px;" id="md-budget">--</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px;">Share of total: <span id="md-budget-share">--</span></div>
+      </div>
+      <div style="flex:1;padding:14px 18px;border-right:1px solid var(--border);">
+        <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Spent</div>
+        <div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--green);letter-spacing:-.5px;" id="md-spent">--</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px;" id="md-spent-pct">--</div>
+      </div>
+      <div style="flex:1;padding:14px 18px;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Remaining</div>
+        <div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--amber);letter-spacing:-.5px;" id="md-remaining">--</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px;">Available to deploy</div>
+      </div>
+    </div>
+    <div class="bbar-bg" style="height:7px;margin-bottom:16px;"><div class="bbar-fill" id="md-bar" style="width:0%;height:100%;"></div></div>
+
+    <!-- Channel split: donut + performance table -->
+    <div class="cgrid c2" style="margin-bottom:0;">
+      <div class="cc">
+        <div class="cc-title">Spend by Channel</div>
+        <div class="cc-sub" id="md-ch-sub">How this manager's budget is distributed</div>
+        <div class="cw h220"><canvas id="c-mdChannel"></canvas></div>
+      </div>
+      <div class="cc" style="padding:0;overflow:hidden;">
+        <div style="padding:16px 16px 0;">
+          <div class="cc-title">Channel Performance</div>
+          <div class="cc-sub">Spend, FTD and ROI per channel for this manager</div>
+        </div>
+        <div class="tw-scroll" style="max-height:220px;">
+          <table class="dt">
+            <thead><tr><th style="text-align:left">Channel</th><th>Spend</th><th>REG</th><th>FTD</th><th>CPFTD</th><th>GD</th><th>ROI</th></tr></thead>
+            <tbody id="md-ch-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Campaign-level performance for this manager -->
+    <div class="tw" style="margin-top:12px;margin-bottom:0;">
+      <div class="tw-head">
+        <div><div class="tw-title">Campaign Performance</div><div class="tw-sub" id="md-camp-sub">Every campaign this manager runs &middot; sorted by Spend</div></div>
+        <span class="tw-cnt" id="md-camp-cnt">--</span>
+      </div>
+      <div class="tw-scroll" style="max-height:280px;">
+        <table class="dt">
+          <thead><tr><th style="text-align:left">Region</th><th style="text-align:left">Campaign</th><th style="text-align:left">Channel</th><th style="text-align:left">Type</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>Spend</th><th>CPFTD</th><th>GD</th><th>NDAW</th><th>ROI</th></tr></thead>
+          <tbody id="md-camp-body"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
+<!-- Controls bar: compact single line -->
+  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:14px;padding:8px 12px;background:var(--surf);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);">
+    <div class="fg" id="fg-camptype" style="border-color:var(--border2);">
+      <span class="fgl" style="font-size:9px;">Type</span>
+      <select id="sel-camptype" onchange="setTypeSelect(this.value)" style="min-width:120px;height:26px;font-size:12px;border:none;outline:none;background:transparent;padding:0 22px 0 8px;font-family:var(--font);-webkit-appearance:none;appearance:none;cursor:pointer;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a8c7a' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E&quot;);background-repeat:no-repeat;background-position:right 6px center;">
+        <option value="all">All Types</option>
+        <option value="Promotion">Promotion</option>
+        <option value="Non-Promotion">Non-Promotion</option>
+      </select>
+    </div>
+    <div style="width:1px;height:18px;background:var(--border);margin:0 2px;"></div>
+    <span style="font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;padding-right:2px;">Sort</span>
+    <div class="sort-tabs" style="gap:3px;">
+      <button class="srtab on" onclick="sortCamp('impr',this)">Impressions</button>
+      <button class="srtab" onclick="sortCamp('spend',this)">Spend</button>
+      <button class="srtab" onclick="sortCamp('reg',this)">REG</button>
+      <button class="srtab" onclick="sortCamp('ftd',this)">FTD</button>
+      <button class="srtab" onclick="sortCamp('roi',this)">ROI</button>
+      <button class="srtab" onclick="sortCamp('gd',this)">GD</button>
+    </div>
+  </div>
+  <!-- Camp KPIs -->
+  <div class="krow k5" id="all-mgr-kpis" style="margin-bottom:14px;">
+    <div class="kc" style="--kc:var(--blue)"><div class="kc-top"><div class="kc-lbl">Total Spend</div><span class="badge" style="background:var(--bbg);color:var(--blue);border-color:#bfdbfe">YTD</span></div><div class="kc-val" id="cs-spend">--</div><div class="kc-subs"><div><div class="sl">Campaigns</div><div class="sv" id="cs-camps">--</div></div><div><div class="sl">Sources</div><div class="sv" id="cs-srcs">--</div></div></div></div>
+    <div class="kc" style="--kc:var(--purple)"><div class="kc-top"><div class="kc-lbl">Total REG</div><span class="badge" style="background:var(--pbg);color:var(--purple);border-color:#c4b5fd">REG</span></div><div class="kc-val p" id="cs-reg">--</div><div class="kc-subs"><div><div class="sl">CPR</div><div class="sv" id="cs-cpr">--</div></div><div><div class="sl">Top Camp.</div><div class="sv" id="cs-treg">--</div></div></div></div>
+    <div class="kc" style="--kc:var(--green)"><div class="kc-top"><div class="kc-lbl">Total FTD</div><span class="badge" style="background:var(--gbg);color:var(--green);border-color:var(--gbr)">FTD</span></div><div class="kc-val g" id="cs-ftd">--</div><div class="kc-subs"><div><div class="sl">CPFTD</div><div class="sv" id="cs-cpftd">--</div></div><div><div class="sl">Conv. Rate</div><div class="sv g" id="cs-cr">--</div></div></div></div>
+    <div class="kc" style="--kc:var(--green)"><div class="kc-top"><div class="kc-lbl">Gross Deposit</div><span class="badge" style="background:var(--gbg);color:var(--green);border-color:var(--gbr)">GD</span></div><div class="kc-val g" id="cs-gd">--</div><div class="kc-subs"><div><div class="sl">NDAW</div><div class="sv g" id="cs-ndaw">--</div></div></div></div>
+    <div class="kc" style="--kc:var(--green)"><div class="kc-top"><div class="kc-lbl">Marketing ROI</div><span class="badge" style="background:var(--gbg);color:var(--green);border-color:var(--gbr)">ROI</span></div><div class="kc-val g" id="cs-roi">--</div><div class="kc-subs"><div><div class="sl">NDAW / Spend</div></div></div></div>
+  </div>
   <div class="tw">
     <div class="tw-head">
-      <div>
-        <div class="tw-title">Campaign Breakdown</div>
-        <div class="tw-sub" id="camp-sub">All regions · All sources · sorted by Impressions</div>
-      </div>
-      <div class="tw-meta" id="camp-rows">— rows</div>
+      <div><div class="tw-title">Campaign Breakdown</div><div class="tw-sub" id="camp-sub">All regions &middot; sorted by Impressions</div></div>
+      <span class="tw-cnt" id="camp-cnt">--</span>
     </div>
-    <div class="tw-scroll">
-      <table class="dt">
+    <div class="tw-scroll"><table class="dt"><thead id="camp-thead"><tr><th style="text-align:left">Region</th><th style="text-align:left">Campaign</th><th style="text-align:left">Source</th><th style="text-align:left">Owner</th><th style="text-align:left">Type</th><th>Impressions</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>FTU</th><th>Spend</th><th>CPR</th><th>CPFTD</th><th>GD</th><th>TAW</th><th>NDAW</th><th>ROI</th></tr></thead><tbody id="camp-body"></tbody></table></div>
+    <div class="note">Attribution: 7-day click &middot; 1-day view &middot; Channel-level ROI is indicative only</div>
+  </div>
+
+  </div><!-- /sub-adsmgr -->
+
+  <!-- SUB: BUDGET -->
+  <div id="sub-budget" class="subpanel" style="display:none;">
+
+  <!-- BUDGET UTILISATION BANNER -->
+  <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:var(--r);padding:8px 14px;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+    <span style="font-size:13px;">&#8505;</span>
+    <span style="font-size:11px;color:#1e40af;font-weight:500;">Budget data is scoped to <strong>Brazil &amp; LATAM 2026</strong> and is independent of the region filter above.</span>
+  </div>
+  <div style="background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:16px;box-shadow:var(--sh);">
+
+    <!-- Row 1: numbers -->
+    <div style="display:flex;align-items:flex-start;gap:0;margin-bottom:16px;">
+
+      <!-- Total Budget (big) -->
+      <div style="flex:0 0 auto;padding-right:32px;border-right:1px solid var(--border);">
+        <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Total Budget</div>
+        <div style="font-family:var(--mono);font-size:36px;font-weight:700;color:var(--text);letter-spacing:-1.5px;line-height:1;" id="b-annual">$3,600,000</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px;">FY2026 Annual Plan</div>
+      </div>
+
+      <!-- Spend + Remaining side by side -->
+      <div style="flex:1;display:flex;gap:0;padding-left:32px;">
+        <div style="flex:1;padding-right:24px;border-right:1px solid var(--border);">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Total Spend</div>
+          <div style="font-family:var(--mono);font-size:24px;font-weight:600;color:#16a34a;letter-spacing:-.8px;line-height:1;" id="b-actual">$468,967</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:4px;">Loaded actuals YTD</div>
+        </div>
+        <div style="flex:1;padding:0 24px;border-right:1px solid var(--border);">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Remaining Budget</div>
+          <div style="font-family:var(--mono);font-size:24px;font-weight:600;color:#d97706;letter-spacing:-.8px;line-height:1;" id="b-remain">$3,131,033</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:4px;">Budget not yet used</div>
+        </div>
+        <div style="flex:0 0 120px;padding-left:24px;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Utilisation</div>
+          <div style="font-family:var(--mono);font-size:24px;font-weight:700;color:#dc2626;letter-spacing:-.8px;line-height:1;" id="b-pct">13.0%</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:4px;">of annual plan</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: progress bar Jan-Dec -->
+    <div>
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text3);font-family:var(--mono);margin-bottom:5px;">
+        <span id="b-bar-lbl">13% spent &middot; $3.13M remaining</span>
+        <span id="b-bar-months">Jan &mdash; Dec 2026</span>
+      </div>
+      <!-- Stacked bar: spent (green) + committed (amber dashed) + remaining (light) -->
+      <div style="height:12px;background:#e8ede8;border-radius:6px;overflow:hidden;position:relative;">
+        <div id="b-bar-spent" style="position:absolute;top:0;left:0;height:100%;background:var(--gl);border-radius:6px 0 0 6px;transition:width .8s cubic-bezier(.4,0,.2,1);"></div>
+        <div id="b-bar-mark" style="position:absolute;top:0;height:100%;width:2px;background:#fff;opacity:.9;transition:left .8s;"></div>
+      </div>
+      <!-- Month ticks Jan-Dec -->
+      <div style="display:flex;justify-content:space-between;margin-top:5px;padding:0 1px;">
+        <span style="font-size:9px;color:var(--text3);font-family:var(--mono);">Jan</span>
+        <span style="font-size:9px;color:var(--text3);font-family:var(--mono);">Feb</span>
+        <span style="font-size:9px;color:var(--text3);font-family:var(--mono);">Mar</span>
+        <span style="font-size:9px;color:var(--text3);font-family:var(--mono);">Apr</span>
+        <span style="font-size:9px;color:var(--text3);font-family:var(--mono);">May</span>
+        <span style="font-size:9px;color:var(--text3);font-family:var(--mono);">Jun</span>
+        <span style="font-size:9px;color:var(--text3);font-family:var(--mono);">Jul</span>
+        <span style="font-size:9px;color:var(--text3);font-family:var(--mono);">Aug</span>
+        <span style="font-size:9px;color:var(--text3);font-family:var(--mono);">Sep</span>
+        <span style="font-size:9px;color:var(--text3);font-family:var(--mono);">Oct</span>
+        <span style="font-size:9px;color:var(--text3);font-family:var(--mono);">Nov</span>
+        <span style="font-size:9px;color:var(--text3);font-family:var(--mono);">Dec</span>
+      </div>
+    </div>
+
+  </div><!-- /banner -->
+
+  <!-- Charts row -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+    <div class="cc">
+      <div class="cc-title">Monthly trend: budget vs actual</div>
+      <div class="cc-sub">Monthly spend against monthly budget allocation</div>
+      <div class="leg">
+        <div class="li"><div class="ld" style="background:#1e3a5f"></div>Budget</div>
+        <div class="li"><div class="ld" style="background:#e8734a"></div>Actual</div>
+      </div>
+      <div class="cw" style="height:260px;"><canvas id="c-bTrend"></canvas></div>
+    </div>
+    <div class="cc">
+      <div class="cc-title">Region comparison</div>
+      <div class="cc-sub">Annual budget vs actual by region</div>
+      <div class="leg">
+        <div class="li"><div class="ld" style="background:#4a90d9"></div>Actual Spend</div>
+        <div class="li"><div class="ld" style="background:#e8734a"></div>Annual Budget</div>
+      </div>
+      <div class="cw" style="height:260px;"><canvas id="c-bRegion"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Spend mix + Category table -->
+  <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:16px;margin-bottom:20px;">
+    <div class="cc">
+      <div class="cc-title">Actual spend mix by category</div>
+      <div class="cc-sub">Distribution across marketing categories</div>
+      <div class="cw" style="height:280px;"><canvas id="c-bMix"></canvas></div>
+    </div>
+    <div class="cc">
+      <div class="cc-title">Region &amp; category snapshot</div>
+      <div class="cc-sub">Budget utilisation by area and category</div>
+      <div style="overflow-x:auto;margin-top:4px;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead>
+            <tr style="background:#1e3a5f;">
+              <th style="padding:8px 12px;text-align:left;color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;">Area</th>
+              <th style="padding:8px 12px;text-align:left;color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;">Category</th>
+              <th style="padding:8px 12px;text-align:right;color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;">Annual Budget</th>
+              <th style="padding:8px 12px;text-align:right;color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;">Actual Spend</th>
+              <th style="padding:8px 12px;text-align:right;color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;">Remaining</th>
+              <th style="padding:8px 12px;text-align:right;color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;">Utilisation</th>
+            </tr>
+          </thead>
+          <tbody id="b-catTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Monthly detail table -->
+  <div class="cc" style="margin-bottom:20px;">
+    <div class="cc-title">Monthly spend detail</div>
+    <div class="cc-sub">Breakdown by month, region and category</div>
+    <div style="overflow-x:auto;margin-top:10px;max-height:400px;overflow-y:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
         <thead>
-          <tr>
-            <th>Region</th><th>Campaign</th><th>Source</th>
-            <th>Owner</th><th>Type</th>
-            <th>Impressions</th><th>Clicks</th><th>CTR</th>
-            <th>REG</th><th>EV.A</th><th>FTD</th><th>FTU</th>
-            <th>Spend</th><th>CPR</th><th>CPFTD</th>
-            <th>GD</th><th>TAW</th><th>NDAW</th><th>ROI</th>
+          <tr style="background:#f7f9f7;position:sticky;top:0;z-index:1;">
+            <th style="padding:8px 12px;text-align:left;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a8c7a;border-bottom:2px solid #1e3a5f;">Month / Region</th>
+            <th style="padding:8px 12px;text-align:right;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a8c7a;border-bottom:2px solid #1e3a5f;">Influencers</th>
+            <th style="padding:8px 12px;text-align:right;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a8c7a;border-bottom:2px solid #1e3a5f;">Paid Media</th>
+            <th style="padding:8px 12px;text-align:right;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a8c7a;border-bottom:2px solid #1e3a5f;">Other Activities</th>
+            <th style="padding:8px 12px;text-align:right;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a8c7a;border-bottom:2px solid #1e3a5f;">Total</th>
           </tr>
         </thead>
-        <tbody id="campBody"></tbody>
+        <tbody id="b-moTable"></tbody>
       </table>
     </div>
-    <div class="note">Attribution: 7-day click · 1-day view · Channel-level ROI is indicative only</div>
   </div>
-</div>
+  </div>
+</div><!-- /overview -->
+
+
+<!-- === BUDGET VIEW === -->
+<!-- /budget -->
+
+<!-- === CAMPAIGN MAIN === -->
 
 </div><!-- /main -->
 
 <script>
-// ══ MASTER DATA ══
-// owner: Allysson owns BR/ES/MN; Dean owns KR/NZ
-// camptype: Promotion = WTC, Gold Rush, Zero Spreads, Kospi 200, Gold, Global Indices, Forex, Partner Invitation, Instagram Boost, Facebook Boost, Boost
-//           Non-Promotion = Ebooks, Academy, WTI, Deposit Bonus, Others, DSP campaigns
+// ==============================================
+//  CONSTANTS & DATA
+// ==============================================
+const BUDGET = 1050000;
+const PROMO = new Set(['WTC','Deposit Bonus']);
+const OWNERS = ['Allyson','Dean','Smith','James','Kevin'];
+const SRC_C = {Meta:'#3b82f6',Investing:'#f59e0b',Rankia:'#22c55e',BizDesk:'#8b5cf6',DSP:'#ef4444',Google:'#ec4899'};
+const ALL_CHANNELS = Object.keys(SRC_C);
+let selectedChannels = new Set(ALL_CHANNELS); // all channels selected by default
 
-function assignOwner(r) {
-  return ['BR','ES','MN'].includes(r) ? 'Allysson' : 'Dean';
+function buildChannelMenu(){
+  const box=document.getElementById('channel-options');
+  box.innerHTML = ALL_CHANNELS.map(ch=>{
+    const checked = selectedChannels.has(ch) ? 'checked' : '';
+    return `<label style="display:flex;align-items:center;gap:7px;padding:5px 6px;border-radius:5px;cursor:pointer;font-size:12px;color:var(--text2);" onmouseover="this.style.background='var(--surf2)'" onmouseout="this.style.background='transparent'">
+      <input type="checkbox" ${checked} onchange="toggleChannel('${ch}',this.checked)" style="accent-color:var(--green);width:13px;height:13px;cursor:pointer;">
+      <span style="width:8px;height:8px;border-radius:2px;background:${SRC_C[ch]};flex-shrink:0;"></span>
+      ${ch}
+    </label>`;
+  }).join('');
 }
-function assignCampType(c) {
-  const branding = ['WTC','Gold Rush','Zero Spreads','Kospi 200','Gold','Global Indices','Forex','Partner Invitation','Instagram Boost','Facebook Boost','Boost'];
-  return branding.includes(c) ? 'Promotion' : 'Non-Promotion';
+
+function toggleChannel(ch,isChecked){
+  if(isChecked) selectedChannels.add(ch);
+  else selectedChannels.delete(ch);
+  updateChannelLabel();
+  onFC();
 }
 
-const ALL = [
-  {r:'ES',src:'Meta',c:'WTC',impr:42326212,clk:618926,sp:65493.34,reg:3497,dep:681.35,wd:-420.29,nf:261.06,ctr:1.46},
-  {r:'MN',src:'Meta',c:'WTC',impr:16408578,clk:151825,sp:8973.80,reg:380,dep:0,wd:0,nf:0,ctr:0.93},
-  {r:'ES',src:'Meta',c:'Deposit Bonus',impr:15066299,clk:108748,sp:2411.92,reg:0,dep:0,wd:0,nf:0,ctr:0.72},
-  {r:'BR',src:'Meta',c:'Instagram Boost',impr:10648231,clk:137692,sp:10891.15,reg:4,dep:200,wd:-105.39,nf:94.61,ctr:1.29},
-  {r:'MN',src:'Meta',c:'Others',impr:9998954,clk:189116,sp:8812.07,reg:94,dep:0,wd:0,nf:0,ctr:1.89},
-  {r:'BR',src:'Meta',c:'Ebooks',impr:7696149,clk:76703,sp:47912.14,reg:0,dep:0,wd:0,nf:0,ctr:1.00},
-  {r:'NZ',src:'Meta',c:'Gold Rush',impr:6916427,clk:58535,sp:30522.55,reg:281,dep:213.82,wd:0,nf:213.82,ctr:0.85},
-  {r:'NZ',src:'Meta',c:'Zero Spreads',impr:4343447,clk:37616,sp:9444.05,reg:4,dep:0,wd:0,nf:0,ctr:0.87},
-  {r:'ES',src:'Meta',c:'Academy',impr:3342735,clk:44764,sp:17800.09,reg:48,dep:10.89,wd:0,nf:10.89,ctr:1.34},
-  {r:'NZ',src:'Meta',c:'WTI',impr:3209274,clk:27143,sp:15899.53,reg:72,dep:0,wd:0,nf:0,ctr:0.85},
-  {r:'KR',src:'Meta',c:'WTC',impr:2334745,clk:11606,sp:20418.60,reg:200,dep:69.16,wd:0,nf:69.16,ctr:0.50},
-  {r:'KR',src:'Meta',c:'Kospi 200',impr:1475868,clk:16807,sp:2031.21,reg:0,dep:0,wd:0,nf:0,ctr:1.14},
-  {r:'ES',src:'Meta',c:'Others',impr:1465692,clk:98808,sp:3163.77,reg:0,dep:0,wd:0,nf:0,ctr:6.74},
-  {r:'KR',src:'Meta',c:'Gold',impr:1283738,clk:16891,sp:2029.07,reg:0,dep:0,wd:0,nf:0,ctr:1.32},
-  {r:'KR',src:'Meta',c:'Global Indices',impr:1247997,clk:16558,sp:2030.28,reg:0,dep:0,wd:0,nf:0,ctr:1.33},
-  {r:'KR',src:'Meta',c:'Forex',impr:1241980,clk:16711,sp:2030.93,reg:0,dep:0,wd:0,nf:0,ctr:1.35},
-  {r:'ES',src:'Meta',c:'Ebooks',impr:1205042,clk:18643,sp:8839.04,reg:0,dep:0,wd:0,nf:0,ctr:1.55},
-  {r:'NZ',src:'Meta',c:'Instagram Boost',impr:871017,clk:5571,sp:3045.20,reg:0,dep:0,wd:0,nf:0,ctr:0.64},
-  {r:'ES',src:'Meta',c:'Instagram Boost',impr:315558,clk:2246,sp:289.43,reg:0,dep:0,wd:0,nf:0,ctr:0.71},
-  {r:'KR',src:'Meta',c:'Partner Invitation',impr:212661,clk:7000,sp:1783.95,reg:0,dep:0,wd:0,nf:0,ctr:3.29},
-  {r:'NZ',src:'Meta',c:'Others',impr:91275,clk:803,sp:301.35,reg:13,dep:0,wd:0,nf:0,ctr:0.88},
-  {r:'MN',src:'Meta',c:'Instagram Boost',impr:87792,clk:1388,sp:89.50,reg:0,dep:0,wd:0,nf:0,ctr:1.58},
-  {r:'NZ',src:'Meta',c:'Facebook Boost',impr:43256,clk:275,sp:138.07,reg:0,dep:0,wd:0,nf:0,ctr:0.64},
-  {r:'ES',src:'Meta',c:'Boost',impr:0,clk:0,sp:0,reg:2,dep:0,wd:0,nf:0,ctr:0},
-  {r:'MN',src:'Meta',c:'Global Indices',impr:0,clk:0,sp:0,reg:153,dep:0,wd:0,nf:0,ctr:0},
-  {r:'KR',src:'Meta',c:'Others',impr:0,clk:0,sp:0,reg:1,dep:0,wd:0,nf:0,ctr:0},
-  {r:'BR',src:'Investing',c:'WTC',impr:3200000,clk:28000,sp:12400,reg:180,dep:420,wd:-80,nf:340,ctr:0.88},
-  {r:'ES',src:'Investing',c:'Gold Rush',impr:2100000,clk:19000,sp:8700,reg:95,dep:310,wd:0,nf:310,ctr:0.90},
-  {r:'KR',src:'Investing',c:'WTC',impr:1800000,clk:14500,sp:7200,reg:72,dep:150,wd:0,nf:150,ctr:0.81},
-  {r:'ES',src:'Rankia',c:'WTC',impr:980000,clk:12000,sp:5400,reg:210,dep:820,wd:-120,nf:700,ctr:1.22},
-  {r:'ES',src:'Rankia',c:'Gold Rush',impr:760000,clk:9800,sp:4200,reg:140,dep:380,wd:0,nf:380,ctr:1.29},
-  {r:'NZ',src:'BizDesk',c:'WTC',impr:420000,clk:6800,sp:3100,reg:88,dep:200,wd:0,nf:200,ctr:1.62},
-  {r:'BR',src:'DSP',c:'Ebooks',impr:1400000,clk:8200,sp:6800,reg:42,dep:0,wd:0,nf:0,ctr:0.59},
-  {r:'KR',src:'DSP',c:'WTC',impr:890000,clk:5400,sp:3900,reg:28,dep:95,wd:0,nf:95,ctr:0.61},
-].map(d => ({ ...d, owner: assignOwner(d.r), camptype: assignCampType(d.c) }));
+function setAllChannels(all){
+  selectedChannels = all ? new Set(ALL_CHANNELS) : new Set();
+  buildChannelMenu();
+  updateChannelLabel();
+  onFC();
+}
 
-// FTD / EVA / GD scaling
-ALL.forEach(d=>{
-  d.ftd = d.dep > 0 ? Math.max(Math.round(d.reg * 0.17), 1) : Math.round(d.reg * 0.17);
-  d.eva = Math.round(d.reg * 0.42);
-  d.ftu = Math.round(d.ftd * 0.78);
-  const gdScale = d.ftd > 0 ? d.ftd * 1200 : 0;
-  if (gdScale > 0 && d.dep > 0) {
-    const wdRatio = d.wd / d.dep;
-    d.dep = gdScale;
-    d.wd  = Math.round(gdScale * wdRatio * 100) / 100;
-    d.nf  = d.dep + d.wd;
-  } else if (gdScale > 0 && d.dep === 0) {
-    d.dep = gdScale;
-    d.wd  = -Math.round(gdScale * 0.38);
-    d.nf  = d.dep + d.wd;
+function updateChannelLabel(){
+  const lbl=document.getElementById('channel-btn-label');
+  const fg=document.getElementById('fg-channel');
+  if(selectedChannels.size===0){
+    lbl.textContent='No Channels'; fg.classList.add('on');
+  } else if(selectedChannels.size===ALL_CHANNELS.length){
+    lbl.textContent='All Channels'; fg.classList.remove('on');
+  } else if(selectedChannels.size===1){
+    lbl.textContent=[...selectedChannels][0]; fg.classList.add('on');
+  } else {
+    lbl.textContent=selectedChannels.size+' Channels'; fg.classList.add('on');
   }
-  d.taw = d.wd;
+}
+
+function toggleChannelMenu(){
+  const menu=document.getElementById('channel-menu');
+  const isOpen=menu.style.display==='block';
+  menu.style.display = isOpen ? 'none' : 'block';
+  if(!isOpen) buildChannelMenu();
+}
+
+document.addEventListener('click', e=>{
+  const fg=document.getElementById('fg-channel');
+  const menu=document.getElementById('channel-menu');
+  if(fg && menu && !fg.contains(e.target)) menu.style.display='none';
 });
 
-const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const REG_C = {BR:'#f59e0b',ES:'#3b82f6',KR:'#ec4899',MN:'#22c55e',NZ:'#8b5cf6'};
-const BUDGET = 1050000;
+const REG_C  = {BR:'#f59e0b',ES:'#3b82f6',KR:'#ec4899',MN:'#22c55e',NZ:'#8b5cf6'};
+const MON    = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const STCOLS = ['#6b7280','#0ea5e9','#8b5cf6','#f59e0b','#22c55e','#15803d'];
 
-const MO_BASE = {
-  impr:[68,62,71,75,82,79,88,91,84,78,86,80],
-  clk: [0.85,0.78,0.88,0.93,1.02,0.97,1.08,1.12,1.04,0.96,1.06,0.98],
-  reg: [210,195,240,270,310,288,320,345,295,272,312,285],
-  eva: [88,82,101,113,130,121,134,145,124,114,131,120],
-  ftd: [8,7,10,11,13,12,14,15,13,11,13,12],
-  gd:  [0.68,0.62,0.79,0.88,1.02,0.95,1.08,1.14,0.98,0.87,1.02,0.94],
-  ndaw:[0.26,0.24,0.30,0.34,0.39,0.36,0.41,0.43,0.37,0.33,0.39,0.36],
+function mkOwner(r,s,c){ let h=0; for(const x of r+s+c) h=(h<<5)-h+x.charCodeAt(0)|0; return OWNERS[Math.abs(h)%OWNERS.length]; }
+
+const RAW=[
+  {r:'ES',src:'Meta',c:'WTC',impr:42326212,clk:618926,sp:65493.34,reg:3497,dep:681.35,wd:-420.29,ctr:1.46},
+  {r:'MN',src:'Meta',c:'WTC',impr:16408578,clk:151825,sp:8973.80,reg:380,dep:0,wd:0,ctr:0.93},
+  {r:'ES',src:'Meta',c:'Deposit Bonus',impr:15066299,clk:108748,sp:2411.92,reg:0,dep:0,wd:0,ctr:0.72},
+  {r:'BR',src:'Meta',c:'Instagram Boost',impr:10648231,clk:137692,sp:10891.15,reg:4,dep:200,wd:-105.39,ctr:1.29},
+  {r:'MN',src:'Meta',c:'Others',impr:9998954,clk:189116,sp:8812.07,reg:94,dep:0,wd:0,ctr:1.89},
+  {r:'BR',src:'Meta',c:'Ebooks',impr:7696149,clk:76703,sp:47912.14,reg:0,dep:0,wd:0,ctr:1.00},
+  {r:'NZ',src:'Meta',c:'Gold Rush',impr:6916427,clk:58535,sp:30522.55,reg:281,dep:213.82,wd:0,ctr:0.85},
+  {r:'NZ',src:'Meta',c:'Zero Spreads',impr:4343447,clk:37616,sp:9444.05,reg:4,dep:0,wd:0,ctr:0.87},
+  {r:'ES',src:'Meta',c:'Academy',impr:3342735,clk:44764,sp:17800.09,reg:48,dep:10.89,wd:0,ctr:1.34},
+  {r:'NZ',src:'Meta',c:'WTI',impr:3209274,clk:27143,sp:15899.53,reg:72,dep:0,wd:0,ctr:0.85},
+  {r:'KR',src:'Meta',c:'WTC',impr:2334745,clk:11606,sp:20418.60,reg:200,dep:69.16,wd:0,ctr:0.50},
+  {r:'KR',src:'Meta',c:'Kospi 200',impr:1475868,clk:16807,sp:2031.21,reg:0,dep:0,wd:0,ctr:1.14},
+  {r:'ES',src:'Meta',c:'Others',impr:1465692,clk:98808,sp:3163.77,reg:0,dep:0,wd:0,ctr:6.74},
+  {r:'KR',src:'Meta',c:'Global Indices',impr:1247997,clk:16558,sp:2030.28,reg:0,dep:0,wd:0,ctr:1.33},
+  {r:'ES',src:'Meta',c:'Ebooks',impr:1205042,clk:18643,sp:8839.04,reg:0,dep:0,wd:0,ctr:1.55},
+  {r:'NZ',src:'Meta',c:'Instagram Boost',impr:871017,clk:5571,sp:3045.20,reg:0,dep:0,wd:0,ctr:0.64},
+  {r:'KR',src:'Meta',c:'Partner Invitation',impr:212661,clk:7000,sp:1783.95,reg:0,dep:0,wd:0,ctr:3.29},
+  {r:'NZ',src:'Meta',c:'Others',impr:91275,clk:803,sp:301.35,reg:13,dep:0,wd:0,ctr:0.88},
+  {r:'NZ',src:'Meta',c:'Facebook Boost',impr:43256,clk:275,sp:138.07,reg:0,dep:0,wd:0,ctr:0.64},
+  {r:'MN',src:'Meta',c:'Global Indices',impr:0,clk:0,sp:0,reg:153,dep:0,wd:0,ctr:0},
+  {r:'BR',src:'Investing',c:'WTC',impr:3200000,clk:28000,sp:12400,reg:180,dep:420,wd:-80,ctr:0.88},
+  {r:'ES',src:'Investing',c:'Gold Rush',impr:2100000,clk:19000,sp:8700,reg:95,dep:310,wd:0,ctr:0.90},
+  {r:'KR',src:'Investing',c:'WTC',impr:1800000,clk:14500,sp:7200,reg:72,dep:150,wd:0,ctr:0.81},
+  {r:'ES',src:'Rankia',c:'WTC',impr:980000,clk:12000,sp:5400,reg:210,dep:820,wd:-120,ctr:1.22},
+  {r:'ES',src:'Rankia',c:'Gold Rush',impr:760000,clk:9800,sp:4200,reg:140,dep:380,wd:0,ctr:1.29},
+  {r:'NZ',src:'BizDesk',c:'WTC',impr:420000,clk:6800,sp:3100,reg:88,dep:200,wd:0,ctr:1.62},
+  {r:'BR',src:'DSP',c:'Ebooks',impr:1400000,clk:8200,sp:6800,reg:42,dep:0,wd:0,ctr:0.59},
+  {r:'KR',src:'DSP',c:'WTC',impr:890000,clk:5400,sp:3900,reg:28,dep:95,wd:0,ctr:0.61},
+  {r:'ES',src:'Google',c:'WTC',impr:2800000,clk:34000,sp:18200,reg:320,dep:2400,wd:-480,ctr:1.21},
+  {r:'BR',src:'Google',c:'Deposit Bonus',impr:1900000,clk:22000,sp:11500,reg:145,dep:1100,wd:-220,ctr:1.16},
+  {r:'KR',src:'Google',c:'Academy',impr:1200000,clk:15000,sp:7800,reg:98,dep:720,wd:0,ctr:1.25},
+];
+
+// Enrich data
+const ALL = RAW.map(d=>{
+  const ftd = d.dep>0 ? Math.max(Math.round(d.reg*0.17),1) : Math.round(d.reg*0.17);
+  const gdS = ftd*1200;
+  let dep=d.dep,wd=d.wd,nf;
+  if(gdS>0&&dep>0){ const r=wd/dep; dep=gdS; wd=Math.round(gdS*r*100)/100; nf=dep+wd; }
+  else if(gdS>0&&dep===0){ dep=gdS; wd=-Math.round(gdS*0.38); nf=dep+wd; }
+  else nf=0;
+  return {...d,
+    ftd, eva:Math.round(d.reg*0.42), ftu:Math.round(ftd*0.78),
+    dep, wd, nf, taw:wd,
+    owner:mkOwner(d.r,d.src,d.c),
+    isPromo:PROMO.has(d.c),
+    type:PROMO.has(d.c)?'Promotion':'Non-Promotion'
+  };
+});
+
+// Monthly simulation base
+const MO={
+  impr:[68,62,71,75,82,79,88,91,84,78,86,80].map(v=>v*1e6),
+  clk: [0.85,0.78,0.88,0.93,1.02,0.97,1.08,1.12,1.04,0.96,1.06,0.98].map(v=>v*1e6),
+  reg: [190,210,240,270,310,288,325,348,298,275,315,288],
+  eva: [80,88,101,113,130,121,137,146,125,116,133,121],
+  ftd: [32,36,41,46,53,49,58,63,57,52,61,56],
+  gd:  [680,620,790,880,1020,950,1080,1140,980,870,1020,940].map(v=>v*1000),
+  ndaw:[260,240,300,340,390,360,410,430,370,330,390,360].map(v=>v*1000),
 };
 
-// ── Filter accessors ──
-const F = {
-  r:  ()=>document.getElementById('sel-region').value,
-  s:  ()=>document.getElementById('sel-source').value,
-  c:  ()=>document.getElementById('sel-campaign').value,
-  o:  ()=>document.getElementById('sel-owner').value,
-  ct: ()=>document.getElementById('sel-camptype').value,
+// ==============================================
+//  FILTER & AGG
+// ==============================================
+const F={
+  region:  ()=>document.getElementById('sel-region').value,
+  source:  ()=>document.getElementById('sel-source').value,
+  campaign:()=>document.getElementById('sel-campaign').value,
+  owner:   ()=>document.getElementById('sel-owner').value,
+  type:    ()=>document.getElementById('sel-type').value,
 };
-
 function filtered(){
   return ALL.filter(d=>{
-    if(F.r()!=='all' && d.r!==F.r()) return false;
-    if(F.s()!=='all' && d.src!==F.s()) return false;
-    if(F.c()!=='all' && d.c!==F.c()) return false;
-    if(F.o()!=='all' && d.owner!==F.o()) return false;
-    if(F.ct()!=='all' && d.camptype!==F.ct()) return false;
+    if(F.region()!=='all'&&d.r!==F.region()) return false;
+    if(!selectedChannels.has(d.src)) return false;
+    if(F.campaign()!=='all'&&d.c!==F.campaign()) return false;
+    if(F.owner()!=='all'&&d.owner!==F.owner()) return false;
+    if(F.type()!=='all'&&d.type!==F.type()) return false;
     return true;
   });
 }
-
 function agg(rows){
   return rows.reduce((a,d)=>({
-    impr:a.impr+d.impr, clk:a.clk+d.clk, sp:a.sp+d.sp,
-    reg:a.reg+d.reg, eva:a.eva+d.eva, ftd:a.ftd+d.ftd, ftu:a.ftu+d.ftu,
-    dep:a.dep+d.dep, wd:a.wd+d.wd, nf:a.nf+d.nf, taw:a.taw+d.taw
-  }), {impr:0,clk:0,sp:0,reg:0,eva:0,ftd:0,ftu:0,dep:0,wd:0,nf:0,taw:0});
+    impr:a.impr+d.impr,clk:a.clk+d.clk,sp:a.sp+d.sp,
+    reg:a.reg+d.reg,eva:a.eva+d.eva,ftd:a.ftd+d.ftd,ftu:a.ftu+d.ftu,
+    dep:a.dep+d.dep,nf:a.nf+d.nf,taw:a.taw+(d.taw||0)
+  }),{impr:0,clk:0,sp:0,reg:0,eva:0,ftd:0,ftu:0,dep:0,nf:0,taw:0});
 }
 
-function fmt$(n,d=0){if(!n&&n!==0)return'—';const a=Math.abs(n),s=n<0?'-':'';if(a>=1e9)return s+'$'+(a/1e9).toFixed(2)+'B';if(a>=1e6)return s+'$'+(a/1e6).toFixed(2)+'M';if(a>=1e3)return s+'$'+(a/1e3).toFixed(1)+'K';return s+'$'+a.toFixed(d);}
-function fN(n){if(!n&&n!==0)return'0';if(n>=1e9)return(n/1e9).toFixed(1)+'B';if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return Math.round(n).toLocaleString();}
-function pct(a,b){return b>0?(a/b*100).toFixed(1)+'%':'—';}
-function set(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
+// ==============================================
+//  FORMATTERS & UTILS
+// ==============================================
+function f$(n,d=0){if(!n&&n!==0)return'--';const a=Math.abs(n),s=n<0?'-':'';if(a>=1e9)return s+'$'+(a/1e9).toFixed(2)+'B';if(a>=1e6)return s+'$'+(a/1e6).toFixed(2)+'M';if(a>=1e3)return s+'$'+(a/1e3).toFixed(1)+'K';return s+'$'+a.toFixed(d);}
+function fN(n){if(!n&&n!==0)return'0';if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return Math.round(n).toLocaleString();}
+function pct(a,b){return b>0?(a/b*100).toFixed(1)+'%':'--';}
+function s(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
+function scaleMO(data){const tot=agg(ALL);const sel=agg(data);return tot.impr>0?sel.impr/tot.impr:1;}
 
-// ── Charts ──
+// ==============================================
+//  CHART ENGINE
+// ==============================================
 const CH={};
 function dc(id){if(CH[id]){CH[id].destroy();delete CH[id];}}
 Chart.defaults.font.family="'IBM Plex Mono',monospace";
 Chart.defaults.font.size=10;
-Chart.defaults.color='#8a9890';
-Chart.defaults.borderColor='#e2e6e2';
-const gc='rgba(0,0,0,.05)';
-const gX=()=>({grid:{display:false},ticks:{color:'#8a9890',font:{size:9}}});
-const gY=(cb)=>({grid:{color:gc,drawBorder:false},ticks:{color:'#8a9890',font:{size:9},callback:cb}});
+Chart.defaults.color='#7a8c7a';
+Chart.defaults.borderColor='#e0e4e0';
+const gc='rgba(0,0,0,.04)';
+const gX=()=>({grid:{display:false},ticks:{color:'#7a8c7a',font:{size:9}}});
+const gY=(cb)=>({grid:{color:gc,drawBorder:false},ticks:{color:'#7a8c7a',font:{size:9},callback:cb}});
+function mkChart(id,cfg){dc(id);const el=document.getElementById(id);if(!el)return;CH[id]=new Chart(el,cfg);}
 
-function scaleFactor(data){
-  const total = agg(ALL);
-  const sel = agg(data);
-  return total.impr>0 ? sel.impr/total.impr : 1;
+// ==============================================
+//  TABLE ROW BUILDER
+// ==============================================
+function trow(d,cols){
+  const roi=d.sp>0?d.nf/d.sp:null;
+  const rc=roi==null?'var(--text3)':roi>=1?'var(--green)':roi>0?'var(--amber)':'var(--red)';
+  const cpM={
+    region:`<td><span class="rp ${d.r}">${d.r}</span></td>`,
+    campaign:`<td class="fn">${d.c}</td>`,
+    source:`<td><span class="ch-pill" style="background:${SRC_C[d.src]||'#9ca3af'}18;color:${SRC_C[d.src]||'#9ca3af'};border:1px solid ${SRC_C[d.src]||'#9ca3af'}33">${d.src}</span></td>`,
+    owner:`<td><span class="owner-pill">${d.owner}</span></td>`,
+    type:`<td><span class="type-pill ${d.isPromo?'tp-promo':'tp-np'}">${d.type}</span></td>`,
+    impr:`<td>${fN(d.impr)}</td>`,clk:`<td>${fN(d.clk)}</td>`,
+    ctr:`<td>${d.ctr.toFixed(2)}%</td>`,
+    reg:`<td>${d.reg>0?d.reg.toLocaleString():'0'}</td>`,
+    eva:`<td>${d.eva>0?d.eva:'0'}</td>`,
+    ftd:`<td><span style="color:${d.ftd>0?'var(--green)':'var(--text3)'};font-weight:${d.ftd>0?600:400}">${d.ftd}</span></td>`,
+    ftu:`<td>${d.ftu>0?d.ftu:'0'}</td>`,
+    spend:`<td>$${d.sp.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>`,
+    cpm:`<td class="mut">${d.impr>0?f$(d.sp/d.impr*1000,2):'--'}</td>`,
+    cpc:`<td class="mut">${d.clk>0?f$(d.sp/d.clk,2):'--'}</td>`,
+    cpr:`<td>${d.reg>0?f$(d.sp/d.reg,0):'--'}</td>`,
+    cpftd:`<td>${d.ftd>0?f$(d.sp/d.ftd,0):'--'}</td>`,
+    gd:`<td class="${d.dep>0?'pos':'mut'}">$${Math.round(d.dep).toLocaleString()}</td>`,
+    taw:`<td class="${d.taw<0?'neg':'mut'}">$${Math.round(Math.abs(d.taw)).toLocaleString()}</td>`,
+    ndaw:`<td class="${d.nf>0?'pos':d.nf<0?'neg':'mut'}">$${Math.round(d.nf).toLocaleString()}</td>`,
+    roi:`<td><span style="color:${rc};font-weight:600">${roi!=null?(roi*100).toFixed(1)+'%':'--'}</span></td>`,
+  };
+  return '<tr>'+cols.map(c=>cpM[c]||'<td>--</td>').join('')+'</tr>';
 }
 
-let campSortKey = 'impr';
-
-// ── MAIN RENDER ──
-function render(){
-  const data = filtered();
-  const a = agg(data);
-  const scale = scaleFactor(data);
-
-  const src  = F.s()==='all'?'All Sources':F.s();
-  const reg2 = F.r()==='all'?'All Regions':F.r();
-
-  // Filter UI highlight
-  ['entity','region','source','campaign','owner','camptype'].forEach(id=>{
-    const sel=document.getElementById('sel-'+id);
-    const grp=document.getElementById('fg-'+id);
-    if(grp&&sel) grp.classList.toggle('on',sel.value!=='all');
-  });
-
-  // Filter summary label
-  const parts=[];
-  const eSel=document.getElementById('sel-entity');
-  if(eSel.value!=='all') parts.push(eSel.options[eSel.selectedIndex].text);
-  if(F.r()!=='all') parts.push(F.r());
-  if(F.s()!=='all') parts.push(F.s());
-  if(F.c()!=='all') parts.push(F.c());
-  if(F.o()!=='all') parts.push(F.o());
-  if(F.ct()!=='all') parts.push(F.ct());
-  parts.push('FY'+document.getElementById('sel-year').value);
-  set('fltSum', parts.join(' · '));
-  set('navCtx', (eSel.value==='all'?'All Entities':eSel.options[eSel.selectedIndex].text)+' · FY'+document.getElementById('sel-year').value);
-
-  const ctr  = a.impr>0?a.clk/a.impr*100:0;
-  const sessions = Math.round(a.clk*0.62);
-  const newv = Math.round(sessions*0.68);
-  const bounce = 28+Math.round(Math.abs(Math.sin(a.impr%999))*12);
-  const roi  = a.sp>0?a.nf/a.sp:0;
-  const spendShare = BUDGET>0?(a.sp/BUDGET*100).toFixed(0)+'%':'—';
-  const budgUtil = BUDGET>0?fmt$(BUDGET-a.sp,0):'—';
-
-  set('k-spend', fmt$(a.sp,1));
-  set('k-spendshare', spendShare);
-  set('k-budgutil', budgUtil);
-  set('k-impr', fN(a.impr));
-  set('k-clicks', fN(a.clk));
-  set('k-ctr', ctr.toFixed(2)+'%');
-  set('k-sessions', fN(sessions));
-  set('k-newv', fN(newv));
-  set('k-bounce', bounce+'%');
-  set('k-reg', fN(a.reg));
-  set('k-eva', fN(a.eva));
-  set('k-ftd-kpi', fN(a.ftd));
-  set('k-gd',   fmt$(a.dep, 0));
-  set('k-ndaw',  fmt$(a.nf,  0));
-  set('k-roi',  roi > 0 ? (roi * 100).toFixed(1) + '%' : '—');
-  set('funnel-sub', `Marketing attribution · ${reg2} · ${src}`);
-
-  // §02 Trend charts
-  const moData = MON.map((m,i)=>({
-    impr: Math.round(MO_BASE.impr[i]*scale*1e6),
-    clk:  Math.round(MO_BASE.clk[i]*scale*1e6),
-    reg:  Math.round(MO_BASE.reg[i]*scale),
-    eva:  Math.round(MO_BASE.eva[i]*scale),
-    ftd:  Math.round(MO_BASE.ftd[i]*scale),
-    gd:   MO_BASE.gd[i]*scale*1e6,
-    ndaw: MO_BASE.ndaw[i]*scale*1e6,
-  }));
-
-  dc('c-imprTrend');
-  CH['c-imprTrend']=new Chart(document.getElementById('c-imprTrend'),{
-    type:'line',
-    data:{labels:MON,datasets:[
-      {label:'Impressions',data:moData.map(d=>d.impr),borderColor:'#6b7280',backgroundColor:'rgba(107,114,128,.07)',fill:true,tension:.4,pointRadius:3,borderWidth:2,yAxisID:'y'},
-      {label:'Clicks',data:moData.map(d=>d.clk),borderColor:'#0ea5e9',backgroundColor:'rgba(14,165,233,.06)',fill:true,tension:.4,pointRadius:3,borderWidth:2,yAxisID:'y2'},
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
-      scales:{x:gX(),y:{...gY(v=>fN(v)),position:'left'},y2:{...gY(v=>fN(v)),position:'right',grid:{display:false}}}}
-  });
-
-  dc('c-regTrend');
-  CH['c-regTrend']=new Chart(document.getElementById('c-regTrend'),{
-    type:'line',
-    data:{labels:MON,datasets:[
-      {label:'REG',data:moData.map(d=>d.reg),borderColor:'#8b5cf6',backgroundColor:'rgba(139,92,246,.07)',fill:true,tension:.4,pointRadius:3,borderWidth:2,yAxisID:'y'},
-      {label:'EV.A',data:moData.map(d=>d.eva),borderColor:'#f59e0b',backgroundColor:'transparent',tension:.4,pointRadius:3,borderWidth:2,borderDash:[4,3],yAxisID:'y'},
-      {label:'FTD',data:moData.map(d=>d.ftd),borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,.06)',fill:true,tension:.4,pointRadius:4,borderWidth:2.5,yAxisID:'y2'},
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
-      scales:{x:gX(),y:{...gY(),position:'left'},y2:{...gY(),position:'right',grid:{display:false}}}}
-  });
-
-  dc('c-gdTrend');
-  CH['c-gdTrend']=new Chart(document.getElementById('c-gdTrend'),{
-    type:'bar',
-    data:{labels:MON,datasets:[
-      {label:'NDAW',data:moData.map(d=>d.ndaw),backgroundColor:'rgba(21,128,61,.7)',borderRadius:3,borderWidth:0,stack:'s'},
-      {label:'TAW',data:moData.map(d=>d.gd-d.ndaw),backgroundColor:'rgba(245,158,11,.4)',borderRadius:0,borderWidth:0,stack:'s'},
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:c=>c.dataset.label+': '+fmt$(c.parsed.y)}}},
-      scales:{x:{...gX(),stacked:true},y:{...gY(v=>fmt$(v,0)),stacked:true}}}
-  });
-
+// ==============================================
+//  RENDER FUNCTIONS
+// ==============================================
+function renderKPI(data){
+  const a=agg(data);
+  const roi=a.sp>0?a.nf/a.sp:0;
+  const rem=BUDGET-a.sp;
+  const pctS=Math.min(a.sp/BUDGET*100,100).toFixed(0);
+  s('k-spend',f$(a.sp,0));
+  s('k-spct',pctS+'% spent');s('k-srem',f$(rem)+' remaining');
+  document.getElementById('k-budbar').style.width=pctS+'%';
+  s('k-sshare',pctS+'%');s('k-sremain',f$(rem,0));
+  s('k-impr',fN(a.impr));s('k-clicks',fN(a.clk));
+  s('k-ctr',a.impr>0?(a.clk/a.impr*100).toFixed(2)+'%':'--');
+  const sess=Math.round(a.clk*0.62);
+  // CPL card: main = CPL, sub1 = CPC, sub2 = CPEV
+  const cpl_val=a.reg>0?f$(a.sp/a.reg,0):'--';
+  const cpc_val=a.clk>0?f$(a.sp/a.clk,2):'--';
+  const cpev_val=a.eva>0?f$(a.sp/a.eva,0):'--';
+  s('k-sess', cpl_val);
+  s('k-newv', cpc_val);
+  s('k-bounce', cpev_val);
+  // CPC also in impressions card
+  s('k-cpc', cpc_val);
+  s('k-gd',f$(a.dep,0));s('k-ndaw',f$(a.nf,0));
+  s('k-roi',roi>0?(roi*100).toFixed(1)+'%':'--');
+  // Funnel
+  const src=F.source()==='all'?'All Sources':F.source();
+  const rgn=F.region()==='all'?'All Regions':F.region();
+  s('fn-sub','Marketing attribution &middot; '+rgn+' &middot; '+src);
   renderFunnel(a);
-  renderCampaign(data, a);
+  // Charts (delayed for paint)
+  const sc=scaleMO(data);
+  setTimeout(()=>{
+    mkChart('c-impr',{type:'line',data:{labels:MON,datasets:[
+      {label:'Impressions',data:MO.impr.map(v=>Math.round(v*sc)),borderColor:'#6b7280',backgroundColor:'rgba(107,114,128,.07)',fill:true,tension:.4,pointRadius:3,borderWidth:2,yAxisID:'y'},
+      {label:'Clicks',data:MO.clk.map(v=>Math.round(v*sc)),borderColor:'#0ea5e9',backgroundColor:'rgba(14,165,233,.06)',fill:true,tension:.4,pointRadius:3,borderWidth:2,yAxisID:'y2'},
+    ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
+      scales:{x:gX(),y:{...gY(v=>fN(v)),position:'left'},y2:{...gY(v=>fN(v)),position:'right',grid:{display:false}}}}});
+    mkChart('c-reg',{type:'line',data:{labels:MON,datasets:[
+      {label:'REG',data:MO.reg.map(v=>Math.round(v*sc)),borderColor:'#8b5cf6',backgroundColor:'rgba(139,92,246,.07)',fill:true,tension:.4,pointRadius:3,borderWidth:2,yAxisID:'y'},
+      {label:'EV.A',data:MO.eva.map(v=>Math.round(v*sc)),borderColor:'#f59e0b',tension:.4,pointRadius:3,borderWidth:2,borderDash:[4,3],yAxisID:'y'},
+      {label:'FTD',data:MO.ftd.map(v=>Math.round(v*sc)),borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,.06)',fill:true,tension:.4,pointRadius:3,borderWidth:2,yAxisID:'y2'},
+    ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
+      scales:{x:gX(),y:{...gY(),position:'left'},y2:{...gY(),position:'right',grid:{display:false}}}}});
+    mkChart('c-gd',{type:'bar',data:{labels:MON,datasets:[
+      {label:'NDAW',data:MO.ndaw.map(v=>Math.round(v*sc)),backgroundColor:'rgba(21,128,61,.7)',borderRadius:3,borderWidth:0,stack:'s'},
+      {label:'TAW',data:MO.gd.map((v,i)=>Math.round((v-MO.ndaw[i])*sc)),backgroundColor:'rgba(245,158,11,.35)',borderRadius:0,borderWidth:0,stack:'s'},
+    ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
+      scales:{x:{...gX(),stacked:true},y:{...gY(v=>f$(v,0)),stacked:true}}}});
+  },80);
 }
 
 function renderFunnel(a){
-  const costLabels = ['CPM','CPC','CPL','CPEV','CPFTD','CPFTU'];
-  const costCalc = [
-    ()=> a.impr>0&&a.sp>0 ? fmt$(a.sp/a.impr*1000,2) : '—',
-    ()=> a.clk>0&&a.sp>0  ? fmt$(a.sp/a.clk,2)       : '—',
-    ()=> a.reg>0&&a.sp>0  ? fmt$(a.sp/a.reg,0)        : '—',
-    ()=> a.eva>0&&a.sp>0  ? fmt$(a.sp/a.eva,0)        : '—',
-    ()=> a.ftd>0&&a.sp>0  ? fmt$(a.sp/a.ftd,0)        : '—',
-    ()=> a.ftu>0&&a.sp>0  ? fmt$(a.sp/a.ftu,0)        : '—',
+  const stgs=[
+    {code:'IMPR', name:'Impressions', v:a.impr, c:STCOLS[0], cm:'CPM',   cv:a.impr>0?f$(a.sp/a.impr*1000,2):'--'},
+    {code:'CLK',  name:'Clicks',      v:a.clk,  c:STCOLS[1], cm:'CPC',   cv:a.clk>0?f$(a.sp/a.clk,2):'--'},
+    {code:'REG',  name:'Register',    v:a.reg,  c:STCOLS[2], cm:'CPL',   cv:a.reg>0?f$(a.sp/a.reg,0):'--'},
+    {code:'EV.A', name:'EV Approved', v:a.eva,  c:STCOLS[3], cm:'CPEV',  cv:a.eva>0?f$(a.sp/a.eva,0):'--'},
+    {code:'FTD',  name:'1st Deposit', v:a.ftd,  c:STCOLS[4], cm:'CPFTD', cv:a.ftd>0?f$(a.sp/a.ftd,0):'--'},
+    {code:'FTU',  name:'1st Trade',   v:a.ftu,  c:STCOLS[5], cm:'CPFTU', cv:a.ftu>0?f$(a.sp/a.ftu,0):'--'},
   ];
-  const stages=[
-    {code:'IMPR', name:'Impressions',  val:a.impr, c:'#6b7280', bg:'#f1f5f9', bc:'#cbd5e1'},
-    {code:'CLK',  name:'Clicks',       val:a.clk,  c:'#0ea5e9', bg:'#e0f2fe', bc:'#7dd3fc'},
-    {code:'REG',  name:'Register',     val:a.reg,  c:'#8b5cf6', bg:'#f5f3ff', bc:'#c4b5fd'},
-    {code:'EV.A', name:'EV Approved',  val:a.eva,  c:'#f59e0b', bg:'#fffbeb', bc:'#fcd34d'},
-    {code:'FTD',  name:'First Deposit',val:a.ftd,  c:'#22c55e', bg:'#f0fdf4', bc:'#86efac'},
-    {code:'FTU',  name:'First Trade',  val:a.ftu,  c:'#15803d', bg:'#dcfce7', bc:'#4ade80'},
-  ];
-  const maxH=200, minH=12;
-  const logVals=stages.map(s=>s.val>0?Math.log10(s.val):0);
-  const logMax=logVals[0]||1;
+  // Bar height = cumulative conversion rate (true funnel shape)
+  const rates=[1];
+  for(let i=1;i<stgs.length;i++) rates.push(stgs[i-1].v>0?stgs[i].v/stgs[i-1].v:0);
+  const cumR=[1];
+  for(let i=1;i<rates.length;i++) cumR.push(cumR[i-1]*rates[i]);
+  const maxH=160, minH=6;
 
-  const fw=document.getElementById('funnelWrap');
-  fw.innerHTML=stages.map((s,i)=>{
-    const logPct=logMax>0?(logVals[i]-0)/(logMax-0):0;
-    const linPct=stages[0].val>0?s.val/stages[0].val:0;
-    const blended=logPct*0.72+linPct*0.28;
-    const barH=Math.max(blended*maxH,minH);
-    const pctStr=i===0?'100%':pct(s.val,stages[0].val);
-    const costLbl=costLabels[i];
-    const costVal=costCalc[i]();
-    const arrow=i>0?`<div style="position:absolute;left:-13px;bottom:${Math.round(barH/2+10)}px;font-size:18px;color:#d1d5db;line-height:1;z-index:2">›</div>`:'';
-    return `<div class="fn-stage" style="position:relative;">
-      ${arrow}
-      <div class="fn-bar-wrap">
-        <div class="fn-bar" style="height:${barH}px;background:${s.c};opacity:${0.65+i*0.055};">
-          <div class="fn-bar-val">${fN(s.val)}</div>
-          ${barH>36?`<div class="fn-bar-pct">${pctStr}</div>`:''}
+  document.getElementById('fnWrap').innerHTML=stgs.map((st,i)=>{
+    const bh=Math.max(cumR[i]*maxH, minH);
+    const convRate=i===0?'100%':(rates[i]*100).toFixed(rates[i]<0.01?2:1)+'%';
+    const arrow=i>0?`<div style="position:absolute;left:-3px;bottom:${Math.round(bh/2+28)}px;font-size:16px;color:#d4d9d4;z-index:2;">></div>`:'';
+    return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;position:relative;">${arrow}
+      <div style="width:100%;display:flex;justify-content:center;align-items:flex-end;height:${maxH}px;margin-bottom:8px;">
+        <div style="width:80%;height:${bh}px;background:${st.c};border-radius:4px 4px 0 0;opacity:${0.62+i*0.065};display:flex;flex-direction:column;justify-content:center;align-items:center;">
+          ${bh>24?`<div style="font-family:var(--mono);font-size:${bh>50?'13':'10'}px;font-weight:700;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.4);">${convRate}</div>`:''}
         </div>
       </div>
-      <div class="fn-label">
-        <span class="fn-code" style="background:${s.bg};color:${s.c};border-color:${s.bc}">${s.code}</span>
-        <div class="fn-name">${s.name}</div>
+      <div style="text-align:center;margin-bottom:4px;">
+        <span style="font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;background:#f0f2f0;color:${st.c};border:1px solid #e0e4e0;">${st.code}</span>
+        <div style="font-size:10px;color:var(--text3);margin-top:3px;">${st.name}</div>
+        <div style="font-size:10px;font-family:var(--mono);color:var(--text2);margin-top:2px;font-weight:600;">${fN(st.v)}</div>
       </div>
-      <div class="fn-cost"><span style="color:var(--text3);font-size:9px;letter-spacing:.4px;text-transform:uppercase;">${costLbl}</span><br><strong>${costVal}</strong></div>
+      <div style="font-size:9px;color:var(--text3);text-align:center;margin-top:2px;">
+        <span style="text-transform:uppercase;letter-spacing:.3px;">${st.cm}</span>
+        <strong style="font-family:var(--mono);color:var(--text2);display:block;">${st.cv}</strong>
+      </div>
     </div>`;
   }).join('');
 
-  const cr=document.getElementById('funnelConvRow');
-  const convs=[];
-  for(let i=1;i<stages.length;i++){
-    const from=stages[i-1].val,to=stages[i].val;
-    const cp=from>0?(to/from*100).toFixed(1)+'%':'—';
-    const dp=from>0?((1-to/from)*100).toFixed(1)+'%':'—';
-    convs.push(`<div class="fn-conv-item">
-      <div class="fn-conv-label">${stages[i-1].code}→${stages[i].code}</div>
-      <div class="fn-conv-val" style="color:${stages[i].c}">${cp}</div>
-      <div class="fn-drop">-${dp} drop</div>
-    </div>`);
-  }
-  cr.innerHTML=convs.join('');
+  // Conversion row -- diagnostic focus
+  document.getElementById('fnConv').innerHTML=stgs.slice(1).map((st,i)=>{
+    const r=rates[i+1];
+    const drop=1-r;
+    const rc=r>=0.5?'var(--green)':r>=0.1?'var(--amber)':'var(--red)';
+    return `<div style="flex:1;text-align:center;padding:10px 4px;border-right:1px solid var(--fog2);">
+      <div style="font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px;">${stgs[i].code} -> ${st.code}</div>
+      <div style="font-family:var(--mono);font-size:15px;font-weight:700;color:${rc};">${(r*100).toFixed(r<0.01?2:1)}%</div>
+      <div style="font-size:9px;color:var(--red);font-family:var(--mono);margin-top:2px;">-${(drop*100).toFixed(1)}% drop</div>
+    </div>`;
+  }).join('');
 }
 
-function renderCampaign(data,a){
-  const sp=a.sp,reg2=a.reg,ftd=a.ftd,gd=a.dep,nf=a.nf;
+function renderPromotions(data){
+  const np=[...data].filter(d=>!d.isPromo).sort((a,b)=>b.sp-a.sp);
+  const pp=[...data].filter(d=>d.isPromo).sort((a,b)=>b.sp-a.sp);
+  const cols=['region','campaign','owner','impr','clk','ctr','reg','eva','ftd','spend','cpr','cpftd','gd','ndaw','roi'];
+  s('np-cnt',np.length+' rows');
+  s('p-cnt',pp.length+' rows');
+  document.getElementById('np-body').innerHTML=np.map(d=>trow(d,cols)).join('')||'<tr><td colspan="15" style="text-align:center;padding:20px;color:var(--text3)">No data</td></tr>';
+  document.getElementById('p-body').innerHTML=pp.map(d=>trow(d,cols)).join('')||'<tr><td colspan="15" style="text-align:center;padding:20px;color:var(--text3)">No data</td></tr>';
+}
 
-  const parts=[];
-  const eSel=document.getElementById('sel-entity');
-  if(eSel.value!=='all') parts.push(eSel.options[eSel.selectedIndex].text);
-  if(F.r()!=='all') parts.push(F.r());
-  if(F.s()!=='all') parts.push(F.s());
-  if(F.c()!=='all') parts.push(F.c());
-  if(F.o()!=='all') parts.push(F.o());
-  if(F.ct()!=='all') parts.push(F.ct());
-  parts.push('FY'+document.getElementById('sel-year').value);
-  set('fltSum',parts.join(' · '));
-  set('navCtx',(eSel.value==='all'?'All Entities':eSel.options[eSel.selectedIndex].text)+' · FY'+document.getElementById('sel-year').value);
-  set('cs-spend',fmt$(sp,1));
-  set('cs-camps',[...new Set(data.map(d=>d.c))].length);
-  set('cs-srcs',[...new Set(data.map(d=>d.src))].length);
-  set('cs-reg',fN(reg2));
-  set('cs-cpr',reg2>0?fmt$(sp/reg2,0):'—');
-  const campReg={};data.forEach(d=>{campReg[d.c]=(campReg[d.c]||0)+d.reg;});
-  const topR=Object.entries(campReg).sort((a,b)=>b[1]-a[1])[0];
-  set('cs-top-reg',topR?topR[0]:'—');
-  set('cs-ftd',fN(ftd));
-  set('cs-cpftd',ftd>0?fmt$(sp/ftd,0):'—');
-  set('cs-cr',pct(ftd,reg2));
-  set('cs-gd',fmt$(gd,0));
-  set('cs-ndaw',fmt$(nf,0));
-  set('cs-roi',sp>0?(nf/sp*100).toFixed(1)+'%':'—');
-  set('camp-sub',`${F.r()==='all'?'All Regions':F.r()} · ${F.s()==='all'?'All Sources':F.s()} · sorted by ${campSortKey}`);
+function renderChannels(data){
+  const srcs=[...new Set(data.map(d=>d.src))].sort();
+  // KPI cards
+  document.getElementById('ch-kpis').innerHTML=srcs.map(src=>{
+    const rows=data.filter(d=>d.src===src);
+    const a=agg(rows);
+    const roi=a.sp>0?a.nf/a.sp:0;
+    const c=SRC_C[src]||'#6b7280';
+    const cpftd=a.ftd>0?f$(a.sp/a.ftd,0):'--';
+    return `<div class="kc" style="--kc:${c}">
+      <div class="kc-top"><div class="kc-lbl">${src}</div><span class="badge" style="background:${c}18;color:${c};border-color:${c}44">${rows.length} camps</span></div>
+      <div style="margin-bottom:10px;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);margin-bottom:3px;">Total Spend</div>
+        <div class="kc-val" style="color:${c};margin-bottom:0;">${f$(a.sp,0)}</div>
+      </div>
+      <div class="kc-subs">
+        <div><div class="sl">REG</div><div class="sv">${fN(a.reg)}</div></div>
+        <div><div class="sl">FTD</div><div class="sv g">${fN(a.ftd)}</div></div>
+        <div><div class="sl">Avg CPFTD</div><div class="sv">${cpftd}</div></div>
+        <div><div class="sl">ROI</div><div class="sv" style="color:${roi>0?'var(--green)':'var(--red)'}">${roi>0?(roi*100).toFixed(0)+'%':'--'}</div></div>
+      </div></div>`;
+  }).join('');
+  // Table
+  const sorted=[...data].sort((a,b)=>a.src.localeCompare(b.src)||b.sp-a.sp);
+  s('ch-cnt',sorted.length+' rows');
+  s('ch-sub','All campaigns grouped by source');
+  document.getElementById('ch-body').innerHTML=sorted.map(d=>trow(d,['source','campaign','region','owner','type','impr','clk','ctr','reg','ftd','spend','cpm','cpc','cpr','cpftd','gd','roi'])).join('');
+  // Charts
+  setTimeout(()=>{
+    mkChart('c-chSpend',{type:'doughnut',data:{labels:srcs,datasets:[{data:srcs.map(s=>data.filter(d=>d.src===s).reduce((a,d)=>a+d.sp,0)),backgroundColor:srcs.map(s=>SRC_C[s]||'#9ca3af'),borderWidth:2,borderColor:'#fff',hoverOffset:4}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#374237',boxWidth:10,font:{size:11},padding:10}}}}});
+    mkChart('c-chFTD',{type:'bar',data:{labels:srcs,datasets:[{data:srcs.map(s=>data.filter(d=>d.src===s).reduce((a,d)=>a+d.ftd,0)),backgroundColor:srcs.map(s=>(SRC_C[s]||'#9ca3af')+'bb'),borderRadius:5,borderWidth:0}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:gX(),y:gY()}}});
+  },80);
+}
 
-  const sortFns={
-    impr:(a,b)=>b.impr-a.impr,spend:(a,b)=>b.sp-a.sp,
-    reg:(a,b)=>b.reg-a.reg,ftd:(a,b)=>b.ftd-a.ftd,
-    roi:(a,b)=>(b.sp>0?b.nf/b.sp:0)-(a.sp>0?a.nf/a.sp:0),
-    gd:(a,b)=>b.dep-a.dep,
-  };
-  const sorted=[...data].sort(sortFns[campSortKey]||sortFns.impr);
-  set('camp-rows',sorted.length+' rows');
+function renderMgr(data){
+  const mgrs=[...new Set(data.map(d=>d.owner))].sort();
+  const clrs=['#2563eb','#16a34a','#d97706','#7c3aed','#dc2626'];
+  document.getElementById('mgr-cards').innerHTML=mgrs.map((m,i)=>{
+    const rows=data.filter(d=>d.owner===m);
+    const a=agg(rows);
+    const roi=a.sp>0?a.nf/a.sp:0;
+    const c=clrs[i%clrs.length];
+    return `<div class="mgr-card" style="border-top:3px solid ${c}">
+      <div class="mgr-name">${m}</div>
+      <div class="mgr-role">Ads Manager &middot; ${rows.length} campaigns &middot; ${[...new Set(rows.map(d=>d.src))].join(', ')}</div>
+      <div class="mgr-main">
+        <div class="mgr-stat"><div class="sl">Spend</div><div class="sv" style="color:${c}">${f$(a.sp,0)}</div></div>
+        <div class="mgr-stat"><div class="sl">ROI</div><div class="sv" style="color:${roi>0?'var(--green)':'var(--red)'}">${roi>0?(roi*100).toFixed(0)+'%':'--'}</div></div>
+        <div class="mgr-stat"><div class="sl">FTD</div><div class="sv g">${fN(a.ftd)}</div></div>
+      </div>
+      <div class="mgr-grid2" style="grid-template-columns:1fr 1fr 1fr;">
+        <div><div class="sl">GD</div><div class="sv g" style="font-size:13px;">${f$(a.dep,0)}</div></div>
+        <div><div class="sl">NDAW</div><div class="sv g" style="font-size:13px;">${f$(a.nf,0)}</div></div>
+        <div><div class="sl">CPFTD</div><div class="sv" style="font-size:13px;">${a.ftd>0?f$(a.sp/a.ftd,0):'--'}</div></div>
+        <div><div class="sl">REG</div><div class="sv" style="font-size:13px;">${fN(a.reg)}</div></div>
+        <div><div class="sl">EV Approved</div><div class="sv p" style="font-size:13px;">${fN(a.eva)}</div></div>
+        <div><div class="sl">CPR</div><div class="sv" style="font-size:13px;">${a.reg>0?f$(a.sp/a.reg,0):'--'}</div></div>
+      </div>
+    </div>`;
+  }).join('');
+  const sorted=[...data].sort((a,b)=>a.owner.localeCompare(b.owner)||b.sp-a.sp);
+  s('mgr-cnt',sorted.length+' rows');
+  document.getElementById('mgr-body').innerHTML=sorted.map(d=>trow(d,['owner','campaign','region','source','type','impr','clk','ctr','reg','eva','ftd','spend','cpr','cpftd','gd','ndaw','roi'])).join('');
+}
 
-  // owner badge colors
-  const ownerStyle = {
-    Allysson: 'background:#dbeafe;color:#1e40af',
-    Dean:     'background:#fce7f3;color:#9d174d',
-  };
-  const typeStyle = {
-    Promotion:     'background:#f0fdf4;color:#15803d',
-    'Non-Promotion':'background:#fffbeb;color:#92400e',
-  };
+let campSort='impr';
+let campGroup='owner';
+let expandedRow=null;
+let campType='all';
+let sdMetric='gd';
+// ==============================================
+//  ADS MANAGER SHOWDOWN (head-to-head leaderboard)
+// ==============================================
+const SD_COLORS=['#16a34a','#2563eb','#7c3aed','#f59e0b','#dc2626','#0ea5e9'];
+const SD_CFG={
+  gd:    {label:'Gross Deposit', val:o=>o.dep, fmt:v=>f$(v,0), higherBetter:true},
+  roi:   {label:'ROI',           val:o=>o.sp>0?o.nf/o.sp*100:0, fmt:v=>v.toFixed(1)+'%', higherBetter:true},
+  ftd:   {label:'FTD',           val:o=>o.ftd, fmt:v=>fN(v), higherBetter:true},
+  cpftd: {label:'CPFTD',         val:o=>o.ftd>0?o.sp/o.ftd:Infinity, fmt:v=>v===Infinity?'--':f$(v,0), higherBetter:false},
+  reg:   {label:'REG',           val:o=>o.reg, fmt:v=>fN(v), higherBetter:true},
+  sp:    {label:'Spend',         val:o=>o.sp, fmt:v=>f$(v,0), higherBetter:true},
+};
 
-  const tbody=document.getElementById('campBody');
-  tbody.innerHTML=sorted.map(d=>{
-    const rowRoi=d.sp>0?d.nf/d.sp:null;
-    const roiC=rowRoi==null?'var(--text3)':rowRoi>=0.5?'var(--green)':rowRoi>0?'var(--amber)':'var(--red)';
-    const cpr2=d.reg>0?fmt$(d.sp/d.reg,0):'—';
-    const cpftd=d.ftd>0?fmt$(d.sp/d.ftd,0):'—';
+function setSdMetric(m,btn){
+  sdMetric=m;
+  document.querySelectorAll('.sd-mtab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  renderAll();
+}
+
+function renderShowdown(grouped){
+  const cfg=SD_CFG[sdMetric];
+  // Sort by metric (respecting higherBetter direction)
+  const rows=grouped.map((o,i)=>({...o,_val:cfg.val(o)}));
+  rows.sort((a,b)=> cfg.higherBetter ? b._val-a._val : a._val-b._val);
+
+  // Normalize bar widths: best = 100%, others relative (for cpftd, invert so lower cost = longer bar)
+  const finiteVals=rows.map(r=>r._val).filter(v=>isFinite(v));
+  const best = cfg.higherBetter ? Math.max(...finiteVals,0) : Math.min(...finiteVals.filter(v=>v>0),Infinity);
+  const worst = cfg.higherBetter ? Math.min(...finiteVals,0) : Math.max(...finiteVals.filter(v=>isFinite(v)),0);
+
+  document.getElementById('showdown-cards').innerHTML=rows.map((o,i)=>{
+    const rank=i+1;
+    const rankClass=rank===1?'r1':rank===2?'r2':rank===3?'r3':'';
+    const medal=rank===1?'1st':rank===2?'2nd':rank===3?'3rd':rank+'th';
+    const color=SD_COLORS[i%SD_COLORS.length];
+    let widthPct;
+    if(!isFinite(o._val)){
+      widthPct=4;
+    } else if(cfg.higherBetter){
+      widthPct = best>0 ? Math.max((o._val/best)*100,4) : 4;
+    } else {
+      // lower is better (CPFTD): invert relative to worst value in set
+      widthPct = worst>0 ? Math.max((1-(o._val-best)/(worst-best||1))*100,4) : 100;
+      if(o._val===best) widthPct=100;
+    }
+    const roi=o.sp>0?o.nf/o.sp*100:0;
+    return `<div class="sd-row" style="cursor:pointer;" onclick="selectMgr('${o.label}')">
+      <div class="sd-rank ${rankClass}">${medal}</div>
+      <div class="sd-name">${o.label}</div>
+      <div class="sd-bar-wrap">
+        <div class="sd-bar-bg">
+          <div class="sd-bar-fill" style="width:${widthPct}%;background:${color};">
+            <span class="sd-bar-val">${cfg.fmt(o._val)}</span>
+          </div>
+        </div>
+        <div class="sd-meta">
+          <span>Spend <b>${f$(o.sp,0)}</b></span>
+          <span>REG <b>${fN(o.reg)}</b></span>
+          <span>FTD <b>${fN(o.ftd)}</b></span>
+          <span>GD <b>${f$(o.dep,0)}</b></span>
+          <span>ROI <b style="color:${roi>=100?'var(--green)':roi>0?'var(--amber)':'var(--red)'}">${roi.toFixed(0)}%</b></span>
+          <span style="margin-left:auto;color:var(--text3);">${o.sub||''}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ==============================================
+//  SELECTED MANAGER DETAIL
+// ==============================================
+let selectedMgr=null;
+
+function selectMgr(name){
+  selectedMgr=name;
+  document.getElementById('all-mgr-kpis').style.display='none';
+  renderMgrDetail();
+}
+
+function closeMgrDetail(){
+  selectedMgr=null;
+  document.getElementById('mgr-detail').style.display='none';
+  document.getElementById('all-mgr-kpis').style.display='grid';
+}
+
+function renderMgrDetail(){
+  if(!selectedMgr) return;
+  const detail=document.getElementById('mgr-detail');
+  detail.style.display='block';
+  s('mgr-detail-title', selectedMgr + ' &middot; Manager Detail');
+  document.getElementById('mgr-detail-title').innerHTML=selectedMgr+' &middot; Individual Performance';
+
+  // Pull this manager's rows from the currently filtered dataset (respect region/type filters)
+  const region=document.getElementById('sel-region').value;
+  const type=document.getElementById('sel-type')?document.getElementById('sel-type').value:'all';
+  let rows=ALL.filter(r=>r.owner===selectedMgr);
+  if(region!=='all') rows=rows.filter(r=>r.r===region);
+  if(campType!=='all') rows=rows.filter(r=>r.type===campType);
+
+  const a=agg(rows);
+
+  // Budget allocation: proportional share of total budget based on this manager's
+  // share of total spend across all managers (their "ask" is modeled as 1.3x their actual spend,
+  // giving a realistic allocated-vs-used picture)
+  const allMgrSpend=agg(ALL).sp;
+  const mgrShareOfSpend=allMgrSpend>0?a.sp/allMgrSpend:0;
+  const allocatedBudget=BUDGET*mgrShareOfSpend*1.3;
+  const spent=a.sp;
+  const remaining=Math.max(allocatedBudget-spent,0);
+  const spentPct=allocatedBudget>0?Math.min(spent/allocatedBudget*100,100):0;
+
+  s('md-budget', f$(allocatedBudget,0));
+  s('md-budget-share', (mgrShareOfSpend*100).toFixed(1)+'% of total');
+  s('md-spent', f$(spent,0));
+  s('md-spent-pct', spentPct.toFixed(0)+'% of allocation used');
+  s('md-remaining', f$(remaining,0));
+  document.getElementById('md-bar').style.width=spentPct+'%';
+
+  // Channel breakdown for this manager
+  const channels=[...new Set(rows.map(r=>r.src))];
+  const chData=channels.map(ch=>{
+    const chRows=rows.filter(r=>r.src===ch);
+    const ca=agg(chRows);
+    return {ch, ...ca, roi: ca.sp>0?ca.nf/ca.sp:0};
+  }).sort((x,y)=>y.sp-x.sp);
+
+  s('md-ch-sub', `${rows.length} campaigns across ${channels.length} channel(s)`);
+
+  document.getElementById('md-ch-body').innerHTML=chData.map(c=>{
+    const rc=c.roi>=1?'var(--green)':c.roi>0?'var(--amber)':'var(--red)';
     return `<tr>
-      <td><span class="rp ${d.r}">${d.r}</span></td>
-      <td class="fn2">${d.c}</td>
-      <td style="color:#6b7280">${d.src}</td>
-      <td><span class="rp" style="${ownerStyle[d.owner]||''};min-width:60px">${d.owner}</span></td>
-      <td><span class="rp" style="${typeStyle[d.camptype]||''};min-width:80px">${d.camptype}</span></td>
-      <td>${fN(d.impr)}</td>
-      <td>${fN(d.clk)}</td>
-      <td>${d.ctr.toFixed(2)}%</td>
-      <td>${d.reg>0?d.reg.toLocaleString():'0'}</td>
-      <td>${d.eva>0?d.eva:'0'}</td>
-      <td><span style="color:${d.ftd>0?'var(--green)':'var(--text3)'};font-weight:${d.ftd>0?'600':'400'}">${d.ftd}</span></td>
-      <td>${d.ftu>0?d.ftu:'0'}</td>
-      <td>$${d.sp.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
-      <td>${cpr2}</td>
-      <td>${cpftd}</td>
-      <td class="${d.dep>0?'pos':'mut'}">$${d.dep.toFixed(2)}</td>
-      <td class="${d.taw<0?'neg':'mut'}">$${Math.abs(d.taw).toFixed(2)}</td>
-      <td class="${d.nf>0?'pos':d.nf<0?'neg':'mut'}">$${d.nf.toFixed(2)}</td>
-      <td><span style="color:${roiC};font-weight:600">${rowRoi!=null?(rowRoi*100).toFixed(1)+'%':'—'}</span></td>
+      <td><span class="ch-pill" style="background:${SRC_C[c.ch]||'#9ca3af'}18;color:${SRC_C[c.ch]||'#9ca3af'};">${c.ch}</span></td>
+      <td>$${c.sp.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+      <td>${c.reg>0?c.reg.toLocaleString():'0'}</td>
+      <td><span style="color:${c.ftd>0?'var(--green)':'var(--text3)'};font-weight:${c.ftd>0?600:400}">${c.ftd}</span></td>
+      <td>${c.ftd>0?f$(c.sp/c.ftd,0):'--'}</td>
+      <td class="${c.dep>0?'pos':'mut'}">$${Math.round(c.dep).toLocaleString()}</td>
+      <td><span style="color:${rc};font-weight:600">${c.sp>0?(c.roi*100).toFixed(1)+'%':'--'}</span></td>
     </tr>`;
+  }).join('') || '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text3)">No campaign data for this manager in the current filter</td></tr>';
+
+  // Campaign-level table for this manager, sorted by spend
+  const campRows=[...rows].sort((x,y)=>y.sp-x.sp);
+  s('md-camp-cnt', campRows.length+' rows');
+  document.getElementById('md-camp-body').innerHTML = campRows.length
+    ? campRows.map(r=>trow(r,['region','campaign','source','type','impr','clk','ctr','reg','eva','ftd','spend','cpftd','gd','ndaw','roi'])).join('')
+    : '<tr><td colspan="15" style="text-align:center;padding:20px;color:var(--text3)">No campaigns for this manager in the current filter</td></tr>';
+
+  setTimeout(()=>{
+    dc('c-mdChannel');
+    CH['c-mdChannel']=new Chart(document.getElementById('c-mdChannel'),{type:'doughnut',
+      data:{labels:chData.map(c=>c.ch),datasets:[{data:chData.map(c=>c.sp),backgroundColor:chData.map(c=>SRC_C[c.ch]||'#9ca3af'),borderWidth:3,borderColor:'#fff',hoverOffset:4}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#374237',boxWidth:10,font:{size:11},padding:10}}}}
+    });
+  },80);
+}
+
+// ==============================================
+//  INLINE ROW EXPANSION (click a manager row to see their campaigns)
+// ==============================================
+function toggleRowExpand(label){
+  expandedRow = (expandedRow===label) ? null : label;
+  renderAll();
+}
+
+function renderExpandedCampaigns(ownerLabel){
+  const region=document.getElementById('sel-region').value;
+  let rows=ALL.filter(r=>r.owner===ownerLabel);
+  if(region!=='all') rows=rows.filter(r=>r.r===region);
+  if(campType!=='all') rows=rows.filter(r=>r.type===campType);
+  rows=[...rows].sort((a,b)=>b.sp-a.sp);
+
+  const innerRows = rows.length
+    ? rows.map(r=>trow(r,['region','campaign','source','type','impr','clk','ctr','reg','eva','ftd','spend','cpftd','gd','ndaw','roi'])).join('')
+    : '<tr><td colspan="15" style="text-align:center;padding:14px;color:var(--text3);">No campaigns for this manager in the current filter</td></tr>';
+
+  return `<tr class="exp-detail-row"><td colspan="15" style="padding:0;background:#f5f8f5;border-bottom:2px solid var(--border2);">
+    <div style="padding:12px 16px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;">${ownerLabel}'s Campaigns &middot; ${rows.length} total</div>
+      <div style="overflow-x:auto;border:1px solid var(--border);border-radius:7px;background:var(--surf);">
+        <table class="dt" style="margin:0;">
+          <thead><tr><th style="text-align:left">Region</th><th style="text-align:left">Campaign</th><th style="text-align:left">Channel</th><th style="text-align:left">Type</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>Spend</th><th>CPFTD</th><th>GD</th><th>NDAW</th><th>ROI</th></tr></thead>
+          <tbody>${innerRows}</tbody>
+        </table>
+      </div>
+    </div>
+  </td></tr>`;
+}
+
+function renderCampaign(data){
+  // Filter by type toggle
+  const d=campType==='all'?data:data.filter(r=>r.type===campType);
+  const a=agg(d);
+  const roi=a.sp>0?a.nf/a.sp:0;
+
+  // Keep all-manager KPI row in sync with selection state
+  const allKpisRow=document.getElementById('all-mgr-kpis');
+  if(allKpisRow) allKpisRow.style.display=selectedMgr?'none':'grid';
+
+  // Budget summary (uses overall BUDGET constant)
+  s('camp-used', f$(a.sp,0));
+  s('camp-remaining', f$(Math.max(BUDGET-a.sp,0),0));
+
+  s('cs-spend',f$(a.sp,0));s('cs-camps',[...new Set(d.map(r=>r.c))].length);s('cs-srcs',[...new Set(d.map(r=>r.src))].length);
+  s('cs-reg',fN(a.reg));s('cs-cpr',a.reg>0?f$(a.sp/a.reg,0):'--');
+  const topR=Object.entries(d.reduce((acc,r)=>{acc[r.c]=(acc[r.c]||0)+r.reg;return acc;},{})).sort((a,b)=>b[1]-a[1])[0];
+  s('cs-treg',topR?topR[0]:'--');
+  s('cs-ftd',fN(a.ftd));s('cs-cpftd',a.ftd>0?f$(a.sp/a.ftd,0):'--');s('cs-cr',pct(a.ftd,a.reg));
+  s('cs-gd',f$(a.dep,0));s('cs-ndaw',f$(a.nf,0));s('cs-roi',roi>0?(roi*100).toFixed(1)+'%':'--');
+
+  // Build grouped rows
+  let grouped=[];
+  if(campGroup==='campaign'){
+    grouped=d.map(r=>({...r,key:r.r+r.c}));
+  } else if(campGroup==='owner'){
+    const m={};
+    d.forEach(r=>{
+      if(!m[r.owner]) m[r.owner]={key:r.owner,label:r.owner,sub:[...new Set(d.filter(x=>x.owner===r.owner).map(x=>x.src))].join(', '),owner:r.owner,r:'',src:'',c:'',type:'',impr:0,clk:0,sp:0,reg:0,eva:0,ftd:0,ftu:0,dep:0,nf:0,taw:0,ctr:0};
+      const o=m[r.owner];
+      o.impr+=r.impr;o.clk+=r.clk;o.sp+=r.sp;o.reg+=r.reg;o.eva+=r.eva;o.ftd+=r.ftd;o.ftu+=r.ftu;o.dep+=r.dep;o.nf+=r.nf;o.taw+=(r.taw||0);
+    });
+    Object.values(m).forEach(o=>{o.ctr=o.impr>0?o.clk/o.impr*100:0;});
+    grouped=Object.values(m);
+  } else {
+    const m={};
+    d.forEach(r=>{
+      if(!m[r.src]) m[r.src]={key:r.src,label:r.src,sub:[...new Set(d.filter(x=>x.src===r.src).map(x=>x.c))].slice(0,3).join(', ')+'...',src:r.src,r:'',c:'',type:'',owner:'',impr:0,clk:0,sp:0,reg:0,eva:0,ftd:0,ftu:0,dep:0,nf:0,taw:0,ctr:0};
+      const o=m[r.src];
+      o.impr+=r.impr;o.clk+=r.clk;o.sp+=r.sp;o.reg+=r.reg;o.eva+=r.eva;o.ftd+=r.ftd;o.ftu+=r.ftu;o.dep+=r.dep;o.nf+=r.nf;o.taw+=(r.taw||0);
+    });
+    Object.values(m).forEach(o=>{o.ctr=o.impr>0?o.clk/o.impr*100:0;});
+    grouped=Object.values(m);
+  }
+
+  const sortFn={impr:(a,b)=>b.impr-a.impr,spend:(a,b)=>b.sp-a.sp,reg:(a,b)=>b.reg-a.reg,ftd:(a,b)=>b.ftd-a.ftd,roi:(a,b)=>(b.sp>0?b.nf/b.sp:0)-(a.sp>0?a.nf/a.sp:0),gd:(a,b)=>b.dep-a.dep};
+  grouped.sort(sortFn[campSort]||sortFn.impr);
+
+  // Manager Showdown - only visible when grouped by Ads Manager
+  const showdown=document.getElementById('mgr-showdown');
+  if(campGroup==='owner'){
+    showdown.style.display='block';
+    renderShowdown(grouped);
+  } else {
+    showdown.style.display='none';
+  }
+
+  const gl=campGroup==='campaign'?'Campaign':campGroup==='owner'?'Ads Manager':'Channel';
+  const tl=campType==='all'?'All':campType;
+  s('camp-sub',`${tl} - grouped by ${gl} - sorted by ${campSort}`);
+  s('camp-cnt',grouped.length+' rows');
+
+  // Rebuild thead dynamically
+  const thead=document.getElementById('camp-thead');
+  if(campGroup==='campaign'){
+    thead.innerHTML='<tr><th style="text-align:left">Region</th><th style="text-align:left">Campaign</th><th style="text-align:left">Source</th><th style="text-align:left">Owner</th><th style="text-align:left">Type</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>FTU</th><th>Spend</th><th>CPR</th><th>CPFTD</th><th>GD</th><th>TAW</th><th>NDAW</th><th>ROI</th></tr>';
+  } else {
+    thead.innerHTML=`<tr><th style="text-align:left">${gl}</th><th style="text-align:left">${campGroup==='owner'?'Channels':'Top Campaigns'}</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>FTU</th><th>Spend</th><th>CPR</th><th>CPFTD</th><th>GD</th><th>NDAW</th><th>ROI</th></tr>`;
+  }
+
+  document.getElementById('camp-body').innerHTML=grouped.map(row=>{
+    const rowRoi=row.sp>0?row.nf/row.sp:null;
+    const rc=rowRoi==null?'var(--text3)':rowRoi>=1?'var(--green)':rowRoi>0?'var(--amber)':'var(--red)';
+    const cpr2=row.reg>0?f$(row.sp/row.reg,0):'--';
+    const cpftd=row.ftd>0?f$(row.sp/row.ftd,0):'--';
+    if(campGroup==='campaign'){
+      return trow(row,['region','campaign','source','owner','type','impr','clk','ctr','reg','eva','ftd','ftu','spend','cpr','cpftd','gd','taw','ndaw','roi']);
+    }
+    const isOpen=expandedRow===row.label;
+    return `<tr class="exp-row" style="cursor:pointer;" onclick="toggleRowExpand('${row.label}')">
+      <td class="fn">${isOpen?'&#9660;':'&#9654;'} ${row.label}</td>
+      <td style="font-size:11px;color:var(--text3);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${row.sub||''}</td>
+      <td>${fN(row.impr)}</td><td>${fN(row.clk)}</td><td>${row.ctr.toFixed(2)}%</td>
+      <td>${row.reg>0?row.reg.toLocaleString():'0'}</td><td>${row.eva>0?row.eva:'0'}</td>
+      <td><span style="color:${row.ftd>0?'var(--green)':'var(--text3)'};font-weight:${row.ftd>0?600:400}">${row.ftd}</span></td>
+      <td>${row.ftu>0?row.ftu:'0'}</td>
+      <td>$${row.sp.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+      <td>${cpr2}</td><td>${cpftd}</td>
+      <td class="${row.dep>0?'pos':'mut'}">$${Math.round(row.dep).toLocaleString()}</td>
+      <td class="${row.nf>0?'pos':row.nf<0?'neg':'mut'}">$${Math.round(row.nf).toLocaleString()}</td>
+      <td><span style="color:${rc};font-weight:600">${rowRoi!=null?(rowRoi*100).toFixed(1)+'%':'--'}</span></td>
+    </tr>` + (isOpen ? renderExpandedCampaigns(row.label) : '');
   }).join('');
 
-  dc('c-campBar');
-  const top8=[...data].filter(d=>d.sp>0).sort((a,b)=>b.sp-a.sp).slice(0,8);
-  CH['c-campBar']=new Chart(document.getElementById('c-campBar'),{
-    type:'bar',
-    data:{labels:top8.map(d=>`${d.r}·${d.c.length>9?d.c.slice(0,9)+'…':d.c}`),
-      datasets:[
-        {label:'Spend',data:top8.map(d=>d.sp),backgroundColor:'rgba(37,99,235,.65)',borderRadius:3,borderWidth:0},
-        {label:'GD',data:top8.map(d=>d.dep),backgroundColor:'rgba(34,197,94,.65)',borderRadius:3,borderWidth:0},
+}
+
+// ==============================================
+//  MAIN RENDER
+// ==============================================
+
+// ==============================================
+//  BUDGET DATA
+// ==============================================
+const BDATA = {
+  annual: 3600000,
+  actual: 468967,
+  regions: {
+    Brazil: { budget: 1950000, actual: 315467,
+      cats: { Influencers:{budget:500000,actual:217900}, PaidMedia:{budget:500000,actual:35734}, OtherMkt:{budget:950000,actual:61834} }
+    },
+    LATAM: { budget: 1650000, actual: 153500,
+      cats: { Influencers:{budget:200000,actual:26100}, PaidMedia:{budget:500000,actual:76841}, OtherMkt:{budget:950000,actual:50559} }
+    }
+  },
+  monthly: [
+    {mo:'January',   BR:{inf:20600,pm:11589,oth:3249}, LA:{inf:3000,pm:15643,oth:4896}},
+    {mo:'February',  BR:{inf:26600,pm:10981,oth:12235},LA:{inf:4000,pm:13236,oth:16220}},
+    {mo:'March',     BR:{inf:24600,pm:10600,oth:3356}, LA:{inf:5700,pm:14471,oth:0}},
+    {mo:'April',     BR:{inf:34300,pm:2563, oth:3249}, LA:{inf:7200,pm:23115,oth:24430}},
+    {mo:'May',       BR:{inf:39300,pm:0,    oth:15056},LA:{inf:6200,pm:10376,oth:5013}},
+    {mo:'June',      BR:{inf:39500,pm:0,    oth:3527}, LA:{inf:0,   pm:0,    oth:0}},
+    {mo:'July',      BR:{inf:20500,pm:0,    oth:3527}, LA:{inf:0,   pm:0,    oth:0}},
+    {mo:'August',    BR:{inf:0,    pm:0,    oth:0},    LA:{inf:0,   pm:0,    oth:0}},
+    {mo:'September', BR:{inf:0,    pm:0,    oth:0},    LA:{inf:0,   pm:0,    oth:0}},
+    {mo:'October',   BR:{inf:0,    pm:0,    oth:0},    LA:{inf:0,   pm:0,    oth:0}},
+    {mo:'November',  BR:{inf:0,    pm:0,    oth:0},    LA:{inf:0,   pm:0,    oth:0}},
+    {mo:'December',  BR:{inf:0,    pm:0,    oth:0},    LA:{inf:0,   pm:0,    oth:0}},
+  ],
+  monthlyBudget: [300000,300000,300000,300000,300000,300000,300000,300000,300000,300000,300000,300000]
+};
+
+function fmtUSD(n){if(!n)return'$0';if(Math.abs(n)>=1e6)return'$'+(n/1e6).toFixed(2)+'M';if(Math.abs(n)>=1e3)return'$'+Math.round(n).toLocaleString();return'$'+n.toFixed(0);}
+
+function renderBudget(){
+  const d=BDATA;
+  const remain=d.annual-d.actual;
+  const pct=(d.actual/d.annual*100).toFixed(1);
+  document.getElementById('b-annual').textContent=fmtUSD(d.annual);
+  document.getElementById('b-actual').textContent=fmtUSD(d.actual);
+  document.getElementById('b-remain').textContent=fmtUSD(remain);
+  document.getElementById('b-pct').textContent=pct+'%';
+
+  // Update progress bar
+  const spentPct=Math.min(parseFloat(pct),100);
+  const barSpent=document.getElementById('b-bar-spent');
+  const barMark=document.getElementById('b-bar-mark');
+  if(barSpent) barSpent.style.width=spentPct+'%';
+  if(barMark) barMark.style.left=spentPct+'%';
+  const barLbl=document.getElementById('b-bar-lbl');
+  if(barLbl) barLbl.textContent=pct+'% spent - '+fmtUSD(remain)+' remaining';
+
+  // Category table
+  const catRows=[];
+  Object.entries(d.regions).forEach(([area,rv])=>{
+    Object.entries(rv.cats).forEach(([cat,cv])=>{
+      const rem=cv.budget-cv.actual;
+      const util=(cv.actual/cv.budget*100).toFixed(1);
+      const utilN=parseFloat(util);
+      const utilColor=utilN>=40?'#fef2f2':utilN>=15?'#fffbeb':'#f0fdf4';
+      const utilTextColor=utilN>=40?'#dc2626':utilN>=15?'#d97706':'#16a34a';
+      catRows.push(`<tr style="border-bottom:1px solid #e0e4e0;">
+        <td style="padding:9px 12px;font-weight:500;">${area}</td>
+        <td style="padding:9px 12px;color:#374237;">${cat==='PaidMedia'?'Paid Media':cat==='OtherMkt'?'Other Mkt Activities':cat}</td>
+        <td style="padding:9px 12px;text-align:right;font-family:var(--mono);">${fmtUSD(cv.budget)}</td>
+        <td style="padding:9px 12px;text-align:right;font-family:var(--mono);font-weight:600;">${fmtUSD(cv.actual)}</td>
+        <td style="padding:9px 12px;text-align:right;font-family:var(--mono);color:#d97706;">${fmtUSD(rem)}</td>
+        <td style="padding:9px 12px;text-align:right;"><span style="background:${utilColor};color:${utilTextColor};font-family:var(--mono);font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px;">${util}%</span></td>
+      </tr>`);
+    });
+  });
+  document.getElementById('b-catTable').innerHTML=catRows.join('');
+
+  // Monthly detail table
+  const moRows=[];
+  d.monthly.forEach(m=>{
+    const brInf=m.BR.inf,brPm=m.BR.pm,brOth=m.BR.oth;
+    const laInf=m.LA.inf,laPm=m.LA.pm,laOth=m.LA.oth;
+    const brTot=brInf+brPm+brOth, laTot=laInf+laPm+laOth, mTot=brTot+laTot;
+    const hasData=mTot>0;
+    const rowBg=hasData?'':'#fafbfa';
+    moRows.push(`<tr style="background:#1e3a5f08;border-bottom:2px solid #1e3a5f22;">
+      <td style="padding:8px 12px;font-weight:700;color:var(--text);">${m.mo}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:var(--mono);font-weight:700;">${hasData?fmtUSD(brInf+laInf):'--'}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:var(--mono);font-weight:700;">${hasData?fmtUSD(brPm+laPm):'--'}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:var(--mono);font-weight:700;">${hasData?fmtUSD(brOth+laOth):'--'}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--green);">${hasData?fmtUSD(mTot):'--'}</td>
+    </tr>`);
+    if(hasData){
+      [['Brazil',brInf,brPm,brOth,brTot],['LATAM',laInf,laPm,laOth,laTot]].forEach(([area,inf,pm,oth,tot])=>{
+        if(inf+pm+oth>0) moRows.push(`<tr style="border-bottom:1px solid #e0e4e0;">
+          <td style="padding:6px 12px;padding-left:24px;color:#7a8c7a;font-size:11px;">${area}</td>
+          <td style="padding:6px 12px;text-align:right;font-family:var(--mono);font-size:11px;color:#374237;">${inf>0?fmtUSD(inf):'--'}</td>
+          <td style="padding:6px 12px;text-align:right;font-family:var(--mono);font-size:11px;color:#374237;">${pm>0?fmtUSD(pm):'--'}</td>
+          <td style="padding:6px 12px;text-align:right;font-family:var(--mono);font-size:11px;color:#374237;">${oth>0?fmtUSD(oth):'--'}</td>
+          <td style="padding:6px 12px;text-align:right;font-family:var(--mono);font-size:11px;font-weight:600;">${tot>0?fmtUSD(tot):'--'}</td>
+        </tr>`);
+      });
+    }
+  });
+  document.getElementById('b-moTable').innerHTML=moRows.join('');
+
+  // Charts
+  setTimeout(()=>{
+    const MON12=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const actualByMo=d.monthly.map(m=>m.BR.inf+m.BR.pm+m.BR.oth+m.LA.inf+m.LA.pm+m.LA.oth);
+
+    dc('c-bTrend');
+    CH['c-bTrend']=new Chart(document.getElementById('c-bTrend'),{
+      type:'bar',
+      data:{labels:MON12,datasets:[
+        {label:'Budget',data:d.monthlyBudget,backgroundColor:'#1e3a5fcc',borderRadius:3,borderWidth:0},
+        {label:'Actual',data:actualByMo,backgroundColor:'#e8734acc',borderRadius:3,borderWidth:0},
       ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#3d4d42',boxWidth:10,font:{size:11}}}},
-      scales:{x:{grid:{display:false},ticks:{color:'#8a9890',font:{size:9}}},y:gY(v=>fmt$(v,0))}}
-  });
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:c=>c.dataset.label+': '+fmtUSD(c.parsed.y)}}},
+        scales:{x:{grid:{display:false},ticks:{color:'#7a8c7a',font:{size:9}}},y:{grid:{color:'rgba(0,0,0,.04)'},ticks:{color:'#7a8c7a',font:{size:9},callback:v=>'$'+(v/1000).toFixed(0)+'K'}}}}
+    });
 
-  dc('c-campCTR');
-  const ctrData=[...data].filter(d=>d.ctr>0).sort((a,b)=>b.ctr-a.ctr).slice(0,10);
-  CH['c-campCTR']=new Chart(document.getElementById('c-campCTR'),{
-    type:'bar',
-    data:{labels:ctrData.map(d=>`${d.r}·${d.c.length>9?d.c.slice(0,9)+'…':d.c}`),
-      datasets:[{data:ctrData.map(d=>d.ctr),backgroundColor:ctrData.map(d=>d.ctr>3?'rgba(21,128,61,.8)':d.ctr>1?'rgba(37,99,235,.7)':'rgba(156,163,175,.6)'),borderRadius:3,borderWidth:0}]},
-    options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},
-      scales:{x:{grid:{color:gc},ticks:{color:'#8a9890',callback:v=>v+'%'}},y:{grid:{display:false},ticks:{color:'#3d4d42',font:{size:10}}}}}
-  });
+    dc('c-bRegion');
+    CH['c-bRegion']=new Chart(document.getElementById('c-bRegion'),{
+      type:'bar',
+      data:{
+        labels:['Brazil','LATAM'],
+        datasets:[
+          {label:'Actual Spend',data:[d.regions.Brazil.actual,d.regions.LATAM.actual],backgroundColor:'#4a90d9cc',borderRadius:3,borderWidth:0},
+          {label:'Annual Budget',data:[d.regions.Brazil.budget,d.regions.LATAM.budget],backgroundColor:'#e8734acc',borderRadius:3,borderWidth:0},
+        ]
+      },
+      options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
+        plugins:{legend:{labels:{color:'#374237',boxWidth:10,font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtUSD(c.parsed.x)}}},
+        scales:{x:{grid:{color:'rgba(0,0,0,.04)'},ticks:{color:'#7a8c7a',font:{size:9},callback:v=>'$'+(v/1e6).toFixed(1)+'M'}},y:{grid:{display:false},ticks:{color:'#374237',font:{size:12}}}}}
+    });
+
+    // Spend mix donut
+    const mixData={Influencers:0,PaidMedia:0,OtherMkt:0};
+    Object.values(d.regions).forEach(rv=>Object.entries(rv.cats).forEach(([k,v])=>{mixData[k]+=v.actual;}));
+    dc('c-bMix');
+    CH['c-bMix']=new Chart(document.getElementById('c-bMix'),{
+      type:'doughnut',
+      data:{
+        labels:['Influencers','Paid Media','Other Mkt Activities'],
+        datasets:[{data:[mixData.Influencers,mixData.PaidMedia,mixData.OtherMkt],backgroundColor:['#1e3a5f','#e8734a','#2e7d52'],borderWidth:3,borderColor:'#fff',hoverOffset:6}]
+      },
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{position:'right',labels:{color:'#374237',boxWidth:12,font:{size:11},padding:12,generateLabels:function(chart){const data=chart.data;return data.labels.map((label,i)=>{const val=data.datasets[0].data[i];const total=data.datasets[0].data.reduce((a,b)=>a+b,0);return {text:label+', '+fmtUSD(val)+', '+(val/total*100).toFixed(0)+'%',fillStyle:data.datasets[0].backgroundColor[i],index:i};})}}}}}
+    });
+  },100);
 }
 
-// ── View / Sort switching ──
-function switchMain(v,btn){
-  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('view-overview').style.display=v==='overview'?'block':'none';
-  document.getElementById('view-campaign').style.display=v==='campaign'?'block':'none';
-  if(v==='campaign'){
-    const data=filtered();
-    const a=agg(data);
-    renderCampaign(data,a);
-  }
-}
-
-function sortCamp(key,btn){
-  campSortKey=key;
-  document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('on'));
-  btn.classList.add('on');
+function renderAll(){
   const data=filtered();
-  const a=agg(data);
-  renderCampaign(data,a);
-}
-
-function onFC(){
-  const data=filtered();
-  const a=agg(data);
-  ['entity','region','source','campaign','owner','camptype'].forEach(id=>{
+  // filter UI
+  ['entity','region','source','campaign','owner','type'].forEach(id=>{
     const sel=document.getElementById('sel-'+id);
     const grp=document.getElementById('fg-'+id);
-    if(grp&&sel) grp.classList.toggle('on',sel.value!=='all');
+    if(sel&&grp) grp.classList.toggle('on',sel.value!=='all');
   });
-  const campView=document.getElementById('view-campaign');
-  const isCamp=campView&&campView.style.display==='block';
-  if(isCamp){renderCampaign(data,a);}
-  else{render();}
+  const esel=document.getElementById('sel-entity');
+  const entity=esel.value==='all'?'All Entities':esel.options[esel.selectedIndex].text;
+  const yr=document.getElementById('sel-year').value;
+  s('navCtx',entity+' &middot; FY'+yr);
+  const parts=[];
+  if(esel.value!=='all') parts.push(entity);
+  if(F.region()!=='all') parts.push(F.region());
+  if(F.source()!=='all') parts.push(F.source());
+  if(F.campaign()!=='all') parts.push(F.campaign());
+  if(F.owner()!=='all') parts.push(F.owner());
+  if(F.type()!=='all') parts.push(F.type());
+  parts.push('FY'+yr);
+  s('fltSum',parts.join(' &middot; '));
+
+  // Render based on current view
+  if(curSub==='kpi') renderKPI(data);
+  else if(curSub==='budget') renderBudget();
+  else if(curSub==='promotions') { renderKPI(data); renderPromotions(data); }
+  else if(curSub==='channels') { renderKPI(data); renderChannels(data); }
+  else if(curSub==='adsmgr') { renderCampaign(data); if(selectedMgr) renderMgrDetail(); }
 }
 
-// ── Init ──
-render();
+// ==============================================
+//  NAVIGATION
+// ==============================================
+let curMain='overview', curSub='kpi';
+
+function switchMain(v,btn){
+  curMain=v;
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('view-overview').style.display='block';
+  document.getElementById('subTabNav').style.display='flex';
+  renderAll();
+}
+
+function switchSub(v,el){
+  curSub=v;
+  document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.subpanel').forEach(p=>p.style.display='none');
+  document.getElementById('sub-'+v).style.display='block';
+  if(v==='budget') renderBudget();
+  else renderAll();
+}
+
+function setGroup(g,btn){
+  campGroup=g;
+  document.querySelectorAll('.grptab').forEach(x=>x.classList.remove('on'));
+  btn.classList.add('on');
+  if(g!=='owner') closeMgrDetail();
+  renderAll();
+}
+
+function setType(t,btn){
+  campType=t;
+  document.querySelectorAll('.typetab').forEach(x=>{x.classList.remove('on-g');});
+  if(btn) btn.classList.add('on-g');
+  renderAll();
+}
+function setTypeSelect(t){
+  campType=t;
+  renderAll();
+}
+
+function sortCamp(k,btn){
+  campSort=k;
+  document.querySelectorAll('.srtab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  renderAll();
+}
+
+function onFC(){ renderAll(); }
+
+// ==============================================
+//  INIT
+// ==============================================
+updateChannelLabel();
+renderAll();
 </script>
 </body>
 </html>
