@@ -422,18 +422,40 @@ table.dt tbody tr:hover td{background:var(--surf2);}
   <div id="sub-adsmgr" class="subpanel" style="display:none;">
 
   <!-- Campaign Budget summary -->
-  <div style="display:flex;align-items:center;gap:0;margin-bottom:12px;background:var(--surf);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;">
-    <div style="flex:1;padding:12px 18px;border-right:1px solid var(--border);">
-      <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Total Budget</div>
-      <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.5px;">$1,050,000</div>
+  <div style="background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;margin-bottom:14px;box-shadow:var(--sh);">
+    <div style="display:flex;align-items:center;gap:0;margin-bottom:16px;">
+      <div style="flex:0 0 160px;padding-right:24px;border-right:1px solid var(--border);">
+        <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Total Budget</div>
+        <div style="font-family:var(--mono);font-size:24px;font-weight:600;color:var(--text);letter-spacing:-.8px;line-height:1;">$1,050,000</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px;">Campaign allocation</div>
+      </div>
+      <div style="flex:1;display:flex;gap:0;padding-left:24px;">
+        <div style="flex:1;padding-right:24px;border-right:1px solid var(--border);">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Used Budget</div>
+          <div style="font-family:var(--mono);font-size:24px;font-weight:600;color:#16a34a;letter-spacing:-.8px;line-height:1;" id="camp-used">--</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:4px;">Loaded actuals YTD</div>
+        </div>
+        <div style="flex:1;padding:0 24px;border-right:1px solid var(--border);">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Remaining Budget</div>
+          <div style="font-family:var(--mono);font-size:24px;font-weight:600;color:#d97706;letter-spacing:-.8px;line-height:1;" id="camp-remaining">--</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:4px;">Budget not yet used</div>
+        </div>
+        <div style="flex:0 0 120px;padding-left:24px;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Utilisation</div>
+          <div style="font-family:var(--mono);font-size:24px;font-weight:700;letter-spacing:-.8px;line-height:1;" id="camp-pct">--</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:4px;">of allocation</div>
+        </div>
+      </div>
     </div>
-    <div style="flex:1;padding:12px 18px;border-right:1px solid var(--border);">
-      <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Used Budget</div>
-      <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--green);letter-spacing:-.5px;" id="camp-used">--</div>
-    </div>
-    <div style="flex:1;padding:12px 18px;">
-      <div style="font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">Remaining Budget</div>
-      <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--amber);letter-spacing:-.5px;" id="camp-remaining">--</div>
+    <!-- Progress bar -->
+    <div>
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text3);font-family:var(--mono);margin-bottom:5px;">
+        <span id="camp-bar-lbl">-- spent</span>
+        <span>of $1,050,000</span>
+      </div>
+      <div style="height:12px;background:#e8ede8;border-radius:6px;overflow:hidden;position:relative;">
+        <div id="camp-bar-spent" style="position:absolute;top:0;left:0;height:100%;background:var(--gl);border-radius:6px 0 0 6px;transition:width .8s cubic-bezier(.4,0,.2,1);width:0%;"></div>
+      </div>
     </div>
   </div>
 
@@ -1311,6 +1333,14 @@ function renderCampaign(data){
   // Budget summary (uses overall BUDGET constant)
   s('camp-used', f$(a.sp,0));
   s('camp-remaining', f$(Math.max(BUDGET-a.sp,0),0));
+  const campPctNum = BUDGET>0 ? (a.sp/BUDGET*100) : 0;
+  const campPctClamped = Math.min(campPctNum,100);
+  s('camp-pct', campPctNum.toFixed(1)+'%');
+  const campPctEl=document.getElementById('camp-pct');
+  if(campPctEl) campPctEl.style.color = campPctNum>=90?'#dc2626':campPctNum>=60?'#d97706':'#16a34a';
+  const campBarSpent=document.getElementById('camp-bar-spent');
+  if(campBarSpent) campBarSpent.style.width=campPctClamped+'%';
+  s('camp-bar-lbl', campPctNum.toFixed(1)+'% spent - '+f$(Math.max(BUDGET-a.sp,0),0)+' remaining');
 
   s('cs-spend',f$(a.sp,0));s('cs-camps',[...new Set(d.map(r=>r.c))].length);s('cs-srcs',[...new Set(d.map(r=>r.src))].length);
   s('cs-reg',fN(a.reg));s('cs-cpr',a.reg>0?f$(a.sp/a.reg,0):'--');
