@@ -205,6 +205,22 @@ table.dt tbody tr:hover td{background:var(--surf2);}
 .sd-mtab{height:26px;padding:0 12px;border-radius:5px;border:1px solid var(--border2);font-family:var(--font);font-size:11px;font-weight:500;color:var(--text3);background:var(--surf);cursor:pointer;transition:all .15s;}
 .sd-mtab:hover{border-color:var(--green);color:var(--text);}
 .sd-mtab.on{background:var(--gl);border-color:var(--gl);color:#052e16;font-weight:600;}
+/* Creative drill-down */
+.cr-panel{padding:14px 18px;background:#f5f8f5;border-bottom:2px solid var(--border2);}
+.cr-header{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.cr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:12px;}
+.cr-card{background:var(--surf);border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:var(--sh);transition:box-shadow .15s;}
+.cr-card:hover{box-shadow:var(--sh2);}
+.cr-thumb{height:90px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.cr-thumb-label{font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.7);position:absolute;bottom:6px;left:8px;background:rgba(0,0,0,.3);padding:2px 6px;border-radius:3px;}
+.cr-card-body{padding:10px 12px;}
+.cr-name{font-size:11px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.3;word-break:break-word;}
+.cr-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;}
+.cr-stat-l{font-size:8px;color:var(--text3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:1px;}
+.cr-stat-v{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text2);}
+.cr-stat-v.g{color:var(--green);}
+.cr-bar{height:3px;background:var(--border);border-radius:2px;margin-top:8px;overflow:hidden;}
+.cr-bar-fill{height:100%;border-radius:2px;transition:width .6s;}
 </style>
 </head>
 <body>
@@ -242,14 +258,22 @@ table.dt tbody tr:hover td{background:var(--surf2);}
       <option value="FSC">FSC &middot; MU</option><option value="SVG">SVG &middot; VC</option>
     </select>
   </div>
-  <div class="fg" id="fg-region">
+  <div class="fg" id="fg-region" style="position:relative;">
     <span class="fgl">Country / Region</span>
-    <select id="sel-region" onchange="onFC()">
-      <option value="all">All Regions</option>
-      <option value="BR">Brazil (BR)</option><option value="ES">Spain (ES)</option>
-      <option value="KR">Korea (KR)</option><option value="MN">Mongolia (MN)</option><option value="NZ">New Zealand (NZ)</option>
-    </select>
+    <button id="region-btn" onclick="toggleRegionMenu()" style="border:none;outline:none;background:transparent;padding:0 22px 0 8px;height:28px;font-size:12px;font-family:var(--font);color:var(--text);cursor:pointer;white-space:nowrap;display:flex;align-items:center;position:relative;">
+      <span id="region-btn-label">All Regions</span>
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7a8c7a" stroke-width="2.5" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <div id="region-menu" style="display:none;position:absolute;top:34px;left:0;background:var(--surf);border:1px solid var(--border2);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:8px;min-width:180px;z-index:500;">
+      <div style="display:flex;gap:6px;padding:0 4px 8px;border-bottom:1px solid var(--border);margin-bottom:6px;">
+        <button onclick="setAllRegions(true)" style="flex:1;font-size:10px;padding:4px 6px;border:1px solid var(--border2);border-radius:4px;background:var(--surf2);color:var(--text2);cursor:pointer;font-family:var(--font);">Select all</button>
+        <button onclick="setAllRegions(false)" style="flex:1;font-size:10px;padding:4px 6px;border:1px solid var(--border2);border-radius:4px;background:var(--surf2);color:var(--text2);cursor:pointer;font-family:var(--font);">Clear</button>
+      </div>
+      <div id="region-options"></div>
+    </div>
   </div>
+  <!-- hidden select kept for any legacy code paths reading sel-region.value directly (mirrors single-region semantics for backward compatibility) -->
+  <select id="sel-region" style="display:none"><option value="all">all</option></select>
   <div class="fg" id="fg-channel" style="position:relative;">
     <span class="fgl">Channel</span>
     <button id="channel-btn" onclick="toggleChannelMenu()" style="border:none;outline:none;background:transparent;padding:0 22px 0 8px;height:28px;font-size:12px;font-family:var(--font);color:var(--text);cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:0;position:relative;">
@@ -287,7 +311,7 @@ table.dt tbody tr:hover td{background:var(--surf2);}
 <nav class="tabnav" id="subTabNav">
   <div class="stab active" onclick="switchSub('kpi',this)">Overview</div>
   <div class="stab" onclick="switchSub('budget',this)">Budget</div>
-  <div class="stab" onclick="switchSub('promotions',this)">Promotions</div>
+  <div class="stab" onclick="switchSub('promotions',this)">Campaigns</div>
   <div class="stab" onclick="switchSub('channels',this)">Channels</div>
   <div class="stab" onclick="switchSub('adsmgr',this)">Ads Managers</div>
 </nav>
@@ -391,7 +415,7 @@ table.dt tbody tr:hover td{background:var(--surf2);}
         <div><div class="tw-title">Non-Promotion Performance</div><div class="tw-sub">Always-on campaigns &middot; sorted by Spend</div></div>
         <div class="tw-right"><span class="tw-badge badge-np">NON-PROMO</span><span class="tw-cnt" id="np-cnt">--</span></div>
       </div>
-      <div class="tw-scroll"><table class="dt"><thead><tr><th>Region</th><th>Campaign</th><th>Owner</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>Spend $$</th><th>CPR</th><th>CPFTD</th><th>GD</th><th>NDAW</th><th>ROI</th></tr></thead><tbody id="np-body"></tbody></table></div>
+      <div class="tw-scroll"><table class="dt"><thead><tr><th style="width:16px;padding:0;"></th><th style="text-align:left">Region</th><th style="text-align:left">Campaign</th><th style="text-align:left">Channel</th><th style="text-align:left">Owner</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>Spend</th><th>CPR</th><th>CPFTD</th><th>GD</th><th>NDAW</th><th>ROI</th></tr></thead><tbody id="np-body"></tbody></table></div>
     </div>
     <div class="shd"><div class="shr"></div><div class="snum">02</div><div class="stitle">Promotion Campaigns</div><div class="shr"></div></div>
     <div class="tw">
@@ -399,7 +423,7 @@ table.dt tbody tr:hover td{background:var(--surf2);}
         <div><div class="tw-title">Promotion Performance</div><div class="tw-sub">Time-limited promotions &amp; bonuses &middot; sorted by Spend</div></div>
         <div class="tw-right"><span class="tw-badge badge-promo">PROMO</span><span class="tw-cnt" id="p-cnt">--</span></div>
       </div>
-      <div class="tw-scroll"><table class="dt"><thead><tr><th>Region</th><th>Campaign</th><th>Owner</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>Spend $$</th><th>CPR</th><th>CPFTD</th><th>GD</th><th>NDAW</th><th>ROI</th></tr></thead><tbody id="p-body"></tbody></table></div>
+      <div class="tw-scroll"><table class="dt"><thead><tr><th style="width:16px;padding:0;"></th><th style="text-align:left">Region</th><th style="text-align:left">Campaign</th><th style="text-align:left">Channel</th><th style="text-align:left">Owner</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>Spend</th><th>CPR</th><th>CPFTD</th><th>GD</th><th>NDAW</th><th>ROI</th></tr></thead><tbody id="p-body"></tbody></table></div>
     </div>
   </div>
 
@@ -586,7 +610,7 @@ table.dt tbody tr:hover td{background:var(--surf2);}
   <!-- BUDGET UTILISATION BANNER -->
   <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:var(--r);padding:8px 14px;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
     <span style="font-size:13px;">&#8505;</span>
-    <span style="font-size:11px;color:#1e40af;font-weight:500;">Budget data is scoped to <strong>Brazil &amp; LATAM 2026</strong> and is independent of the region filter above.</span>
+    <span style="font-size:11px;color:#1e40af;font-weight:500;">The FY2026 Annual Plan total and category table below are reported at <strong>Brazil &amp; LATAM</strong> level and are independent of the region filter. The Region Comparison chart reflects your selection above.</span>
   </div>
   <div style="background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:16px;box-shadow:var(--sh);">
 
@@ -663,10 +687,10 @@ table.dt tbody tr:hover td{background:var(--surf2);}
     </div>
     <div class="cc">
       <div class="cc-title">Region comparison</div>
-      <div class="cc-sub">Annual budget vs actual by region</div>
+      <div class="cc-sub">Spend vs allocated budget for regions selected above</div>
       <div class="leg">
         <div class="li"><div class="ld" style="background:#4a90d9"></div>Actual Spend</div>
-        <div class="li"><div class="ld" style="background:#e8734a"></div>Annual Budget</div>
+        <div class="li"><div class="ld" style="background:#e8734a"></div>Allocated Budget</div>
       </div>
       <div class="cw" style="height:260px;"><canvas id="c-bRegion"></canvas></div>
     </div>
@@ -739,6 +763,10 @@ const PROMO = new Set(['WTC','Deposit Bonus']);
 const OWNERS = ['Allyson','Dean','Smith','James','Kevin'];
 const SRC_C = {Meta:'#3b82f6',Investing:'#f59e0b',Rankia:'#22c55e',BizDesk:'#8b5cf6',DSP:'#ef4444',Google:'#ec4899'};
 const ALL_CHANNELS = Object.keys(SRC_C);
+const RG_NAME = {BR:'Brazil',ES:'Spain',KR:'Korea',MN:'Mongolia',NZ:'New Zealand'};
+const RG_C = {BR:'#f59e0b',ES:'#3b82f6',KR:'#ec4899',MN:'#22c55e',NZ:'#7c3aed'};
+const ALL_REGIONS = Object.keys(RG_NAME);
+let selectedRegions = new Set(ALL_REGIONS); // global region filter, drives every tab/sub-page
 let selectedChannels = new Set(ALL_CHANNELS); // all channels selected by default
 
 function buildChannelMenu(){
@@ -788,13 +816,64 @@ function toggleChannelMenu(){
   if(!isOpen) buildChannelMenu();
 }
 
+function buildRegionMenu(){
+  const box=document.getElementById('region-options');
+  box.innerHTML = ALL_REGIONS.map(r=>{
+    const checked = selectedRegions.has(r) ? 'checked' : '';
+    return `<label style="display:flex;align-items:center;gap:7px;padding:5px 6px;border-radius:5px;cursor:pointer;font-size:12px;color:var(--text2);" onmouseover="this.style.background='var(--surf2)'" onmouseout="this.style.background='transparent'">
+      <input type="checkbox" ${checked} onchange="toggleRegion('${r}',this.checked)" style="accent-color:var(--green);width:13px;height:13px;cursor:pointer;">
+      <span style="width:8px;height:8px;border-radius:2px;background:${RG_C[r]};flex-shrink:0;"></span>
+      ${RG_NAME[r]} (${r})
+    </label>`;
+  }).join('');
+}
+
+function toggleRegion(r,isChecked){
+  if(isChecked) selectedRegions.add(r);
+  else selectedRegions.delete(r);
+  updateRegionLabel();
+  renderAll();
+}
+
+function setAllRegions(all){
+  selectedRegions = all ? new Set(ALL_REGIONS) : new Set();
+  buildRegionMenu();
+  updateRegionLabel();
+  renderAll();
+}
+
+function updateRegionLabel(){
+  const lbl=document.getElementById('region-btn-label');
+  const fg=document.getElementById('fg-region');
+  if(!lbl) return;
+  if(selectedRegions.size===0){ lbl.textContent='No Regions'; if(fg)fg.classList.add('on'); }
+  else if(selectedRegions.size===ALL_REGIONS.length){ lbl.textContent='All Regions'; if(fg)fg.classList.remove('on'); }
+  else if(selectedRegions.size===1){ lbl.textContent=RG_NAME[[...selectedRegions][0]]; if(fg)fg.classList.add('on'); }
+  else { lbl.textContent=selectedRegions.size+' Regions'; if(fg)fg.classList.add('on'); }
+}
+
+function regionDisplayLabel(){
+  if(selectedRegions.size===0) return 'No Regions';
+  if(selectedRegions.size===ALL_REGIONS.length) return 'All Regions';
+  if(selectedRegions.size===1) return RG_NAME[[...selectedRegions][0]];
+  return [...selectedRegions].map(r=>RG_NAME[r]).join(', ');
+}
+
+function toggleRegionMenu(){
+  const menu=document.getElementById('region-menu');
+  const isOpen=menu.style.display==='block';
+  menu.style.display = isOpen ? 'none' : 'block';
+  if(!isOpen) buildRegionMenu();
+}
+
 document.addEventListener('click', e=>{
   const fg=document.getElementById('fg-channel');
   const menu=document.getElementById('channel-menu');
   if(fg && menu && !fg.contains(e.target)) menu.style.display='none';
+  const fg2=document.getElementById('fg-region');
+  const menu2=document.getElementById('region-menu');
+  if(fg2 && menu2 && !fg2.contains(e.target)) menu2.style.display='none';
 });
-
-const REG_C  = {BR:'#f59e0b',ES:'#3b82f6',KR:'#ec4899',MN:'#22c55e',NZ:'#8b5cf6'};
 const MON    = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const STCOLS = ['#6b7280','#0ea5e9','#8b5cf6','#f59e0b','#22c55e','#15803d'];
 
@@ -863,6 +942,87 @@ const MO={
 };
 
 // ==============================================
+//  CREATIVE / AD GROUP DATA
+//  Key: `${r}|${src}|${c}` -> array of ad groups
+//  Each row: {id, name, format, split (0-1 fraction of parent metrics)}
+//  Performance = parent campaign row metrics x split
+// ==============================================
+function mkCreatives(r,src,c,splits){
+  // splits: [{id,name,format,sp,impr,clk,reg,ftd}] as fractions of parent
+  return splits;
+}
+
+const CREATIVES = {};
+function regCr(r,src,c,ads){
+  CREATIVES[`${r}|${src}|${c}`]=ads;
+}
+
+// KR Global Indices - the campaign from the screenshot
+regCr('KR','Meta','Global Indices',[
+  {id:'AD01',     name:'SVG-KO-Global indices-AD01',          fmt:'IMAGE', color:'#1e3a5f', sp:.52,impr:.55,clk:.52,reg:.5,ftd:.5},
+  {id:'AD01_TTD', name:'SVG-KO-Global indices-AD01_TTD Variation',fmt:'IMAGE',color:'#2563eb',sp:.18,impr:.18,clk:.20,reg:.2,ftd:.2},
+  {id:'AD02',     name:'SVG-KO-Global indices-AD02',          fmt:'IMAGE', color:'#15803d', sp:.20,impr:.18,clk:.18,reg:.2,ftd:.2},
+  {id:'AD02_TTD', name:'SVG-KO-Global indices-AD02_TTD Variation',fmt:'IMAGE',color:'#16a34a',sp:.10,impr:.09,clk:.10,reg:.1,ftd:.1},
+]);
+regCr('MN','Meta','Global Indices',[
+  {id:'AD01',name:'SVG-MN-Global indices-AD01',fmt:'IMAGE',color:'#1e3a5f',sp:.6,impr:.6,clk:.6,reg:.6,ftd:.6},
+  {id:'AD02',name:'SVG-MN-Global indices-AD02',fmt:'IMAGE',color:'#15803d',sp:.4,impr:.4,clk:.4,reg:.4,ftd:.4},
+]);
+
+// WTC -- most popular campaign
+regCr('ES','Meta','WTC',[
+  {id:'AD01',name:'ZM-ES-WTC-AD01_Broad',    fmt:'VIDEO',color:'#7c3aed',sp:.38,impr:.40,clk:.38,reg:.35,ftd:.35},
+  {id:'AD02',name:'ZM-ES-WTC-AD02_Retarget', fmt:'VIDEO',color:'#6d28d9',sp:.28,impr:.27,clk:.29,reg:.30,ftd:.30},
+  {id:'AD03',name:'ZM-ES-WTC-AD03_Static',   fmt:'IMAGE',color:'#2563eb',sp:.20,impr:.20,clk:.20,reg:.20,ftd:.20},
+  {id:'AD04',name:'ZM-ES-WTC-AD04_Carousel', fmt:'CAROUSEL',color:'#0ea5e9',sp:.14,impr:.13,clk:.13,reg:.15,ftd:.15},
+]);
+regCr('MN','Meta','WTC',[
+  {id:'AD01',name:'ZM-MN-WTC-AD01',fmt:'IMAGE',color:'#7c3aed',sp:.55,impr:.58,clk:.55,reg:.55,ftd:.55},
+  {id:'AD02',name:'ZM-MN-WTC-AD02',fmt:'VIDEO',color:'#6d28d9',sp:.45,impr:.42,clk:.45,reg:.45,ftd:.45},
+]);
+regCr('KR','Meta','WTC',[
+  {id:'AD01',name:'SVG-KO-WTC-AD01',fmt:'IMAGE',color:'#7c3aed',sp:.60,impr:.62,clk:.60,reg:.60,ftd:.60},
+  {id:'AD02',name:'SVG-KO-WTC-AD02_TTD',fmt:'IMAGE',color:'#6d28d9',sp:.40,impr:.38,clk:.40,reg:.40,ftd:.40},
+]);
+regCr('BR','Investing','WTC',[
+  {id:'AD01',name:'ZM-BR-WTC-INV-AD01',fmt:'IMAGE',color:'#f59e0b',sp:.65,impr:.65,clk:.65,reg:.65,ftd:.65},
+  {id:'AD02',name:'ZM-BR-WTC-INV-AD02',fmt:'IMAGE',color:'#d97706',sp:.35,impr:.35,clk:.35,reg:.35,ftd:.35},
+]);
+regCr('ES','Rankia','WTC',[
+  {id:'AD01',name:'ZM-ES-WTC-RNK-AD01',fmt:'IMAGE',color:'#22c55e',sp:.70,impr:.70,clk:.70,reg:.70,ftd:.70},
+  {id:'AD02',name:'ZM-ES-WTC-RNK-AD02',fmt:'IMAGE',color:'#16a34a',sp:.30,impr:.30,clk:.30,reg:.30,ftd:.30},
+]);
+regCr('NZ','BizDesk','WTC',[
+  {id:'AD01',name:'ZM-NZ-WTC-BIZ-AD01',fmt:'IMAGE',color:'#8b5cf6',sp:.60,impr:.60,clk:.60,reg:.60,ftd:.60},
+  {id:'AD02',name:'ZM-NZ-WTC-BIZ-AD02',fmt:'IMAGE',color:'#7c3aed',sp:.40,impr:.40,clk:.40,reg:.40,ftd:.40},
+]);
+regCr('ES','Google','WTC',[
+  {id:'RSA01',name:'ZM-ES-WTC-RSA01_Search',fmt:'RSA',color:'#ec4899',sp:.50,impr:.50,clk:.50,reg:.50,ftd:.50},
+  {id:'DSA01',name:'ZM-ES-WTC-DSA01_Display',fmt:'DISPLAY',color:'#db2777',sp:.30,impr:.32,clk:.30,reg:.30,ftd:.30},
+  {id:'VID01',name:'ZM-ES-WTC-VID01_YouTube',fmt:'VIDEO',color:'#be185d',sp:.20,impr:.18,clk:.20,reg:.20,ftd:.20},
+]);
+regCr('KR','DSP','WTC',[
+  {id:'AD01',name:'SVG-KO-WTC-DSP-AD01',fmt:'BANNER',color:'#ef4444',sp:.55,impr:.55,clk:.55,reg:.55,ftd:.55},
+  {id:'AD02',name:'SVG-KO-WTC-DSP-AD02_Native',fmt:'NATIVE',color:'#dc2626',sp:.45,impr:.45,clk:.45,reg:.45,ftd:.45},
+]);
+
+// Deposit Bonus
+regCr('BR','Google','Deposit Bonus',[
+  {id:'AD01',name:'ZM-BR-DepBonus-RSA01',fmt:'RSA',color:'#ec4899',sp:.55,impr:.55,clk:.55,reg:.55,ftd:.55},
+  {id:'AD02',name:'ZM-BR-DepBonus-DISP01',fmt:'DISPLAY',color:'#db2777',sp:.45,impr:.45,clk:.45,reg:.45,ftd:.45},
+]);
+
+// Gold Rush
+regCr('NZ','Meta','Gold Rush',[
+  {id:'AD01',name:'ZM-NZ-GoldRush-AD01',fmt:'IMAGE',color:'#f59e0b',sp:.55,impr:.55,clk:.55,reg:.55,ftd:.55},
+  {id:'AD02',name:'ZM-NZ-GoldRush-AD02_Video',fmt:'VIDEO',color:'#d97706',sp:.45,impr:.45,clk:.45,reg:.45,ftd:.45},
+]);
+regCr('ES','Investing','Gold Rush',[
+  {id:'AD01',name:'ZM-ES-GoldRush-INV-AD01',fmt:'IMAGE',color:'#f59e0b',sp:.60,impr:.60,clk:.60,reg:.60,ftd:.60},
+  {id:'AD02',name:'ZM-ES-GoldRush-INV-AD02',fmt:'IMAGE',color:'#d97706',sp:.40,impr:.40,clk:.40,reg:.40,ftd:.40},
+]);
+
+// ==============================================
 //  FILTER & AGG
 // ==============================================
 const F={
@@ -874,7 +1034,7 @@ const F={
 };
 function filtered(){
   return ALL.filter(d=>{
-    if(F.region()!=='all'&&d.r!==F.region()) return false;
+    if(!selectedRegions.has(d.r)) return false;
     if(!selectedChannels.has(d.src)) return false;
     if(F.campaign()!=='all'&&d.c!==F.campaign()) return false;
     if(F.owner()!=='all'&&d.owner!==F.owner()) return false;
@@ -972,7 +1132,7 @@ function renderKPI(data){
   s('k-roi',roi>0?(roi*100).toFixed(1)+'%':'--');
   // Funnel
   const src=F.source()==='all'?'All Sources':F.source();
-  const rgn=F.region()==='all'?'All Regions':F.region();
+  const rgn=regionDisplayLabel();
   s('fn-sub','Marketing attribution &middot; '+rgn+' &middot; '+src);
   renderFunnel(a);
   // Charts (delayed for paint)
@@ -1049,13 +1209,45 @@ function renderFunnel(a){
 }
 
 function renderPromotions(data){
-  const np=[...data].filter(d=>!d.isPromo).sort((a,b)=>b.sp-a.sp);
-  const pp=[...data].filter(d=>d.isPromo).sort((a,b)=>b.sp-a.sp);
-  const cols=['region','campaign','owner','impr','clk','ctr','reg','eva','ftd','spend','cpr','cpftd','gd','ndaw','roi'];
+  var np=[...data].filter(function(d){return !d.isPromo;}).sort(function(a,b){return b.sp-a.sp;});
+  var pp=[...data].filter(function(d){return d.isPromo;}).sort(function(a,b){return b.sp-a.sp;});
   s('np-cnt',np.length+' rows');
   s('p-cnt',pp.length+' rows');
-  document.getElementById('np-body').innerHTML=np.map(d=>trow(d,cols)).join('')||'<tr><td colspan="15" style="text-align:center;padding:20px;color:var(--text3)">No data</td></tr>';
-  document.getElementById('p-body').innerHTML=pp.map(d=>trow(d,cols)).join('')||'<tr><td colspan="15" style="text-align:center;padding:20px;color:var(--text3)">No data</td></tr>';
+
+  function buildRows(rows, expandedKey, toggleFn){
+    if(!rows.length) return '<tr><td colspan="17" style="text-align:center;padding:20px;color:var(--text3)">No data for current filters</td></tr>';
+    return rows.map(function(d){
+      var ck=d.r+'|'+d.src+'|'+d.c;
+      var hasCr=!!CREATIVES[ck];
+      var isOpen=(expandedKey===ck);
+      var roi=d.sp>0?d.nf/d.sp:null;
+      var rc=roi===null?'var(--text3)':roi>=1?'var(--green)':roi>0?'var(--amber)':'var(--red)';
+      var row='<tr class="'+(hasCr?'exp-row':'')+'" style="'+(hasCr?'cursor:pointer;':'')+'" '+(hasCr?'onclick="'+toggleFn+'(\''+ck+'\')"':'')+' >'
+        +'<td style="padding:0 6px 0 10px;width:16px;font-size:10px;color:var(--text3);">'+(hasCr?(isOpen?'&#9660;':'&#9654;'):'')+'</td>'
+        +'<td><span class="rp '+d.r+'">'+d.r+'</span></td>'
+        +'<td class="fn">'+d.c+'</td>'
+        +'<td><span class="ch-pill" style="background:'+(SRC_C[d.src]||'#9ca3af')+'18;color:'+(SRC_C[d.src]||'#9ca3af')+';">'+d.src+'</span></td>'
+        +'<td><span class="owner-pill">'+d.owner+'</span></td>'
+        +'<td>'+fN(d.impr)+'</td>'
+        +'<td>'+fN(d.clk)+'</td>'
+        +'<td>'+d.ctr.toFixed(2)+'%</td>'
+        +'<td>'+(d.reg>0?d.reg.toLocaleString():'0')+'</td>'
+        +'<td>'+(d.eva>0?d.eva:'0')+'</td>'
+        +'<td><span style="color:'+(d.ftd>0?'var(--green)':'var(--text3)')+';font-weight:'+(d.ftd>0?600:400)+'">'+d.ftd+'</span></td>'
+        +'<td>$'+d.sp.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})+'</td>'
+        +'<td>'+(d.reg>0?f$(d.sp/d.reg,0):'--')+'</td>'
+        +'<td>'+(d.ftd>0?f$(d.sp/d.ftd,0):'--')+'</td>'
+        +'<td class="'+(d.dep>0?'pos':'mut')+'">$'+Math.round(d.dep).toLocaleString()+'</td>'
+        +'<td class="'+(d.nf>0?'pos':d.nf<0?'neg':'mut')+'">$'+Math.round(d.nf).toLocaleString()+'</td>'
+        +'<td><span style="color:'+rc+';font-weight:600">'+(roi!==null?(roi*100).toFixed(1)+'%':'--')+'</span></td>'
+        +'</tr>';
+      var creative=(hasCr&&isOpen)?renderCreativeDetailInline(ck,d,17):'';
+      return row+creative;
+    }).join('');
+  }
+
+  document.getElementById('np-body').innerHTML=buildRows(np, expandedCampaignNP, 'toggleCreativeNP');
+  document.getElementById('p-body').innerHTML=buildRows(pp, expandedCampaignP, 'toggleCreativeP');
 }
 
 function renderChannels(data){
@@ -1128,7 +1320,19 @@ function renderMgr(data){
 let campSort='impr';
 let campGroup='owner';
 let expandedRow=null;
+let expandedCampaign=null;
+let expandedCreativeInMgr=null;
+let expandedCampaignNP=null;  // for creative drill-down in Non-Promotion table
+let expandedCampaignP=null;   // for creative drill-down in Promotion table
+
+function toggleCreativeNP(ck){ expandedCampaignNP=(expandedCampaignNP===ck)?null:ck; renderAll(); }
+function toggleCreativeP(ck){  expandedCampaignP=(expandedCampaignP===ck)?null:ck;  renderAll(); }
 let campType='all';
+
+function toggleCreativeInMgr(ck){
+  expandedCreativeInMgr = (expandedCreativeInMgr===ck) ? null : ck;
+  renderAll();
+}
 let sdMetric='gd';
 // ==============================================
 //  ADS MANAGER SHOWDOWN (head-to-head leaderboard)
@@ -1223,11 +1427,9 @@ function renderMgrDetail(){
   s('mgr-detail-title', selectedMgr + ' &middot; Manager Detail');
   document.getElementById('mgr-detail-title').innerHTML=selectedMgr+' &middot; Individual Performance';
 
-  // Pull this manager's rows from the currently filtered dataset (respect region/type filters)
-  const region=document.getElementById('sel-region').value;
+  // Pull this manager's rows from the currently filtered dataset (respect region/channel/type filters)
   const type=document.getElementById('sel-type')?document.getElementById('sel-type').value:'all';
-  let rows=ALL.filter(r=>r.owner===selectedMgr);
-  if(region!=='all') rows=rows.filter(r=>r.r===region);
+  let rows=ALL.filter(r=>r.owner===selectedMgr && selectedRegions.has(r.r) && selectedChannels.has(r.src));
   if(campType!=='all') rows=rows.filter(r=>r.type===campType);
 
   const a=agg(rows);
@@ -1292,27 +1494,143 @@ function renderMgrDetail(){
 //  INLINE ROW EXPANSION (click a manager row to see their campaigns)
 // ==============================================
 function toggleRowExpand(label){
+  expandedCreativeInMgr=null; // always clear creative when toggling manager row
   expandedRow = (expandedRow===label) ? null : label;
   renderAll();
 }
 
+function toggleCreative(ck){
+  expandedCampaign = (expandedCampaign===ck) ? null : ck;
+  renderAll();
+}
+
+function renderCreativeDetailInline(ck, parentRow, colspan){
+  var ads = CREATIVES[ck];
+  if(!ads||!ads.length) return '';
+  var parts=ck.split('|'); var r=parts[0],src=parts[1],c=parts[2];
+
+  function fmtIcon(f){return f==='VIDEO'?'&#9654;':f==='CAROUSEL'?'&#8644;':f==='RSA'?'RSA':f==='DISPLAY'?'&#9635;':'&#128247;';}
+  function fmtColor(f){return f==='VIDEO'?'#3b82f6':f==='IMAGE'?'#16a34a':f==='CAROUSEL'?'#f59e0b':f==='RSA'?'#ec4899':'#7c3aed';}
+
+  var totalSp=0;
+  var adRows=ads.map(function(ad){
+    var row={
+      id:ad.id, name:ad.name, fmt:ad.fmt, color:ad.color,
+      _impr:Math.round((parentRow.impr||0)*ad.impr),
+      _clk:Math.round((parentRow.clk||0)*ad.clk),
+      _sp:(parentRow.sp||0)*ad.sp,
+      _reg:Math.round((parentRow.reg||0)*ad.reg),
+      _ftd:Math.round((parentRow.ftd||0)*ad.ftd),
+    };
+    totalSp+=row._sp;
+    return row;
+  });
+
+  var cards=adRows.map(function(ad){
+    var ctr=ad._impr>0?(ad._clk/ad._impr*100).toFixed(2):'0.00';
+    var cpftd=ad._ftd>0?f$(ad._sp/ad._ftd,0):'--';
+    var barPct=totalSp>0?(ad._sp/totalSp*100):0;
+    var bg='linear-gradient(135deg,'+ad.color+'ee 0%,'+ad.color+'66 100%)';
+    return '<div class="cr-card">'
+      +'<div class="cr-thumb" style="background:'+bg+';">'
+        +'<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;">'
+          +'<div style="font-size:28px;opacity:.85;">'+fmtIcon(ad.fmt)+'</div>'
+          +'<div style="font-size:9px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.85);">'+ad.id+'</div>'
+        +'</div>'
+        +'<div style="position:absolute;bottom:6px;right:8px;font-size:8px;font-weight:700;padding:2px 6px;border-radius:3px;background:rgba(0,0,0,.4);color:#fff;">'+ad.fmt+'</div>'
+      +'</div>'
+      +'<div class="cr-card-body">'
+        +'<div class="cr-name" title="'+ad.name+'">'+(ad.name.length>38?ad.name.slice(0,37)+'...':ad.name)+'</div>'
+        +'<div class="cr-stats">'
+          +'<div><div class="cr-stat-l">Impr</div><div class="cr-stat-v">'+fN(ad._impr)+'</div></div>'
+          +'<div><div class="cr-stat-l">Clicks</div><div class="cr-stat-v">'+fN(ad._clk)+'</div></div>'
+          +'<div><div class="cr-stat-l">CTR</div><div class="cr-stat-v">'+ctr+'%</div></div>'
+          +'<div><div class="cr-stat-l">Spend</div><div class="cr-stat-v">$'+Math.round(ad._sp).toLocaleString()+'</div></div>'
+          +'<div><div class="cr-stat-l">REG</div><div class="cr-stat-v">'+ad._reg+'</div></div>'
+          +'<div><div class="cr-stat-l">CPFTD</div><div class="cr-stat-v g">'+cpftd+'</div></div>'
+        +'</div>'
+        +'<div class="cr-bar"><div class="cr-bar-fill" style="width:'+barPct.toFixed(1)+'%;background:'+ad.color+';"></div></div>'
+        +'<div style="font-size:9px;color:var(--text3);margin-top:3px;font-family:var(--mono);">'+barPct.toFixed(0)+'% of spend</div>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+
+  var tableRows=adRows.map(function(ad){
+    var ctr=(ad._impr>0?(ad._clk/ad._impr*100).toFixed(2):'0.00')+'%';
+    var cpftd=ad._ftd>0?f$(ad._sp/ad._ftd,0):'--';
+    var barPct=totalSp>0?(ad._sp/totalSp*100):0;
+    var fc=fmtColor(ad.fmt);
+    return '<tr>'
+      +'<td style="padding:8px 10px;"><div style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:'+ad.color+';flex-shrink:0;"></span><span style="font-size:10px;font-weight:700;color:var(--text);font-family:var(--mono);">'+ad.id+'</span></div></td>'
+      +'<td style="font-size:11px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+ad.name+'">'+ad.name+'</td>'
+      +'<td><span style="font-size:9px;padding:2px 6px;border-radius:3px;background:'+fc+'18;color:'+fc+';font-weight:700;">'+ad.fmt+'</span></td>'
+      +'<td>'+fN(ad._impr)+'</td><td>'+fN(ad._clk)+'</td><td>'+ctr+'</td>'
+      +'<td>'+ad._reg+'</td>'
+      +'<td><span style="color:'+(ad._ftd>0?'var(--green)':'var(--text3)')+';font-weight:'+(ad._ftd>0?600:400)+'">'+ad._ftd+'</span></td>'
+      +'<td>$'+Math.round(ad._sp).toLocaleString()+'</td><td>'+cpftd+'</td>'
+      +'<td><div style="display:flex;align-items:center;gap:6px;"><div style="flex:1;height:5px;background:#e8ede8;border-radius:3px;min-width:50px;overflow:hidden;"><div style="height:100%;background:'+ad.color+';width:'+barPct.toFixed(1)+'%;"></div></div><span style="font-size:9px;color:var(--text3);font-family:var(--mono);">'+barPct.toFixed(0)+'%</span></div></td>'
+    +'</tr>';
+  }).join('');
+
+  var closeFunc=colspan===20?"toggleCreative('"+ck+"')" : "toggleCreativeInMgr('"+ck+"')";
+  return '<tr><td colspan="'+colspan+'" style="padding:0;">'
+    +'<div class="cr-panel">'
+      +'<div class="cr-header">'
+        +'<span style="font-size:14px;">&#9680;</span> Creative Breakdown &mdash; <strong>'+c+'</strong> &middot; '+r+' &middot; '+src
+        +' <span style="font-weight:400;color:var(--text3);font-size:10px;">'+ads.length+' ad groups</span>'
+        +'<button onclick="'+closeFunc+'" style="margin-left:auto;height:22px;padding:0 10px;border:1px solid var(--border2);border-radius:5px;background:var(--surf);color:var(--text3);font-family:var(--font);font-size:10px;cursor:pointer;">Close x</button>'
+      +'</div>'
+      +'<div class="cr-grid">'+cards+'</div>'
+      +'<div style="overflow-x:auto;border:1px solid var(--border);border-radius:8px;background:var(--surf);">'
+        +'<table class="dt" style="margin:0;">'
+          +'<thead><tr><th style="text-align:left">Ad ID</th><th style="text-align:left">Name</th><th>Format</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>FTD</th><th>Spend</th><th>CPFTD</th><th>Spend Share</th></tr></thead>'
+          +'<tbody>'+tableRows+'</tbody>'
+        +'</table>'
+      +'</div>'
+    +'</div>'
+  +'</td></tr>';
+}
+
+
 function renderExpandedCampaigns(ownerLabel){
-  const region=document.getElementById('sel-region').value;
-  let rows=ALL.filter(r=>r.owner===ownerLabel);
-  if(region!=='all') rows=rows.filter(r=>r.r===region);
+  let rows=ALL.filter(r=>r.owner===ownerLabel && selectedRegions.has(r.r) && selectedChannels.has(r.src));
   if(campType!=='all') rows=rows.filter(r=>r.type===campType);
   rows=[...rows].sort((a,b)=>b.sp-a.sp);
 
-  const innerRows = rows.length
-    ? rows.map(r=>trow(r,['region','campaign','source','type','impr','clk','ctr','reg','eva','ftd','spend','cpftd','gd','ndaw','roi'])).join('')
-    : '<tr><td colspan="15" style="text-align:center;padding:14px;color:var(--text3);">No campaigns for this manager in the current filter</td></tr>';
+  if(!rows.length){
+    return `<tr class="exp-detail-row"><td colspan="15" style="padding:14px 24px;background:#f5f8f5;border-bottom:2px solid var(--border2);color:var(--text3);font-size:12px;">No campaigns for this manager in the current filter</td></tr>`;
+  }
+
+  const innerRows = rows.map(r=>{
+    const ck=`${r.r}|${r.src}|${r.c}`;
+    const hasCr=!!CREATIVES[ck];
+    const isOpen=expandedCreativeInMgr===ck;
+    const roi=r.sp>0?r.nf/r.sp:null;
+    const rc=roi===null?'var(--text3)':roi>=1?'var(--green)':roi>0?'var(--amber)':'var(--red)';
+    const crRow=`<tr class="${hasCr?'exp-row':''}" style="${hasCr?'cursor:pointer;':''}" ${hasCr?`onclick="toggleCreativeInMgr('${ck}')"`:''}">
+      <td style="padding:0 6px 0 10px;width:16px;font-size:10px;color:var(--text3);">${hasCr?(isOpen?'&#9660;':'&#9654;'):''}</td>
+      <td><span class="rp ${r.r}">${r.r}</span></td>
+      <td class="fn">${r.c}</td>
+      <td><span class="ch-pill" style="background:${SRC_C[r.src]||'#9ca3af'}18;color:${SRC_C[r.src]||'#9ca3af'};">${r.src}</span></td>
+      <td><span class="type-pill ${r.isPromo?'tp-promo':'tp-np'}">${r.type}</span></td>
+      <td>${fN(r.impr)}</td><td>${fN(r.clk)}</td><td>${r.ctr.toFixed(2)}%</td>
+      <td>${r.reg>0?r.reg.toLocaleString():'0'}</td><td>${r.eva>0?r.eva:'0'}</td>
+      <td><span style="color:${r.ftd>0?'var(--green)':'var(--text3)'};font-weight:${r.ftd>0?600:400}">${r.ftd}</span></td>
+      <td>$${r.sp.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+      <td>${r.ftd>0?f$(r.sp/r.ftd,0):'--'}</td>
+      <td class="${r.dep>0?'pos':'mut'}">$${Math.round(r.dep).toLocaleString()}</td>
+      <td><span style="color:${rc};font-weight:600">${roi!==null?(roi*100).toFixed(1)+'%':'--'}</span></td>
+    </tr>`;
+    const crDetail = (hasCr && isOpen) ? renderCreativeDetailInline(ck, r, 15) : '';
+    return crRow + crDetail;
+  }).join('');
 
   return `<tr class="exp-detail-row"><td colspan="15" style="padding:0;background:#f5f8f5;border-bottom:2px solid var(--border2);">
     <div style="padding:12px 16px;">
-      <div style="font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;">${ownerLabel}'s Campaigns &middot; ${rows.length} total</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;">${ownerLabel}'s Campaigns &middot; ${rows.length} total &middot; <span style="font-weight:400;">click a row to see creatives</span></div>
       <div style="overflow-x:auto;border:1px solid var(--border);border-radius:7px;background:var(--surf);">
         <table class="dt" style="margin:0;">
-          <thead><tr><th style="text-align:left">Region</th><th style="text-align:left">Campaign</th><th style="text-align:left">Channel</th><th style="text-align:left">Type</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>Spend</th><th>CPFTD</th><th>GD</th><th>NDAW</th><th>ROI</th></tr></thead>
+          <thead><tr><th style="width:16px;padding:0;"></th><th style="text-align:left">Region</th><th style="text-align:left">Campaign</th><th style="text-align:left">Channel</th><th style="text-align:left">Type</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>Spend</th><th>CPFTD</th><th>GD</th><th>ROI</th></tr></thead>
           <tbody>${innerRows}</tbody>
         </table>
       </div>
@@ -1393,7 +1711,7 @@ function renderCampaign(data){
   // Rebuild thead dynamically
   const thead=document.getElementById('camp-thead');
   if(campGroup==='campaign'){
-    thead.innerHTML='<tr><th style="text-align:left">Region</th><th style="text-align:left">Campaign</th><th style="text-align:left">Source</th><th style="text-align:left">Owner</th><th style="text-align:left">Type</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>FTU</th><th>Spend</th><th>CPR</th><th>CPFTD</th><th>GD</th><th>TAW</th><th>NDAW</th><th>ROI</th></tr>';
+    thead.innerHTML='<tr><th style="width:16px;padding:0;"></th><th style="text-align:left">Region</th><th style="text-align:left">Campaign</th><th style="text-align:left">Source</th><th style="text-align:left">Owner</th><th style="text-align:left">Type</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>FTU</th><th>Spend</th><th>CPR</th><th>CPFTD</th><th>GD</th><th>TAW</th><th>NDAW</th><th>ROI</th></tr>';
   } else {
     thead.innerHTML=`<tr><th style="text-align:left">${gl}</th><th style="text-align:left">${campGroup==='owner'?'Channels':'Top Campaigns'}</th><th>Impr</th><th>Clicks</th><th>CTR</th><th>REG</th><th>EV.A</th><th>FTD</th><th>FTU</th><th>Spend</th><th>CPR</th><th>CPFTD</th><th>GD</th><th>NDAW</th><th>ROI</th></tr>`;
   }
@@ -1404,7 +1722,30 @@ function renderCampaign(data){
     const cpr2=row.reg>0?f$(row.sp/row.reg,0):'--';
     const cpftd=row.ftd>0?f$(row.sp/row.ftd,0):'--';
     if(campGroup==='campaign'){
-      return trow(row,['region','campaign','source','owner','type','impr','clk','ctr','reg','eva','ftd','ftu','spend','cpr','cpftd','gd','taw','ndaw','roi']);
+      const ck=`${row.r}|${row.src}|${row.c}`;
+      const hasCreatives=!!CREATIVES[ck];
+      const isExpanded=expandedCampaign && expandedCampaign===ck;
+      const baseRow=`<tr class="${hasCreatives?'exp-row':''}" style="${hasCreatives?'cursor:pointer;':''}" ${hasCreatives?`onclick="toggleCreative('${ck}')"`:''}>${
+        hasCreatives?`<td style="padding:0 6px 0 10px;width:16px;font-size:10px;color:var(--text3);">${isExpanded?'&#9660;':'&#9654;'}</td>`:'<td style="padding:0 6px 0 10px;width:16px;"></td>'
+      }
+        <td><span class="rp ${row.r}">${row.r}</span></td>
+        <td class="fn">${row.c}</td>
+        <td><span class="ch-pill" style="background:${SRC_C[row.src]||'#9ca3af'}18;color:${SRC_C[row.src]||'#9ca3af'};">${row.src}</span></td>
+        <td><span class="owner-pill">${row.owner}</span></td>
+        <td><span class="type-pill ${row.isPromo?'tp-promo':'tp-np'}">${row.type}</span></td>
+        <td>${fN(row.impr)}</td><td>${fN(row.clk)}</td><td>${row.ctr.toFixed(2)}%</td>
+        <td>${row.reg>0?row.reg.toLocaleString():'0'}</td><td>${row.eva>0?row.eva:'0'}</td>
+        <td><span style="color:${row.ftd>0?'var(--green)':'var(--text3)'};font-weight:${row.ftd>0?600:400}">${row.ftd}</span></td>
+        <td>${row.ftu>0?row.ftu:'0'}</td>
+        <td>$${row.sp.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+        <td>${row.reg>0?f$(row.sp/row.reg,0):'--'}</td>
+        <td>${row.ftd>0?f$(row.sp/row.ftd,0):'--'}</td>
+        <td class="${row.dep>0?'pos':'mut'}">$${Math.round(row.dep).toLocaleString()}</td>
+        <td class="${row.nf>0?'pos':row.nf<0?'neg':'mut'}">$${Math.round(row.nf).toLocaleString()}</td>
+        <td class="${row.nf>0?'pos':row.nf<0?'neg':'mut'}">$${Math.round(row.nf).toLocaleString()}</td>
+        <td><span style="color:${(row.sp>0&&row.nf/row.sp>=1)?'var(--green)':(row.sp>0&&row.nf/row.sp>0)?'var(--amber)':'var(--red)'};font-weight:600">${row.sp>0?(row.nf/row.sp*100).toFixed(1)+'%':'--'}</span></td>
+      </tr>`;
+      return baseRow + (isExpanded ? renderCreativeDetailInline(ck, row, 20) : '');
     }
     const isOpen=expandedRow===row.label;
     return `<tr class="exp-row" style="cursor:pointer;" onclick="toggleRowExpand('${row.label}')">
@@ -1546,19 +1887,30 @@ function renderBudget(){
         scales:{x:{grid:{display:false},ticks:{color:'#7a8c7a',font:{size:9}}},y:{grid:{color:'rgba(0,0,0,.04)'},ticks:{color:'#7a8c7a',font:{size:9},callback:v=>'$'+(v/1000).toFixed(0)+'K'}}}}
     });
 
+    // Region comparison: one bar per selected operational region (BR/ES/KR/MN/NZ), respecting channel filter
+    const chFilteredAll = ALL.filter(x=>selectedChannels.has(x.src));
+    const totalAllSpend = chFilteredAll.reduce((s,r)=>s+r.sp,0);
+    const selRegions = ALL_REGIONS.filter(r=>selectedRegions.has(r));
+    const regionRows = selRegions.map(r=>{
+      const rows=chFilteredAll.filter(x=>x.r===r);
+      const spend=rows.reduce((s,x)=>s+x.sp,0);
+      const allocated = totalAllSpend>0 ? BUDGET*(spend/totalAllSpend) : 0;
+      return {r, name:RG_NAME[r], spend, allocated, color:RG_C[r]};
+    });
+
     dc('c-bRegion');
     CH['c-bRegion']=new Chart(document.getElementById('c-bRegion'),{
       type:'bar',
       data:{
-        labels:['Brazil','LATAM'],
+        labels:regionRows.map(x=>x.name),
         datasets:[
-          {label:'Actual Spend',data:[d.regions.Brazil.actual,d.regions.LATAM.actual],backgroundColor:'#4a90d9cc',borderRadius:3,borderWidth:0},
-          {label:'Annual Budget',data:[d.regions.Brazil.budget,d.regions.LATAM.budget],backgroundColor:'#e8734acc',borderRadius:3,borderWidth:0},
+          {label:'Actual Spend',data:regionRows.map(x=>x.spend),backgroundColor:regionRows.map(x=>x.color+'cc'),borderRadius:3,borderWidth:0},
+          {label:'Allocated Budget',data:regionRows.map(x=>x.allocated),backgroundColor:regionRows.map(x=>x.color+'40'),borderRadius:3,borderWidth:0},
         ]
       },
       options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
         plugins:{legend:{labels:{color:'#374237',boxWidth:10,font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtUSD(c.parsed.x)}}},
-        scales:{x:{grid:{color:'rgba(0,0,0,.04)'},ticks:{color:'#7a8c7a',font:{size:9},callback:v=>'$'+(v/1e6).toFixed(1)+'M'}},y:{grid:{display:false},ticks:{color:'#374237',font:{size:12}}}}}
+        scales:{x:{grid:{color:'rgba(0,0,0,.04)'},ticks:{color:'#7a8c7a',font:{size:9},callback:v=>fmtUSD(v)}},y:{grid:{display:false},ticks:{color:'#374237',font:{size:12}}}}}
     });
 
     // Spend mix donut
@@ -1580,7 +1932,7 @@ function renderBudget(){
 function renderAll(){
   const data=filtered();
   // filter UI
-  ['entity','region','source','campaign','owner','type'].forEach(id=>{
+  ['entity','source','campaign','owner','type'].forEach(id=>{
     const sel=document.getElementById('sel-'+id);
     const grp=document.getElementById('fg-'+id);
     if(sel&&grp) grp.classList.toggle('on',sel.value!=='all');
@@ -1591,7 +1943,7 @@ function renderAll(){
   s('navCtx',entity+' &middot; FY'+yr);
   const parts=[];
   if(esel.value!=='all') parts.push(entity);
-  if(F.region()!=='all') parts.push(F.region());
+  if(selectedRegions.size>0 && selectedRegions.size<ALL_REGIONS.length) parts.push(regionDisplayLabel());
   if(F.source()!=='all') parts.push(F.source());
   if(F.campaign()!=='all') parts.push(F.campaign());
   if(F.owner()!=='all') parts.push(F.owner());
@@ -1636,6 +1988,8 @@ function setGroup(g,btn){
   document.querySelectorAll('.grptab').forEach(x=>x.classList.remove('on'));
   btn.classList.add('on');
   if(g!=='owner') closeMgrDetail();
+  expandedCampaign=null;
+  expandedRow=null;
   renderAll();
 }
 
@@ -1663,6 +2017,7 @@ function onFC(){ renderAll(); }
 //  INIT
 // ==============================================
 updateChannelLabel();
+updateRegionLabel();
 renderAll();
 </script>
 </body>
